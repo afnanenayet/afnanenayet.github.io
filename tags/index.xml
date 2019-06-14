@@ -6,13 +6,67 @@
     <description>Recent content in Tags on Afnan Enayet</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Oct 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Apr 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://afnan.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>C</title>
+      <title>Andrew</title>
+      <link>https://afnan.io/tags/andrew/</link>
+      <pubDate>Fri, 05 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://afnan.io/tags/andrew/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Kensler</title>
+      <link>https://afnan.io/tags/kensler/</link>
+      <pubDate>Fri, 05 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://afnan.io/tags/kensler/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>algorithm</title>
+      <link>https://afnan.io/tags/algorithm/</link>
+      <pubDate>Fri, 05 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://afnan.io/tags/algorithm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>hashed</title>
+      <link>https://afnan.io/tags/hashed/</link>
+      <pubDate>Fri, 05 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://afnan.io/tags/hashed/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>permutation</title>
+      <link>https://afnan.io/tags/permutation/</link>
+      <pubDate>Fri, 05 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://afnan.io/tags/permutation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>shuffle</title>
+      <link>https://afnan.io/tags/shuffle/</link>
+      <pubDate>Fri, 05 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://afnan.io/tags/shuffle/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>c</title>
       <link>https://afnan.io/tags/c/</link>
       <pubDate>Mon, 01 Oct 2018 00:00:00 +0000</pubDate>
       
@@ -21,7 +75,7 @@
     </item>
     
     <item>
-      <title>C&#43;&#43;</title>
+      <title>c&#43;&#43;</title>
       <link>https://afnan.io/tags/c&#43;&#43;/</link>
       <pubDate>Mon, 01 Oct 2018 00:00:00 +0000</pubDate>
       
