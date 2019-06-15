@@ -17,7 +17,7 @@
       <pubDate>Fri, 05 Apr 2019 00:00:00 +0000</pubDate>
       
       <guid>https://afnan.io/post/2019-04-05-explaining-the-hashed-permutation/</guid>
-      <description>Andrew Kensler, from Pixar, introduced an interesting technique for generating the permutation of an array in his 2013 paper, Correlated Multi-Jittered Sampling.
+      <description>Andrew Kensler, a researcher at Pixar, introduced an interesting technique for generating the permutation of an array in his 2013 paper, Correlated Multi-Jittered Sampling.
 Firstly, let&#39;s look at the naive way of generating a permutation. You construct an array of elements from \(0 \cdots n\), and then you randomly shuffle them. Then, your resulting array (let&#39;s call it A), will have the permuted value for i at A[i].
 from random import shuffle n = 10 permutation = list(range(n)) permutation = shuffle(permutation)  The bright side of this is that it&#39;s really easy to implement and fairly easy to access.</description>
     </item>

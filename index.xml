@@ -17,7 +17,7 @@
       <pubDate>Fri, 05 Apr 2019 00:00:00 +0000</pubDate>
       
       <guid>https://afnan.io/post/2019-04-05-explaining-the-hashed-permutation/</guid>
-      <description>Andrew Kensler, from Pixar, introduced an interesting technique for generating the permutation of an array in his 2013 paper, Correlated Multi-Jittered Sampling.
+      <description>Andrew Kensler, a researcher at Pixar, introduced an interesting technique for generating the permutation of an array in his 2013 paper, Correlated Multi-Jittered Sampling.
 Firstly, let&#39;s look at the naive way of generating a permutation. You construct an array of elements from \(0 \cdots n\), and then you randomly shuffle them. Then, your resulting array (let&#39;s call it A), will have the permuted value for i at A[i].
 from random import shuffle n = 10 permutation = list(range(n)) permutation = shuffle(permutation)  The bright side of this is that it&#39;s really easy to implement and fairly easy to access.</description>
     </item>
@@ -133,10 +133,10 @@ C gives you a lot of access to memory - you can allocate bytes for use in your p
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://afnan.io/about/</guid>
-      <description>My name is Afnan Enayet. I studied Computer Science at Dartmouth College. I went to the College of William and Mary before transferring to Dartmouth.
-I was on the Dartmouth Cycling Team, I play guitar, and I love taking pictures. Check out my pictures on Flickr!
+      <description>My name is Afnan Enayet. I studied Computer Science at Dartmouth College. I was on the Dartmouth Cycling Team, I play guitar, and I love taking pictures. Check out my pictures on Flickr!
 Contact You can reach me at afnan@afnan.io.
-I use PGP keys to sign and encrypt my emails. My public key is probably available on the usual public key servers.</description>
+I use PGP keys to sign and encrypt my emails. My public key is probably available on the usual public key servers. You can also access it here.
+Experience Professional  Incoming software engineer at Blend Labs on the infrastructure team Interned at Capital One doing machine learning work with Payments API team (2018) Interned for Blend Labs on the infrastructure team (2017) Interned at Microsoft on the Windows core quality team (2015)  Academic Works  Orthogonal Array Sampling for Monte Carlo Rendering (accepted EGSR/CGF 2019) Undergraduate thesis: Orthogonal Array Sampling for Monte Carlo Rendering Replacing transistors with nanomagnets for computation (2015)  Research  Currently conducting research with Wojciech Jarosz of Dartmouth&amp;rsquo;s Visual Computing Lab and Pixar, researching potential ways to speed up Monte Carlo rendering using orthogonal arrays.</description>
     </item>
     
     <item>
