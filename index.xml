@@ -156,9 +156,8 @@ Setup Setting up Jekyll is pretty simple - it&#39;s a Ruby gem so you have to in
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://afnan.io/project/</guid>
-      <description>pcg-rs A port of the PCG random number generation library, written in pure Rust.
-weekend-ray-tracer A ray tracer written in Rust, which follows Pete Shirley&amp;rsquo;s book, &amp;ldquo;Ray Tracing in One Weekend.&amp;rdquo; It features multithreading, and (soon to be completed) serialization.
-ensh Ensh stands for &amp;ldquo;Enayet Shell.&amp;rdquo; It is a basic shell written in Rust, designed to be modern and efficient. It is currently a stable viable shell for MacOS and Linux.</description>
+      <description>oars A rust library for orthogonal array generation and verification. It contains constructors for orthogonal arrays as well as functions that can verify whether a given point set is a valid (strong) orthogonal array. Development is currently in progress, as we are currently working on efficiently generating strong orthogonal arrays. The library is available at crates.io.
+pcg-rs A port of the PCG random number generation library, written in pure Rust.</description>
     </item>
     
     <item>
