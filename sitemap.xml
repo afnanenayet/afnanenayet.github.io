@@ -62,11 +62,6 @@
   </url>
   
   <url>
-    <loc>https://afnan.io/post/2018-10-01-using-the-latest-llvm-release-on-macos/</loc>
-    <lastmod>2018-10-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://afnan.io/tags/c/</loc>
     <lastmod>2018-10-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -76,6 +71,11 @@
     <loc>https://afnan.io/tags/c&#43;&#43;/</loc>
     <lastmod>2018-10-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://afnan.io/post/2018-10-01-using-the-latest-llvm-release-on-macos/</loc>
+    <lastmod>2018-10-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
