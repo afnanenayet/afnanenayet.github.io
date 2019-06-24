@@ -224,9 +224,8 @@ are the same, we have a random shuffling of the input set.</p>
 
 <p>In Kensler's paper, he defines a set of operations that are reversible in any
 domain that is a power of 2. Most of these are trivially reversible, and don't
-forget that shifting a number to the left by one bit simply amounts to squaring
-it, and shifting to the right by one bit is the same as taking the truncated
-square root.</p>
+forget that shifting a number to the left by one bit simply amounts to
+multiplying by two, and shifting to the right is the same as dividing by two.</p>
 
 <pre><code class="language-c">hash ^= constant;
 hash *= constant; // if the constant is odd
@@ -314,6 +313,12 @@ such that <span  class="math">\(i \leq x\)</span>. The code gives us <span  clas
 in terms of bits. It takes the leftmost bit, and turns all of the bits to the
 right of the bit to <code>1</code>. If the number is a power of two, then the leftmost bit
 is flipped to a <code>0</code>.</p>
+
+<p>I was curious as to how Kensler actually derived this specific function, so I
+asked him. He told me that he created a program to measure the
+<a href="https://en.wikipedia.org/wiki/Avalanche_effect">avalanching</a>
+properties of the hash function, and they tried a number of hash functions and
+picked the one with the best empirical results.</p>
 
 <p>Using this function gives you a very low overhead way to generate particular
 permutations or shuffles on the fly with <code>O(1)</code> space and time complexity.</p>
