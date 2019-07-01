@@ -169,7 +169,7 @@
       
 
     <h3><a href="/post/introducing-oars/">Introducing oars</a></h3>
-    <h4>A Rust library for handling orthogonal arrays</h4>
+    <h4>June 14, 2019</h4>
     
     <a href="https://afnan.iotags/orthogonal"><kbd class="item-tag">orthogonal</kbd></a>
     
@@ -511,7 +511,7 @@ analogy to the code snippet would be something like:</p>
 my vector was a vector of integers:</p>
 
 <pre><code class="language-rust">fn main() {
-    let v: i32 = vec![0.2, 0.2, 0.2];
+    let v: Vec&lt;i32&gt; = vec![0.2, 0.2, 0.2];
     let sum: f32 = v.into_iter().sum();
     println!(&quot;{}&quot;, sum);
 }
@@ -520,27 +520,13 @@ my vector was a vector of integers:</p>
 <p><code>rustc</code> gives us the following output:</p>
 
 <pre><code class="language-txt">error[E0308]: mismatched types
- --&gt; src/main.rs:2:18
+ --&gt; src/main.rs:2:28
   |
-2 |     let v: i32 = vec![0.2, 0.2, 0.2];
-  |                  ^^^^^^^^^^^^^^^^^^^ expected i32, found struct `std::vec::Vec`
+2 |     let v: Vec&lt;i32&gt; = vec![0.2, 0.2, 0.2];
+  |                            ^^^ expected i32, found floating-point number
   |
   = note: expected type `i32`
-             found type `std::vec::Vec&lt;{float}&gt;`
-  = note: this error originates in a macro outside of the current crate (in Nightly builds, run with -Z external-macro-backtrace for more info)
-
-error[E0599]: no method named `into_iter` found for type `i32` in the current scope
- --&gt; src/main.rs:3:22
-  |
-3 |     let sum: f32 = v.into_iter().sum();
-  |                      ^^^^^^^^^
-  |
-  = note: the method `into_iter` exists but the following trait bounds were not satisfied:
-          `&amp;i32 : std::iter::IntoIterator`
-          `&amp;mut i32 : std::iter::IntoIterator`
-          `i32 : std::iter::IntoIterator`
-
-error: aborting due to 2 previous errors
+             found type `{float}`
 </code></pre>
 
 <p>Or we can specify that the return type should be an integer:</p>
