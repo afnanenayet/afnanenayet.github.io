@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+         
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Introducing oars</title>
+        
+        <style>
+
+  html body {
+      font-family: 'Source Sans Pro', sans-serif;
+      background-color: white;
+      font-size: 150%;
+  }
+
+  :root {
+      --accent: red;
+      --border-width:  5px ;
+  }
+</style>
+
+
+<link rel="stylesheet" href="https://afnan.io/css/main.css">
+
+
+
+
+
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css?family=Source%20Sans%20Pro"
+/>
+<link
+  href="https://fonts.googleapis.com/css?family=Inconsolata&display=swap"
+  rel="stylesheet"
+/>
+
+
+
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/styles/xcode.min.css">
+
+
+
+<link
+  rel="stylesheet"
+  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+  integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+  crossorigin="anonymous"
+/>
+
+
+<link
+  rel="stylesheet"
+  href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+  integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+  crossorigin="anonymous"
+/>
+ 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/highlight.min.js" integrity="sha256-js+I1fdbke/DJrW2qXQlrw7VUEqmdeFeOW37UC0bEiU=" crossorigin="anonymous"></script>
+
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/languages/rust.min.js"></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/languages/cpp.min.js"></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/languages/python.min.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script>
+ <meta name="generator" content="Hugo 0.55.6" />
+        
+
+        
+        
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-57800813-3"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments)};
+          gtag('js', new Date());
+
+          gtag('config', 'UA-57800813-3');
+        </script>
+        
+    </head>
+
+    
+    
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    
+
+    <body>
+         
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    
+                        
+
+                    <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" style="float:right;white-space:nowrap">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                </div>
+
+                <div class="collapse navbar-collapse">
+
+                    
+                        <ul class="nav navbar-nav">
+                            
+                                <li><a href="/">Home</a></li>
+                            
+                                <li><a href="/about/">About</a></li>
+                            
+                                <li><a href="/post/">Posts</a></li>
+                            
+                                <li><a href="/project/">Projects</a></li>
+                            
+                        </ul>
+                    
+
+                    
+                        <ul class="nav navbar-nav navbar-right">
+                            
+                                <li class="navbar-icon"><a href="mailto:afnan@afnan.io"><i class="fa fa-envelope-o"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://github.com/afnanenayet"><i class="fa fa-github"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://www.linkedin.com/in/afnanenayet"><i class="fa fa-linkedin"></i></a></li>
+                            
+                        </ul>
+                    
+
+                </div>
+
+            </div>
+
+        </nav>
+
+
+<main>
+
+    <div class="item">
+
+    
+    
+    
+
+    
+      
+
+    <h3><a href="/post/introducing-oars/">Introducing oars</a></h3>
+    <h4>A Rust library for handling orthogonal arrays</h4>
+    
+    <a href="https://afnan.iotags/orthogonal"><kbd class="item-tag">orthogonal</kbd></a>
+    
+    <a href="https://afnan.iotags/array"><kbd class="item-tag">array</kbd></a>
+    
+    <a href="https://afnan.iotags/rust"><kbd class="item-tag">rust</kbd></a>
+    
+    <a href="https://afnan.iotags/library"><kbd class="item-tag">library</kbd></a>
+    
+    <a href="https://afnan.iotags/monte"><kbd class="item-tag">monte</kbd></a>
+    
+    <a href="https://afnan.iotags/carlo"><kbd class="item-tag">carlo</kbd></a>
+    
+
+</div>
+
+
+    <br> <div class="text-left"><h2 id="the-motivation-behind-oars">The Motivation Behind <code>oars</code></h2>
+
+<p>For a while now, I have been working on a library called
+<a href="https://github.com/afnanenayet/oars">oars</a> (<em>o</em>rthogonal <em>a</em>rrays <em>r</em>u<em>s</em>t).</p>
+
+<p>The need for this library was born out of the work we were doing on my
+Bachelor's <a href="/documents/undergrad_thesis.pdf">thesis</a> and related EGSR
+<a href="https://cs.dartmouth.edu/~wjarosz/publications/jarosz19orthogonal.html">paper</a>.
+The team and I were working on implementing orthogonal array construction
+methods, and using Art Owen's techniques to create point sets from these
+orthogonal arrays that are suitable for Monte Carlo integration. At first, we
+implemented these algorithms and generation methods and relied on code review
+and visualizations to ensure that these points were correct (i.e. valid
+orthogonal arrays). As I attempted to implement more complex methods, I found
+that I was having a more difficult time catching small errors, and that I was
+having a tough time verifying my work in general.  I decided to go ahead and
+create something new that would hopefully help me with my work, and be a little
+more conducive to my workflow.</p>
+
+<h2 id="orthogonal-arrays">Orthogonal Arrays</h2>
+
+<p>You may be wondering what an orthogonal array (OA) actually is. For an in-depth
+read, check out the paper or my thesis. In this post, I'll give a broader
+overview.</p>
+
+<h3 id="experiment-design">Experiment Design</h3>
+
+<p>Suppose you're a scientist that wants to measure the effect of various
+<em>factors</em> on plant growth. We'll say that we are testing out the effects of
+water, sunlight, and fertilizer. For each of these factors, we'll say that
+there are three <em>levels</em> for each factor. Each level can be something like
+none, some, and a lot. So for water, we will test out no water, some water, and
+a lot of water. Extend this to the other factors.</p>
+
+<p>Now that we have these factors and levels set up, how do we design an
+experiment so that we can accurately capture the effects of each combination of
+levels and factors? We could simply try out every single combination of levels
+and factors, but this seems inefficient.</p>
+
+<p>The idea behind orthogonal arrays is that they provide a better way to stage
+experiments, rather than needing us to try every single combination of factors
+for each level, we can try out different configurations that require less
+trials.</p>
+
+<p>First, let's look at an orthogonal array and see how it relates to experiments.</p>
+
+<table class="table table-striped">
+<thead>
+<tr>
+<th>sunlight</th>
+<th>water</th>
+<th>fertilizer</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>0</td>
+<td>2</td>
+<td>2</td>
+</tr>
+
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+</tr>
+
+<tr>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>0</td>
+<td>2</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>1</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+<p>We can interpret this table as the configuration for each trial of the
+experiment. For example, the first trial (the first row of the column),
+dictates that we use no sunlight, water, or fertilizer. The second trial is the
+same except we use some fertilizer, and on and on. Now you may be wondering,
+how do orthogonal arrays get around the issue of having to use every possible
+combination of levels for each factor?</p>
+
+<p>There is a property of orthogonal arrays called <em>strength</em>. The strength of an
+orthogonal array is an integer that must be less than the number of factors.
+For an orthogonal array to have a strength <span  class="table table-striped" class="math">\(t\)</span> means that if you select any <span  class="table table-striped" class="math">\(t\)</span>
+factors in the orthogonal array, you are guaranteed to find every <span  class="table table-striped" class="math">\(t\)</span>-tuple of
+the levels.</p>
+
+<p>Let's break it down even further. Let's suppose <span  class="table table-striped" class="math">\(t=2\)</span>. For our levels, which we
+can define as the set <span  class="table table-striped" class="math">\(\{0, 1, 2\}\)</span>, every 2-tuple consists of the following:</p>
+
+<ul>
+<li><span  class="math">\((0, 0)\)</span></li>
+<li><span  class="math">\((0, 1)\)</span></li>
+<li><span  class="math">\((0, 2)\)</span></li>
+<li><span  class="math">\((1, 0)\)</span></li>
+<li><span  class="math">\((1, 1)\)</span></li>
+<li><span  class="math">\((1, 2)\)</span></li>
+<li><span  class="math">\((2, 0)\)</span></li>
+<li><span  class="math">\((2, 1)\)</span></li>
+<li><span  class="math">\((2, 2)\)</span></li>
+</ul>
+
+<p>This is the same as taking every possible combination of two numbers from the
+set we defined above. Now we can take any 2 columns from the orthogonal array,
+and those two columns will form this complete list. Of course, we can extend
+this all the way up however many factors there are. So for this case, we can
+have <span  class="math">\(t = \{1, 2, 3\}\)</span>.</p>
+
+<p>I mentioned earlier that the purpose of orthogonal arrays is to create
+<em>efficient</em> experiment designs, and we don't want to use every possible
+combination (of which there are <span  class="math">\(s^t\)</span> where <span  class="math">\(s\)</span> is the number of levels and
+<span  class="math">\(t\)</span> is the number of factors), since that leads to many trials, probably more
+than you need. You might realize that when the strength is equal to the number
+of factors, we have exactly that case. In the literature, this is a special
+degenerate case of an orthogonal array referred as a <em>full factorial design</em>.</p>
+
+<h3 id="construction-techniques">Construction Techniques</h3>
+
+<p>So you've got these cool arrays telling you how to conduct scientific
+experiments, now what? Well for one, you may want to know how you can generate
+these arrays. In the literature, many papers are more concerned about the
+existence of orthogonal arrays rather than demonstrating how to construct them.
+Luckily for us, there are two very efficient construction techniques that were
+introduced by Bose and Bush, called the Bose and Bush construction techniques,
+respectively.</p>
+
+<p>Oars provides extremely efficient implementations of these construction
+techniques. They are in-place (meaning that there is very little
+computation/memory overhead), and random access, so each dimension/index of an
+orthogonal array can be generated independently and on-the-fly.</p>
+
+<h3 id="monte-carlo-sampling">Monte Carlo Sampling</h3>
+
+<p>I am going to assume you are familiar with Monte Carlo integration. If you are
+not, there are a lot of resources out on the internet that explain this
+technique in finer detail.</p>
+
+<p>Suppose you want to integrate a function, <span  class="math">\(f(x)\)</span>. It's a really hard function
+to integrate, so you can generate a bunch of random numbers for <span  class="math">\(x\)</span>, evaluate
+<span  class="math">\(f(x)\)</span> for each random input, and then take the average of those numbers to get
+an approximation of the integrand. We can pack this into a nice equation:</p>
+
+<p><span  class="math">\[ \int_0^1 f(x) = \frac{1}{N} \sum_{i = 0}^N f(\bar{x}) \]</span></p>
+
+<p>It looks complicated, but the idea is very simple and intuitive. Of course, you
+may be wondering, what do orthogonal arrays have to do with Monte Carlo
+integration? Well, it turns out the way that we generate these random numbers,
+or our sampling techniques, have a significant effect on how quickly this
+technique converges to the right answer.</p>
+
+<p>If you average more random samples, you'll get a more accurate answer. Using
+more efficient sample techniques means that you start approaching the correct
+answer even faster. Another way to put this is that if we take 100 samples with
+pure random sampling, and 100 samples with a more efficient method, the more
+efficient method will be more accurate. There are several properties for point
+sets that are conducive to efficient Monte Carlo integration, such as
+low-discrepancy and good stratification, which I won't get into in this post.</p>
+
+<p>It turns out that if you take an orthogonal array, and you normalize and
+randomize it, the resulting point set works very well for Monte Carlo
+integration. Art Owen, in his book, provides the equation to transform an
+orthogonal array into a point set ready for Monte Carlo integration, and we
+implement the method in <code>oars</code>.</p>
+
+<h2 id="development">Development</h2>
+
+<p>The API design for <code>oars</code> was heavily inspired by the work that my advisor,
+Wojciech Jarosz, did with his tool SampleView. I liked the way his API was
+designed - it made sense and it was clean. I simplified the generic API for
+orthogonal arrays a little bit, since <code>oars</code> isn't a general purpose Monte
+Carlo sampling library, but specifically geared towards orthogonal arrays.</p>
+
+<p>One of the first reasons I started using Rust in the first place was because
+Rust's testing and benchmarking tools are really easy to use, and provide a
+standardized and ergonomic way to implement testing and benchmarks. This sort
+of easy verification helped me a lot in ensuring that my implementations of
+various orthogonal array construction techniques were not only correct, but
+performant. The testing harnesses made it really easy to sanity check all of my
+implementations, especially during late nights.</p>
+
+<h3 id="numeric-code">Numeric Code</h3>
+
+<p>One of Rust's strong points is its type system and extensive used of generics.
+I wanted my library to be as generic as possible, so I didn't tie my APIs to
+any particular numeric type. If you have done any heavy numeric work in Rust,
+you know how much of a pain this can be. I used the
+<a href="https://github.com/rust-num/num">num</a> crate to help facilitate numeric generic
+traits, but even then, I found the process to be lacking in ergonomics.</p>
+
+<p>Consider the following code snippet in C++:</p>
+
+<pre><code class="language-cpp">&lt;typename T&gt;
+T add_one(T x) {
+    return x + 1;
+}
+</code></pre>
+
+<p>Now compare this to Rust:</p>
+
+<pre><code class="language-rust">// We need to use the num crate to have generic methods over numeric types
+use num::{NumCast, FromPrimitive};
+
+fn add_one&lt;T&gt;(x: T)
+where T: NumCast + FromPrimitive + Copy
+{
+    x + T::from(1).unwrap()
+}
+</code></pre>
+
+<p>While this is a smaller example, we can already see that the Rust code snippet
+is much more verbose. My codebase is littered with a lot of these calls, which
+can be slightly annoying. I understand why Rust has these safeguards in place,
+as there are many small overflow and loss of precision errors that can happen
+when C++ engages in reckless implicit casting. I've been a victim of these
+errors myself, even in this project. All the same, I wonder if there is a more
+ergonomic way we could handle numeric types in Rust and reduce some of the
+boilerplate. There is a good reason for this explicitness. Consider the
+following code snippet in C++, in which I take a vector of <code>float</code>s and try to
+sum over the vector.</p>
+
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;numeric&gt;
+#include &lt;vector&gt;
+
+float sum_vec(const std::vector&lt;float&gt; &amp;v) {
+    return std::accumulate(v.begin(), v.end(), 0);
+}
+
+int main() {
+    std::vector&lt;float&gt; v{0.2, 0.2, 0.2};
+    std::cout &lt;&lt; sum_vec(v) &lt;&lt; std::endl;
+}
+</code></pre>
+
+<p>For those of you who aren't familiar with the <code>accumulate</code> method, it's
+essentially a reduction over an iterable. You can use different accumulation
+methods, such as taking the sum of an iterable or multiplying every element in the
+iterable. The function call takes the beginning and end of an iterable,
+followed up by the initial value. In this case, I used <code>0</code> as my initial value
+because I just want the sum of the vector. So what output would you expect to
+see from this code snippet? <code>0.6</code> right? Wrong! Let's check the output:</p>
+
+<pre><code>0
+</code></pre>
+
+<p>We have fallen victim to implicit type coercion. Let's take a look at the
+actual signature of <code>accumulate</code>:</p>
+
+<pre><code class="language-cpp">template&lt;class InputIt, class T&gt;
+T accumulate(InputIt first, InputIt last, T init);
+</code></pre>
+
+<p>You can see that the return type is the same as the initialization type. If you
+look at our function above, we made a subtle mistake and passed in <code>0</code> as the
+initial value, which is an <code>int</code>, rather than <code>0.0</code>, which is a <code>float</code>. This
+led to the method taking each value, (<code>0.2</code> in this case), turning it into an
+integer, which coerces to <code>0</code>, and adding that repeatedly to the initial value
+of <code>0</code>, which is why the final output was 0.</p>
+
+<p>Here's the corrected version of the function:</p>
+
+<pre><code class="language-cpp">float sum_vec(const std::vector&lt;float&gt; &amp;v) {
+    return std::accumulate(v.begin(), v.end(), 0.0);
+}
+</code></pre>
+
+<p>It's a very small detail, but it's an error I fell victim to and spent far too
+long debugging because it's so subtle.</p>
+
+<p>The Rust analog for the above code is a little different, since Rust provides
+methods on iterators and not methods that take iterators like the STL, so the
+analogy to the code snippet would be something like:</p>
+
+<pre><code class="language-rust">fn main() {
+    let v = vec![0.2, 0.2, 0.2];
+    let sum: f32 = v.into_iter().sum();
+    println!(&quot;{}&quot;, sum);
+}
+</code></pre>
+
+<p>This gives us the expected output: <code>0.6</code>.</p>
+
+<p>Now lets see how Rust handles implicit coercions. Suppose that I specified that
+my vector was a vector of integers:</p>
+
+<pre><code class="language-rust">fn main() {
+    let v: i32 = vec![0.2, 0.2, 0.2];
+    let sum: f32 = v.into_iter().sum();
+    println!(&quot;{}&quot;, sum);
+}
+</code></pre>
+
+<p><code>rustc</code> gives us the following output:</p>
+
+<pre><code class="language-txt">error[E0308]: mismatched types
+ --&gt; src/main.rs:2:18
+  |
+2 |     let v: i32 = vec![0.2, 0.2, 0.2];
+  |                  ^^^^^^^^^^^^^^^^^^^ expected i32, found struct `std::vec::Vec`
+  |
+  = note: expected type `i32`
+             found type `std::vec::Vec&lt;{float}&gt;`
+  = note: this error originates in a macro outside of the current crate (in Nightly builds, run with -Z external-macro-backtrace for more info)
+
+error[E0599]: no method named `into_iter` found for type `i32` in the current scope
+ --&gt; src/main.rs:3:22
+  |
+3 |     let sum: f32 = v.into_iter().sum();
+  |                      ^^^^^^^^^
+  |
+  = note: the method `into_iter` exists but the following trait bounds were not satisfied:
+          `&amp;i32 : std::iter::IntoIterator`
+          `&amp;mut i32 : std::iter::IntoIterator`
+          `i32 : std::iter::IntoIterator`
+
+error: aborting due to 2 previous errors
+</code></pre>
+
+<p>Or we can specify that the return type should be an integer:</p>
+
+<pre><code class="language-rust">fn main() {
+    let v = vec![0.2, 0.2, 0.2];
+    let sum: i32 = v.into_iter().sum();
+    println!(&quot;{}&quot;, sum);
+}
+</code></pre>
+
+<p>This gives us the following error:</p>
+
+<pre><code class="language-txt">error[E0277]: the trait bound `i32: std::iter::Sum&lt;{float}&gt;` is not satisfied
+ --&gt; src/main.rs:3:34
+  |
+3 |     let sum: i32 = v.into_iter().sum();
+  |                                  ^^^ the trait `std::iter::Sum&lt;{float}&gt;` is not implemented for `i32`
+  |
+  = help: the following implementations were found:
+            &lt;i32 as std::iter::Sum&lt;&amp;'a i32&gt;&gt;
+            &lt;i32 as std::iter::Sum&gt;
+
+error: aborting due to previous error
+</code></pre>
+
+<p>Rust's mandated explicitness catches type mismatches that would have been
+implicitly coerced in C++, at the expense of some verbosity (at least with
+generic numerical types).</p>
+
+<h3 id="external-libraries">External Libraries</h3>
+
+<p>One of the biggest pain points I have with C++ development is library
+management. I prefer to use system libraries whenever I can, since I'm on Arch
+and I can easily install pretty much every library I'll ever need, but a lot of
+times when I'm collaborating with people on different platforms, we have to use
+other solutions, like bundling dependencies in tree, or use something like
+<a href="https://conan.io">Conan</a> or <a href="https://github.com/microsoft/vcpkg">vcpkg</a>. While
+both managers are really nice, I have issues with both of them, and not
+everyone always has them available. More often than not, we simply bundle
+dependencies as git submodules.</p>
+
+<p>Rust, on the other hand, has Cargo, which is an excellent package manager. I
+really enjoy how easy it is to add a dependency and link it with your project.
+Cargo feels much saner than <code>cmake</code>, and I don't have to deal with obscure
+linker errors.</p>
+
+<h2 id="the-api">The API</h2>
+
+<p>As I mentioned before, the API for this project was heavily inspired by the
+SampleView program (a program written by Dr. Jarosz to visualize sampling
+points in various dimensions for Monte Carlo integration). For each
+construction method, I have a struct which holds parameters that are filled in
+by the user. There is a trait, <code>OAConstructor</code>, which demarcates structs that
+can generate orthogonal arrays. This trait contains only one function: <code>gen()</code>,
+which returns a valid orthogonal array.  Most of the structs that implement
+this trait will also likely want some sort of verification method that ensures
+that the parameters that users pass in are valid. I didn't create a
+standardized interface for this because I wanted to leave some flexibility for
+the future and for consumers that implement the <code>OAConstructor</code> trait.
+Additionally, our research on orthogonal arrays is still fairly early, so I
+don't actually know what kind of constraints will come up as we discover new
+methods for generating orthogonal arrays.</p>
+
+<h3 id="parallelization">Parallelization</h3>
+
+<p>I also wanted to create a parallel constructor interface, since it seemed
+fairly trivial to convert the Bose and Bush construction methods to utilize
+parallelization. <code>ndarray</code> provides the <code>ndarray-parallel</code> crate, which
+integrates with <code>rayon</code>. I used rayon's parallel iterators to set up
+parallelization with the Bose and Bush methods. These construction methods are
+wrapped in a trait called <code>ParOAConstructor</code>, which provides a generic
+interface for any parallel construction method and can be extended by the user.</p>
+
+<h3 id="stateful-types">Stateful Types</h3>
+
+<p>The implemented constructors in <code>oars</code> have parameters that are passed in as
+structs. The parameters for Bose and Bush are very specific, your base must be
+a prime number, the dimensionality of the resulting point set has to be less
+than the base, and so on. At first, I had the structs implement a
+function, <code>verify(&amp;self) -&gt; bool</code>, that would be called whenever the end user
+tried to generate an orthogonal array. I wasn't a huge fan of this implicit
+behavior, because verifying large prime numbers can be expensive, and on top of
+that, I wanted a more transparent and optional way to do parameter checks.</p>
+
+<p>I learned about stateful types in Rust, and decided to use this principle for
+parameter checking as well. The constructors for OAs have two variants: a
+checked variant and a &quot;direct&quot; variant. The checked variant is simply a struct
+that checks parameters, and upon success, consumes the struct and returns the
+regular constructor, which implements the trait for generating OAs.</p>
+
+<p>The general flow for the verification states is as follows:</p>
+
+<pre><code class="language-rust">impl&lt;T&gt; BoseChecked&lt;T&gt; {
+    verify(self) -&gt; OarsResult&lt;Bose&gt; {
+        // verify things here
+        // ...
+
+        // invalid parameters
+        return OarsError::new(&quot;bad params&quot;);
+
+        // valid parameters
+        Bose {
+            // ...
+        }
+    }
+}
+</code></pre>
+
+<p>What happens here is that the user supplies some values to the struct. This
+method performs some checking, and upon success, the <code>BoseChecked</code> struct is
+consumed so it can't be used anymore, and is replaced by the <code>Bose</code> struct,
+which implements the proper traits so it can generate an orthogonal array. Of
+course, if you don't want to incur the overhead of checking the parameters, you
+are free to just use the <code>Bose</code> struct directly, but improper parameters will
+lead to invalid orthogonal arrays, so it is up to the user to verify their own
+parameters.</p>
+
+<p>The stateful typing system allows for some pretty ergonomic code. The general
+flow for generating orthogonal arrays with checked code goes like this:</p>
+
+<pre><code class="language-rust">let bose = BoseChecked {
+    prime_base: 3,
+    dimensions: 3,
+};
+
+let oa = bose.verify()?.gen()?;
+</code></pre>
+
+<h2 id="resourceslinks">Resources/Links</h2>
+
+<ul>
+<li><a href="https://cs.dartmouth.edu/~wjarosz/publications/jarosz19orthogonal.html">EGSR paper</a></li>
+<li><a href="https://www.cs.dartmouth.edu/~trdata/reports/abstracts/TR2019-872/">Bachelor's thesis</a></li>
+<li><a href="https://docs.rs/oars">Library documentation</a></li>
+<li><a href="https://github.com/afnanenayet/oars">Github link</a></li>
+<li><a href="https://statweb.stanford.edu/~owen/mc/">Art Owen's book</a></li>
+</ul>
+</div>
+
+    
+    
+
+    
+
+    
+
+        <h4 class="page-header">Comments</h4>
+
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "afnanenayet" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+
+</main>
+
+        <footer>
+
+            <p class="copyright text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io">Hugo</a> and <a href="https://github.com/calintat/minimal">Minimal</a></p>
+
+        </footer>
+       
+    </body>
+
+</html>
+

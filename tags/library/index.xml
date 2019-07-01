@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>library on Afnan Enayet</title>
+    <link>https://afnan.io/tags/library/</link>
+    <description>Recent content in library on Afnan Enayet</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 14 Jun 2019 21:47:21 -0400</lastBuildDate>
+    
+	<atom:link href="https://afnan.io/tags/library/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Introducing oars</title>
+      <link>https://afnan.io/post/introducing-oars/</link>
+      <pubDate>Fri, 14 Jun 2019 21:47:21 -0400</pubDate>
+      
+      <guid>https://afnan.io/post/introducing-oars/</guid>
+      <description>The Motivation Behind oars For a while now, I have been working on a library called oars (orthogonal arrays rust).
+The need for this library was born out of the work we were doing on my Bachelor&#39;s thesis and related EGSR paper. The team and I were working on implementing orthogonal array construction methods, and using Art Owen&#39;s techniques to create point sets from these orthogonal arrays that are suitable for Monte Carlo integration.</description>
+    </item>
+    
+  </channel>
+</rss>

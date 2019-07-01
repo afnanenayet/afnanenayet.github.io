@@ -3,14 +3,67 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://afnan.io/post/2019-04-05-explaining-the-hashed-permutation/</loc>
-    <lastmod>2019-04-05T00:00:00+00:00</lastmod>
+    <loc>https://afnan.io/</loc>
+    <lastmod>2019-06-14T21:47:21-04:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://afnan.io/</loc>
-    <lastmod>2019-04-05T00:00:00+00:00</lastmod>
+    <loc>https://afnan.io/post/introducing-oars/</loc>
+    <lastmod>2019-06-14T21:47:21-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://afnan.io/post/</loc>
+    <lastmod>2019-06-14T21:47:21-04:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://afnan.io/tags/</loc>
+    <lastmod>2019-06-14T21:47:21-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://afnan.io/tags/array/</loc>
+    <lastmod>2019-06-14T21:47:21-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://afnan.io/tags/carlo/</loc>
+    <lastmod>2019-06-14T21:47:21-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://afnan.io/tags/library/</loc>
+    <lastmod>2019-06-14T21:47:21-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://afnan.io/tags/monte/</loc>
+    <lastmod>2019-06-14T21:47:21-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://afnan.io/tags/orthogonal/</loc>
+    <lastmod>2019-06-14T21:47:21-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://afnan.io/tags/rust/</loc>
+    <lastmod>2019-06-14T21:47:21-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://afnan.io/post/2019-04-05-explaining-the-hashed-permutation/</loc>
+    <lastmod>2019-04-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -21,18 +74,6 @@
   
   <url>
     <loc>https://afnan.io/tags/kensler/</loc>
-    <lastmod>2019-04-05T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://afnan.io/post/</loc>
-    <lastmod>2019-04-05T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://afnan.io/tags/</loc>
     <lastmod>2019-04-05T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -62,11 +103,6 @@
   </url>
   
   <url>
-    <loc>https://afnan.io/post/2018-10-01-using-the-latest-llvm-release-on-macos/</loc>
-    <lastmod>2018-10-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://afnan.io/tags/c/</loc>
     <lastmod>2018-10-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -76,6 +112,11 @@
     <loc>https://afnan.io/tags/c&#43;&#43;/</loc>
     <lastmod>2018-10-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://afnan.io/post/2018-10-01-using-the-latest-llvm-release-on-macos/</loc>
+    <lastmod>2018-10-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
