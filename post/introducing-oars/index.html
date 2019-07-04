@@ -685,9 +685,9 @@ is checked by the compiler, and has some very strong reflection capabilities. I
 created a derive macro called <code>Checked</code> which automatically creates a copy of a
 struct, but changes its name to be suffixed by <code>Checked</code>. Usage is very simple:</p>
 
-<pre><code class="language-rust">#[derive(Checked)]
-// creates a struct called `BoseChecked` with identical parameters, comments,
+<pre><code class="language-rust">// creates a struct called `BoseChecked` with identical parameters, comments,
 // visibility, etc.
+#[derive(Checked)]
 struct Bose {
     // ...
 }
