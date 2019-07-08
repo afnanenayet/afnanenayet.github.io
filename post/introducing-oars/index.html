@@ -479,7 +479,7 @@ T accumulate(InputIt first, InputIt last, T init);
 
 <p>You can see that the return type is the same as the initialization type. If you
 look at our function above, we made a subtle mistake and passed in <code>0</code> as the
-initial value, which is an <code>int</code>, rather than <code>0.0</code>, which is a <code>float</code>. This
+initial value, which is an <code>int</code>, rather than <code>0.0</code>, which is a <code>double</code>. This
 led to the method taking each value, (<code>0.2</code> in this case), turning it into an
 integer, which coerces to <code>0</code>, and adding that repeatedly to the initial value
 of <code>0</code>, which is why the final output was 0.</p>
@@ -713,6 +713,8 @@ parsing.</p>
 <li><a href="https://github.com/afnanenayet/oars">Github link</a></li>
 <li><a href="https://statweb.stanford.edu/~owen/mc/">Art Owen's book</a></li>
 </ul>
+
+<p><em>Thanks to Zach Misso, Lucy Xiao for pointing out improvements/errata.</em></p>
 </div>
 
     
