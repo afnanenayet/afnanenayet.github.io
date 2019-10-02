@@ -13,10 +13,10 @@
     
     <item>
       <title>Debugging C with GDB and Valgrind</title>
-      <link>https://afnan.io/post/2017-07-29-debugging-c-with-gdb-and-valgrind/</link>
+      <link>https://afnan.io/posts/2017-07-29-debugging-c-with-gdb-and-valgrind/</link>
       <pubDate>Sat, 29 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://afnan.io/post/2017-07-29-debugging-c-with-gdb-and-valgrind/</guid>
+      <guid>https://afnan.io/posts/2017-07-29-debugging-c-with-gdb-and-valgrind/</guid>
       <description>Debugging C can be a chore, but being able to pinpoint your memory leaks with Valgrind and monitoring the flow of your program with GDB (or LLDB) can speed up the development of your code significantly. It&#39;s a significant improvement over sticking a bunch of printf statements in your code and taking them out before production (which should by no means be your sole tool for debugging).
 Setup Installing gdb is pretty easy on both OS X and Linux.</description>
     </item>

@@ -12,10 +12,10 @@
     
     <item>
       <title>Creating a website with GAE, Travis, and Jekyll</title>
-      <link>https://afnan.io/post/2017-07-06-make-a-website/</link>
+      <link>https://afnan.io/posts/2017-07-06-make-a-website/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://afnan.io/post/2017-07-06-make-a-website/</guid>
+      <guid>https://afnan.io/posts/2017-07-06-make-a-website/</guid>
       <description>Recently, I decided that I wanted to change the look of my website. I&#39;m not really a web developer so I wanted a simple setup. I like Markdown, especially the way Github renders markdown documentation.
 Feel free to modify/check out the source for this website.
 Setup Setting up Jekyll is pretty simple - it&#39;s a Ruby gem so you have to install Ruby. I have Homebrew, so it was as simple as</description>

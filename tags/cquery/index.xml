@@ -13,10 +13,10 @@
     
     <item>
       <title>My Neovim Development Setup</title>
-      <link>https://afnan.io/post/2018-04-12-my-neovim-development-setup/</link>
+      <link>https://afnan.io/posts/2018-04-12-my-neovim-development-setup/</link>
       <pubDate>Thu, 12 Apr 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://afnan.io/post/2018-04-12-my-neovim-development-setup/</guid>
+      <guid>https://afnan.io/posts/2018-04-12-my-neovim-development-setup/</guid>
       <description>It&#39;s been a while since I wrote about my Neovim setup. Since my last post, my nvim config has grown to be a little more sophisticated, and I finally worked out autocompletion and linting for all of the languages I work with.
 Here&#39;s what my editor looks like:
 

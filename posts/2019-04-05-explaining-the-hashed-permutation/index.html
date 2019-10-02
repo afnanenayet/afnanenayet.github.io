@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="chrome=1">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="referrer" content="no-referrer">
+        <meta name="description" content="A personal site">
+
+        
+            <link href='https://fonts.googleapis.com/css?family=Open+Sans:400|Old+Standard+TT:400' rel='stylesheet' type='text/css'>
+        
+
+        <link rel="icon" type="image/png" href="/favicon_16x16.png" sizes="16x16">
+        <link rel="icon" type="image/png" href="/favicon_32x32.png" sizes="32x32">
+        <link rel="icon" type="image/png" href="/favicon_128x128.png" sizes="128x128">
+
+        <title>
+            
+            
+                 A Memory and Space Constant Shuffling Algorithm 
+                
+        </title>
+        <link rel="canonical" href="https://afnan.io/posts/2019-04-05-explaining-the-hashed-permutation/">
+
+        <style>
+    * {
+        border: 0;
+        font: inherit;
+        font-size: 100%;
+        vertical-align: baseline;
+        margin: 0;
+        padding: 0;
+        color: black;
+        text-decoration-skip: ink;
+    }
+
+    body {
+        font-family: 'Open Sans', 'Myriad Pro', Myriad, sans-serif;
+        font-size: 17px;
+        line-height: 160%;
+        color: #1d1313;
+        max-width: 700px;
+        margin: auto;
+    }
+
+    p {
+        margin: 20px 0;
+    }
+
+    a img {
+        border: none;
+    }
+
+    img {
+        margin: 10px auto 10px auto;
+        max-width: 100%;
+        display: block;
+    }
+
+    .left-justify {
+        float: left;
+    }
+
+    .right-justify {
+        float: right;
+    }
+
+    pre,
+    code {
+        font: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+        background-color: #f7f7f7;
+    }
+
+    code {
+        padding: 2px;
+    }
+
+    pre {
+        margin-top: 0;
+        margin-bottom: 16px;
+        word-wrap: normal;
+        padding: 16px;
+        overflow: auto;
+        font-size: 85%;
+        line-height: 1.45;
+    }
+
+    pre>code {
+        padding: 0;
+        margin: 0;
+        font-size: 100%;
+        word-break: normal;
+        white-space: pre;
+        background: transparent;
+        border: 0;
+    }
+
+    pre code {
+        display: inline;
+        max-width: auto;
+        padding: 0;
+        margin: 0;
+        overflow: visible;
+        line-height: inherit;
+        word-wrap: normal;
+        background-color: transparent;
+        border: 0;
+    }
+
+    pre code::before,
+    pre code::after {
+        content: normal;
+    }
+
+    em,
+    q,
+    em,
+    dfn {
+        font-style: italic;
+    }
+
+    .sans,
+    html .gist .gist-file .gist-meta {
+        font-family: "Open Sans", "Myriad Pro", Myriad, sans-serif;
+    }
+
+    .mono,
+    pre,
+    code,
+    tt,
+    p code,
+    li code {
+        font-family: Menlo, Monaco, "Andale Mono", "lucida console", "Courier New", monospace;
+    }
+
+    .serif {
+        font-family: "Old Standard TT", serif;
+    }
+
+    strong {
+        font-weight: 600;
+    }
+
+    q:before {
+        content: "\201C";
+    }
+
+    q:after {
+        content: "\201D";
+    }
+
+    del,
+    s {
+        text-decoration: line-through;
+    }
+
+    blockquote {
+        font-family: "Old Standard TT", serif;
+        text-align: center;
+        padding: 50px;
+    }
+
+    blockquote p {
+        display: inline-block;
+        font-style: italic;
+    }
+
+    blockquote:before,
+    blockquote:after {
+        font-family: "Old Standard TT", serif;
+        content: '\201C';
+        font-size: 35px;
+        color: #403c3b;
+    }
+
+    blockquote:after {
+        content: '\201D';
+    }
+
+    hr {
+        width: 40%;
+        height: 1px;
+        background: #403c3b;
+        margin: 25px auto;
+    }
+
+    h1 {
+        font-size: 35px;
+    }
+
+    h2 {
+        font-size: 28px;
+    }
+
+    h3 {
+        font-size: 22px;
+        margin-top: 18px;
+    }
+
+    h1 a,
+    h2 a,
+    h3 a {
+        text-decoration: none;
+    }
+
+    h1,
+    h2 {
+        margin-top: 28px;
+    }
+
+    #sub-header,
+    time {
+        color: #403c3b;
+        font-size: 13px;
+    }
+
+    #sub-header {
+        margin: 0 4px;
+    }
+
+    #nav h1 a {
+        font-size: 35px;
+        color: #1d1313;
+        line-height: 120%;
+    }
+
+    .posts_listing a,
+    #nav a {
+        text-decoration: none;
+    }
+
+    li {
+        margin-left: 20px;
+    }
+
+    ul li {
+        margin-left: 5px;
+    }
+
+    ul li {
+        list-style-type: none;
+    }
+
+    ul li:before {
+        content: "\00BB \0020";
+    }
+
+    #nav ul li:before,
+    .posts_listing li:before {
+        content: '';
+        margin-right: 0;
+    }
+
+    #content {
+        text-align: left;
+        width: 100%;
+        font-size: 15px;
+        padding: 60px 0 80px;
+    }
+
+    #content h1,
+    #content h2 {
+        margin-bottom: 5px;
+    }
+
+    #content h2 {
+        font-size: 25px;
+    }
+
+    #content .entry-content {
+        margin-top: 15px;
+    }
+
+    #content time {
+        margin-left: 3px;
+    }
+
+    #content h1 {
+        font-size: 30px;
+    }
+
+    .highlight {
+        margin: 10px 0;
+    }
+
+    .posts_listing {
+        margin: 0 0 50px;
+    }
+
+    .posts_listing li {
+        margin: 0 0 25px 15px;
+    }
+
+    .posts_listing li a:hover,
+    #nav a:hover {
+        text-decoration: underline;
+    }
+
+    #nav {
+        text-align: center;
+        position: static;
+        margin-top: 60px;
+    }
+
+    #nav ul {
+        display: table;
+        margin: 8px auto 0 auto;
+    }
+
+    #nav li {
+        list-style-type: none;
+        display: table-cell;
+        font-size: 15px;
+        padding: 0 20px;
+    }
+
+    #links {
+        margin: 50px 0 0 0;
+    }
+
+    #links :nth-child(2) {
+        float: right;
+    }
+
+    #not-found {
+        text-align: center;
+    }
+
+    #not-found a {
+        font-family: "Old Standard TT", serif;
+        font-size: 200px;
+        text-decoration: none;
+        display: inline-block;
+        padding-top: 225px;
+    }
+
+    @media (max-width: 750px) {
+        body {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        #nav h1 a {
+            font-size: 28px;
+        }
+
+        #nav li {
+            font-size: 13px;
+            padding: 0 15px;
+        }
+
+        #content {
+            margin-top: 0;
+            padding-top: 50px;
+            font-size: 14px;
+        }
+
+        #content h1 {
+            font-size: 25px;
+        }
+
+        #content h2 {
+            font-size: 22px;
+        }
+
+        .posts_listing li div {
+            font-size: 12px;
+        }
+    }
+
+    @media (max-width: 400px) {
+        body {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        #nav h1 a {
+            font-size: 22px;
+        }
+
+        #nav li {
+            font-size: 12px;
+            padding: 0 10px;
+        }
+
+        #content {
+            margin-top: 0;
+            padding-top: 20px;
+            font-size: 12px;
+        }
+
+        #content h1 {
+            font-size: 20px;
+        }
+
+        #content h2 {
+            font-size: 18px;
+        }
+
+        .posts_listing li div {
+            font-size: 12px;
+        }
+    }
+
+    @media (prefers-color-scheme: dark) {
+
+        *,
+        #nav h1 a {
+            color: #FDFDFD;
+        }
+
+        body {
+            background: #121212;
+        }
+
+        pre,
+        code {
+            background-color: #262626;
+        }
+
+        #sub-header,
+        time {
+            color: #BABABA;
+        }
+
+        hr {
+            background: #EBEBEB;
+        }
+
+        .highlight>pre {
+            background-color: #262626;
+        }
+
+        highlight>pre {
+            background-color: #262626;
+        }
+    }
+
+     
+    .chroma {
+        background-color: #f7f7f7
+    }
+
+    @media (prefers-color-scheme: dark) {
+        .chroma {
+            background-color: #262626
+        }
+    }
+
+     
+    .chroma .err {}
+
+     
+    .chroma .lntd {
+        vertical-align: top;
+        padding: 0;
+        margin: 0;
+        border: 0;
+    }
+
+     
+    .chroma .lntable {
+        border-spacing: 0;
+        padding: 0;
+        margin: 0;
+        border: 0;
+        width: auto;
+        overflow: auto;
+        display: block;
+    }
+
+     
+    .chroma .hl {
+        display: block;
+        width: 100%;
+        background-color: #ffffcc
+    }
+
+     
+    .chroma .lnt {
+        margin-right: 0.4em;
+        padding: 0 0.4em 0 0.4em;
+        color: #7f7f7f
+    }
+
+     
+    .chroma .ln {
+        margin-right: 0.4em;
+        padding: 0 0.4em 0 0.4em;
+        color: #7f7f7f
+    }
+
+     
+    .chroma .k {
+        font-weight: bold
+    }
+
+     
+    .chroma .kc {
+        font-weight: bold
+    }
+
+     
+    .chroma .kd {
+        font-weight: bold
+    }
+
+     
+    .chroma .kn {
+        font-weight: bold
+    }
+
+     
+    .chroma .kp {}
+
+     
+    .chroma .kr {
+        font-weight: bold
+    }
+
+     
+    .chroma .kt {}
+
+     
+    .chroma .nc {
+        font-weight: bold
+    }
+
+     
+    .chroma .ni {
+        font-weight: bold
+    }
+
+     
+    .chroma .ne {
+        font-weight: bold
+    }
+
+     
+    .chroma .nn {
+        font-weight: bold
+    }
+
+     
+    .chroma .nt {
+        font-weight: bold
+    }
+
+     
+    .chroma .sa {
+        font-style: italic
+    }
+
+     
+    .chroma .sb {
+        font-style: italic
+    }
+
+     
+    .chroma .sc {
+        font-style: italic
+    }
+
+     
+    .chroma .dl {
+        font-style: italic
+    }
+
+     
+    .chroma .sd {
+        font-style: italic
+    }
+
+     
+    .chroma .s2 {
+        font-style: italic
+    }
+
+     
+    .chroma .se {
+        font-weight: bold;
+    }
+
+     
+    .chroma .sh {
+        font-style: italic
+    }
+
+     
+    .chroma .si {
+        font-weight: bold;
+        font-style: italic
+    }
+
+     
+    .chroma .sx {
+        font-style: italic
+    }
+
+     
+    .chroma .sr {
+        font-style: italic
+    }
+
+     
+    .chroma .s1 {
+        font-style: italic
+    }
+
+     
+    .chroma .ss {
+        font-style: italic
+    }
+
+     
+    .chroma .ow {
+        font-weight: bold
+    }
+
+     
+    .chroma .c {
+        font-style: italic
+    }
+
+     
+    .chroma .ch {
+        font-style: italic
+    }
+
+     
+    .chroma .cm {
+        font-style: italic
+    }
+
+     
+    .chroma .c1 {
+        font-style: italic
+    }
+
+     
+    .chroma .cs {
+        font-style: italic
+    }
+
+     
+    .chroma .cp {}
+
+     
+    .chroma .cpf {}
+
+     
+    .chroma .ge {
+        font-style: italic
+    }
+
+     
+    .chroma .gh {
+        font-weight: bold
+    }
+
+     
+    .chroma .gp {
+        font-weight: bold
+    }
+
+     
+    .chroma .gs {
+        font-weight: bold
+    }
+
+     
+    .chroma .gu {
+        font-weight: bold
+    }
+</style>
+
+
+        
+
+        
+            
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+
+
+        
+    </head>
+
+    <body>
+        <section id=nav>
+            <h1><a href="/">Afnan Enayet</a></h1>
+            <ul>
+                
+                    <li><a href="/">Home</a></li>
+                
+                    <li><a href="/about/">About</a></li>
+                
+                    <li><a href="/">Posts</a></li>
+                
+                    <li><a href="/project/">Projects</a></li>
+                
+            </ul>
+        </section>
+
+
+<section id=content>
+  <h1> A Memory and Space Constant Shuffling Algorithm </h1>
+
+  
+    <div id=sub-header>
+      April 2019 · 5 minute read
+    </div>
+  
+
+  <div class="entry-content">
+    <p>Andrew Kensler, a researcher at Pixar, introduced an interesting technique for
+generating the permutation of an array in his 2013 paper,
+<a href="https://graphics.pixar.com/library/MultiJitteredSampling/paper.pdf">Correlated Multi-Jittered Sampling</a>.</p>
+
+<p>Firstly, let's look at the naive way of generating a permutation. You construct
+an array of elements from <span  class="math">\(0 \cdots n\)</span>, and then you randomly shuffle them.
+Then, your resulting array (let's call it <code>A</code>), will have the permuted value
+for <code>i</code> at <code>A[i]</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">shuffle</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="n">permutation</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+<span class="n">permutation</span> <span class="o">=</span> <span class="n">shuffle</span><span class="p">(</span><span class="n">permutation</span><span class="p">)</span></code></pre></div>
+<p>The bright side of this is that it's really easy to implement and fairly easy
+to access. You simply subscript the array at whichever number you want to
+permute and you get the permutation for that number. The downside is that it's
+<code>O(n)</code> for space complexity and <code>O(n)</code> for time complexity. At the very
+least, you need to create an array of <code>n</code> elements, yielding an <code>O(n)</code> space
+complexity, and then generate the array, which is <code>O(n)</code> time, and then shuffle
+the array, which is also <code>O(n)</code> with the Fisher-Yates algorithm, which the
+<code>shuffle</code> method from Python uses.</p>
+
+<p>Kensler's paper introduces a way to turn this into <code>O(1)</code> for both space and
+time through some clever hashing techniques. He mentions some prior work in AES
+which uses hashed permutations, and notes that any hash function that is
+reversible must be a permutation so long as it remains within a defined domain.
+Why? Consider that a hash is (ideally) a 1-1 mapping of elements. If we are
+constrained to a domain, then that means that every element in a domain maps to
+another element within the domain, and thus we end up with a unique mapping of
+elements to other elements. Because the domain of the input set and output set
+are the same, we have a random shuffling of the input set.</p>
+
+<p>In Kensler's paper, he defines a set of operations that are reversible in any
+domain that is a power of 2. Most of these are trivially reversible, and don't
+forget that shifting a number to the left by one bit simply amounts to
+multiplying by two, and shifting to the right is the same as dividing by two.</p>
+<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="n">hash</span> <span class="o">^=</span> <span class="n">constant</span><span class="p">;</span>
+<span class="n">hash</span> <span class="o">*=</span> <span class="n">constant</span><span class="p">;</span> <span class="c1">// if the constant is odd
+</span><span class="c1"></span><span class="n">hash</span> <span class="o">+=</span> <span class="n">constant</span><span class="p">;</span>
+<span class="n">hash</span> <span class="o">-=</span> <span class="n">constant</span><span class="p">;</span>
+<span class="n">hash</span> <span class="o">^=</span> <span class="n">hash</span> <span class="o">&gt;&gt;</span> <span class="n">constant</span><span class="p">;</span>
+<span class="n">hash</span> <span class="o">^=</span> <span class="n">hash</span> <span class="o">&lt;&lt;</span> <span class="n">constant</span><span class="p">;</span>
+<span class="n">hash</span> <span class="o">+=</span> <span class="n">hash</span> <span class="o">&lt;&lt;</span> <span class="n">constant</span><span class="p">;</span>
+<span class="n">hash</span> <span class="o">-=</span> <span class="n">hash</span> <span class="o">&lt;&lt;</span> <span class="n">constant</span><span class="p">;</span>
+<span class="n">hash</span> <span class="o">=</span> <span class="p">(</span><span class="n">hash</span> <span class="o">&lt;&lt;</span> <span class="n">constant</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">hash</span> <span class="o">&gt;&gt;</span> <span class="n">wordsize_constant</span><span class="p">);</span></code></pre></div>
+<p>Of course, you may be a little put off by the constraint that the domain must
+be a power of two, but Kensler shows how we can mitigate that to operate within
+arbitrary domains using cycle walking. Cycle walking is a technique in
+cryptography where you basically just repeatedly encrypt information until it
+falls within an acceptable range. In this case, we can continue applying
+permutations to a number until it falls within the proper range.</p>
+
+<p>Let's take a look at the actual permutation function.</p>
+<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="cm">/*!
+</span><span class="cm"> * \brief Permute a number
+</span><span class="cm"> *
+</span><span class="cm"> * \param i The number to permute/the index of the permutation vector
+</span><span class="cm"> * \param l The desired size of the permutation vector
+</span><span class="cm"> * \param p The seed of the shuffle
+</span><span class="cm"> */</span>
+<span class="kt">unsigned</span> <span class="nf">permute</span><span class="p">(</span><span class="kt">unsigned</span> <span class="n">i</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="n">l</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="n">p</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kt">unsigned</span> <span class="n">w</span> <span class="o">=</span> <span class="n">l</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="n">w</span> <span class="o">|=</span> <span class="n">w</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="n">w</span> <span class="o">|=</span> <span class="n">w</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="n">w</span> <span class="o">|=</span> <span class="n">w</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">;</span>
+  <span class="n">w</span> <span class="o">|=</span> <span class="n">w</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">;</span>
+  <span class="n">w</span> <span class="o">|=</span> <span class="n">w</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">;</span>
+
+  <span class="k">do</span> <span class="p">{</span>
+    <span class="n">i</span> <span class="o">^=</span> <span class="n">p</span><span class="p">;</span>
+    <span class="n">i</span> <span class="o">*=</span> <span class="mh">0xe170893d</span><span class="p">;</span>
+    <span class="n">i</span> <span class="o">^=</span> <span class="n">p</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">;</span>
+    <span class="n">i</span> <span class="o">^=</span> <span class="p">(</span><span class="n">i</span> <span class="o">&amp;</span> <span class="n">w</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">;</span>
+    <span class="n">i</span> <span class="o">^=</span> <span class="n">p</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">;</span>
+    <span class="n">i</span> <span class="o">*=</span> <span class="mh">0x0929eb3f</span><span class="p">;</span>
+    <span class="n">i</span> <span class="o">^=</span> <span class="n">p</span> <span class="o">&gt;&gt;</span> <span class="mi">23</span><span class="p">;</span>
+    <span class="n">i</span> <span class="o">^=</span> <span class="p">(</span><span class="n">i</span> <span class="o">&amp;</span> <span class="n">w</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">i</span> <span class="o">*=</span> <span class="mi">1</span> <span class="o">|</span> <span class="n">p</span> <span class="o">&gt;&gt;</span> <span class="mi">27</span><span class="p">;</span>
+    <span class="n">i</span> <span class="o">*=</span> <span class="mh">0x6935fa69</span><span class="p">;</span>
+    <span class="n">i</span> <span class="o">^=</span> <span class="p">(</span><span class="n">i</span> <span class="o">&amp;</span> <span class="n">w</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">11</span><span class="p">;</span>
+    <span class="n">i</span> <span class="o">*=</span> <span class="mh">0x74dcb303</span><span class="p">;</span>
+    <span class="n">i</span> <span class="o">^=</span> <span class="p">(</span><span class="n">i</span> <span class="o">&amp;</span> <span class="n">w</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="n">i</span> <span class="o">*=</span> <span class="mh">0x9e501cc3</span><span class="p">;</span>
+    <span class="n">i</span> <span class="o">^=</span> <span class="p">(</span><span class="n">i</span> <span class="o">&amp;</span> <span class="n">w</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="n">i</span> <span class="o">*=</span> <span class="mh">0xc860a3df</span><span class="p">;</span>
+    <span class="n">i</span> <span class="o">&amp;=</span> <span class="n">w</span><span class="p">;</span>
+    <span class="n">i</span> <span class="o">^=</span> <span class="n">i</span> <span class="o">&gt;&gt;</span> <span class="mi">5</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="n">l</span><span class="p">);</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">p</span><span class="p">)</span> <span class="o">%</span> <span class="n">l</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+<p><em>This was taken from Kensler's paper, the comments added to explain the
+function signature are mine.</em></p>
+
+<p>This looks rather daunting, with a lot of bitwise operations, but remember that
+the entire thing is comprised of operations we just discussed are being
+reversible. This means that this is a hash operation that is a permutation, so
+each number will unique map to another number within the smallest power of two
+domain that is larger than <code>l</code>.</p>
+
+<p>The body of the function inside of the do-while loop is basically just applying
+a permuted hash repeatedly until our number is within the domain, which we
+define with <code>l</code>. <code>p</code> can be more or less treated as a random seed, it lets us
+apply some arbitrary offset which retaining the uniqueness property of a
+permutation. It's fairly self explanatory: apply some offset and modulo it
+within the domain of <span  class="math">\(0 \cdots l\)</span>, and because the input domain is the same
+as the output domain, we retain the 1-1 mapping and always get a proper
+permutation.</p>
+
+<p>You may also be wondering what's going on with <code>w</code> operations before the for
+loop. The algorithm takes <code>i</code> and returns the greatest number in the domain
+that is less than a power of two. The &quot;actual&quot; domains in this case are powers
+of two, and this operation yields the highest number that falls within that
+domain. So if we have some number <span  class="math">\(i\)</span>, find the smallest number of two <span  class="math">\(x\)</span>
+such that <span  class="math">\(i \leq x\)</span>. The code gives us <span  class="math">\(x - 1\)</span>. We can also explain this
+in terms of bits. It takes the leftmost bit, and turns all of the bits to the
+right of the bit to <code>1</code>. If the number is a power of two, then the leftmost bit
+is flipped to a <code>0</code>.</p>
+
+<p>I was curious as to how Kensler actually derived this specific function, so I
+asked him. He told me that he created a program to measure the
+<a href="https://en.wikipedia.org/wiki/Avalanche_effect">avalanching</a>
+properties of the hash function, and they tried a number of hash functions and
+picked the one with the best empirical results.</p>
+
+<p>Using this function gives you a very low overhead way to generate particular
+permutations or shuffles on the fly with <code>O(1)</code> space and time complexity.</p>
+
+  </div>
+
+  <div id=links>
+    
+      <a class="basic-alignment left" href="https://afnan.io/posts/2018-10-01-using-the-latest-llvm-release-on-macos/">&laquo; Using the Latest LLVM Release on MacOS</a>
+    
+    
+      <a class="basic-alignment left" href="https://afnan.io/posts/introducing-oars/">Introducing oars &raquo;</a>
+    
+  </div>
+</section>
+
+    
+</body>
+</html>
+

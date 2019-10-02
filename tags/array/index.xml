@@ -13,10 +13,10 @@
     
     <item>
       <title>Introducing oars</title>
-      <link>https://afnan.io/post/introducing-oars/</link>
+      <link>https://afnan.io/posts/introducing-oars/</link>
       <pubDate>Fri, 14 Jun 2019 21:47:21 -0400</pubDate>
       
-      <guid>https://afnan.io/post/introducing-oars/</guid>
+      <guid>https://afnan.io/posts/introducing-oars/</guid>
       <description>The Motivation Behind oars For a while now, I have been working on a library called oars (orthogonal arrays rust).
 The need for this library was born out of the work we were doing on my Bachelor&#39;s thesis and related EGSR paper. The team and I were working on implementing orthogonal array construction methods, and using Art Owen&#39;s techniques to create point sets from these orthogonal arrays that are suitable for Monte Carlo integration.</description>
     </item>

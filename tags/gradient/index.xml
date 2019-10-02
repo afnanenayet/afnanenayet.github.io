@@ -13,10 +13,10 @@
     
     <item>
       <title>Explaining Gradient Descent</title>
-      <link>https://afnan.io/post/2017-09-28-explaining-gradient-descent/</link>
+      <link>https://afnan.io/posts/2017-09-28-explaining-gradient-descent/</link>
       <pubDate>Thu, 28 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://afnan.io/post/2017-09-28-explaining-gradient-descent/</guid>
+      <guid>https://afnan.io/posts/2017-09-28-explaining-gradient-descent/</guid>
       <description>A classic statistics problem In machine learning, problems are often framed as optimization problems. For example, let us take one of the simplest applications of supervised learning: the linear regression. It&#39;s conceptually an easy problem - given a set of data points, create a function \( f = ax + b \) that best approximates these points. If you ever took statistics or have used excel, this is the line of best fit.</description>
     </item>
     

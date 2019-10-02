@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="chrome=1">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="referrer" content="no-referrer">
+        <meta name="description" content="A personal site">
+
+        
+            <link href='https://fonts.googleapis.com/css?family=Open+Sans:400|Old+Standard+TT:400' rel='stylesheet' type='text/css'>
+        
+
+        <link rel="icon" type="image/png" href="/favicon_16x16.png" sizes="16x16">
+        <link rel="icon" type="image/png" href="/favicon_32x32.png" sizes="32x32">
+        <link rel="icon" type="image/png" href="/favicon_128x128.png" sizes="128x128">
+
+        <title>
+            
+            
+                 Introducing oars 
+                
+        </title>
+        <link rel="canonical" href="https://afnan.io/posts/introducing-oars/">
+
+        <style>
+    * {
+        border: 0;
+        font: inherit;
+        font-size: 100%;
+        vertical-align: baseline;
+        margin: 0;
+        padding: 0;
+        color: black;
+        text-decoration-skip: ink;
+    }
+
+    body {
+        font-family: 'Open Sans', 'Myriad Pro', Myriad, sans-serif;
+        font-size: 17px;
+        line-height: 160%;
+        color: #1d1313;
+        max-width: 700px;
+        margin: auto;
+    }
+
+    p {
+        margin: 20px 0;
+    }
+
+    a img {
+        border: none;
+    }
+
+    img {
+        margin: 10px auto 10px auto;
+        max-width: 100%;
+        display: block;
+    }
+
+    .left-justify {
+        float: left;
+    }
+
+    .right-justify {
+        float: right;
+    }
+
+    pre,
+    code {
+        font: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+        background-color: #f7f7f7;
+    }
+
+    code {
+        padding: 2px;
+    }
+
+    pre {
+        margin-top: 0;
+        margin-bottom: 16px;
+        word-wrap: normal;
+        padding: 16px;
+        overflow: auto;
+        font-size: 85%;
+        line-height: 1.45;
+    }
+
+    pre>code {
+        padding: 0;
+        margin: 0;
+        font-size: 100%;
+        word-break: normal;
+        white-space: pre;
+        background: transparent;
+        border: 0;
+    }
+
+    pre code {
+        display: inline;
+        max-width: auto;
+        padding: 0;
+        margin: 0;
+        overflow: visible;
+        line-height: inherit;
+        word-wrap: normal;
+        background-color: transparent;
+        border: 0;
+    }
+
+    pre code::before,
+    pre code::after {
+        content: normal;
+    }
+
+    em,
+    q,
+    em,
+    dfn {
+        font-style: italic;
+    }
+
+    .sans,
+    html .gist .gist-file .gist-meta {
+        font-family: "Open Sans", "Myriad Pro", Myriad, sans-serif;
+    }
+
+    .mono,
+    pre,
+    code,
+    tt,
+    p code,
+    li code {
+        font-family: Menlo, Monaco, "Andale Mono", "lucida console", "Courier New", monospace;
+    }
+
+    .serif {
+        font-family: "Old Standard TT", serif;
+    }
+
+    strong {
+        font-weight: 600;
+    }
+
+    q:before {
+        content: "\201C";
+    }
+
+    q:after {
+        content: "\201D";
+    }
+
+    del,
+    s {
+        text-decoration: line-through;
+    }
+
+    blockquote {
+        font-family: "Old Standard TT", serif;
+        text-align: center;
+        padding: 50px;
+    }
+
+    blockquote p {
+        display: inline-block;
+        font-style: italic;
+    }
+
+    blockquote:before,
+    blockquote:after {
+        font-family: "Old Standard TT", serif;
+        content: '\201C';
+        font-size: 35px;
+        color: #403c3b;
+    }
+
+    blockquote:after {
+        content: '\201D';
+    }
+
+    hr {
+        width: 40%;
+        height: 1px;
+        background: #403c3b;
+        margin: 25px auto;
+    }
+
+    h1 {
+        font-size: 35px;
+    }
+
+    h2 {
+        font-size: 28px;
+    }
+
+    h3 {
+        font-size: 22px;
+        margin-top: 18px;
+    }
+
+    h1 a,
+    h2 a,
+    h3 a {
+        text-decoration: none;
+    }
+
+    h1,
+    h2 {
+        margin-top: 28px;
+    }
+
+    #sub-header,
+    time {
+        color: #403c3b;
+        font-size: 13px;
+    }
+
+    #sub-header {
+        margin: 0 4px;
+    }
+
+    #nav h1 a {
+        font-size: 35px;
+        color: #1d1313;
+        line-height: 120%;
+    }
+
+    .posts_listing a,
+    #nav a {
+        text-decoration: none;
+    }
+
+    li {
+        margin-left: 20px;
+    }
+
+    ul li {
+        margin-left: 5px;
+    }
+
+    ul li {
+        list-style-type: none;
+    }
+
+    ul li:before {
+        content: "\00BB \0020";
+    }
+
+    #nav ul li:before,
+    .posts_listing li:before {
+        content: '';
+        margin-right: 0;
+    }
+
+    #content {
+        text-align: left;
+        width: 100%;
+        font-size: 15px;
+        padding: 60px 0 80px;
+    }
+
+    #content h1,
+    #content h2 {
+        margin-bottom: 5px;
+    }
+
+    #content h2 {
+        font-size: 25px;
+    }
+
+    #content .entry-content {
+        margin-top: 15px;
+    }
+
+    #content time {
+        margin-left: 3px;
+    }
+
+    #content h1 {
+        font-size: 30px;
+    }
+
+    .highlight {
+        margin: 10px 0;
+    }
+
+    .posts_listing {
+        margin: 0 0 50px;
+    }
+
+    .posts_listing li {
+        margin: 0 0 25px 15px;
+    }
+
+    .posts_listing li a:hover,
+    #nav a:hover {
+        text-decoration: underline;
+    }
+
+    #nav {
+        text-align: center;
+        position: static;
+        margin-top: 60px;
+    }
+
+    #nav ul {
+        display: table;
+        margin: 8px auto 0 auto;
+    }
+
+    #nav li {
+        list-style-type: none;
+        display: table-cell;
+        font-size: 15px;
+        padding: 0 20px;
+    }
+
+    #links {
+        margin: 50px 0 0 0;
+    }
+
+    #links :nth-child(2) {
+        float: right;
+    }
+
+    #not-found {
+        text-align: center;
+    }
+
+    #not-found a {
+        font-family: "Old Standard TT", serif;
+        font-size: 200px;
+        text-decoration: none;
+        display: inline-block;
+        padding-top: 225px;
+    }
+
+    @media (max-width: 750px) {
+        body {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        #nav h1 a {
+            font-size: 28px;
+        }
+
+        #nav li {
+            font-size: 13px;
+            padding: 0 15px;
+        }
+
+        #content {
+            margin-top: 0;
+            padding-top: 50px;
+            font-size: 14px;
+        }
+
+        #content h1 {
+            font-size: 25px;
+        }
+
+        #content h2 {
+            font-size: 22px;
+        }
+
+        .posts_listing li div {
+            font-size: 12px;
+        }
+    }
+
+    @media (max-width: 400px) {
+        body {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        #nav h1 a {
+            font-size: 22px;
+        }
+
+        #nav li {
+            font-size: 12px;
+            padding: 0 10px;
+        }
+
+        #content {
+            margin-top: 0;
+            padding-top: 20px;
+            font-size: 12px;
+        }
+
+        #content h1 {
+            font-size: 20px;
+        }
+
+        #content h2 {
+            font-size: 18px;
+        }
+
+        .posts_listing li div {
+            font-size: 12px;
+        }
+    }
+
+    @media (prefers-color-scheme: dark) {
+
+        *,
+        #nav h1 a {
+            color: #FDFDFD;
+        }
+
+        body {
+            background: #121212;
+        }
+
+        pre,
+        code {
+            background-color: #262626;
+        }
+
+        #sub-header,
+        time {
+            color: #BABABA;
+        }
+
+        hr {
+            background: #EBEBEB;
+        }
+
+        .highlight>pre {
+            background-color: #262626;
+        }
+
+        highlight>pre {
+            background-color: #262626;
+        }
+    }
+
+     
+    .chroma {
+        background-color: #f7f7f7
+    }
+
+    @media (prefers-color-scheme: dark) {
+        .chroma {
+            background-color: #262626
+        }
+    }
+
+     
+    .chroma .err {}
+
+     
+    .chroma .lntd {
+        vertical-align: top;
+        padding: 0;
+        margin: 0;
+        border: 0;
+    }
+
+     
+    .chroma .lntable {
+        border-spacing: 0;
+        padding: 0;
+        margin: 0;
+        border: 0;
+        width: auto;
+        overflow: auto;
+        display: block;
+    }
+
+     
+    .chroma .hl {
+        display: block;
+        width: 100%;
+        background-color: #ffffcc
+    }
+
+     
+    .chroma .lnt {
+        margin-right: 0.4em;
+        padding: 0 0.4em 0 0.4em;
+        color: #7f7f7f
+    }
+
+     
+    .chroma .ln {
+        margin-right: 0.4em;
+        padding: 0 0.4em 0 0.4em;
+        color: #7f7f7f
+    }
+
+     
+    .chroma .k {
+        font-weight: bold
+    }
+
+     
+    .chroma .kc {
+        font-weight: bold
+    }
+
+     
+    .chroma .kd {
+        font-weight: bold
+    }
+
+     
+    .chroma .kn {
+        font-weight: bold
+    }
+
+     
+    .chroma .kp {}
+
+     
+    .chroma .kr {
+        font-weight: bold
+    }
+
+     
+    .chroma .kt {}
+
+     
+    .chroma .nc {
+        font-weight: bold
+    }
+
+     
+    .chroma .ni {
+        font-weight: bold
+    }
+
+     
+    .chroma .ne {
+        font-weight: bold
+    }
+
+     
+    .chroma .nn {
+        font-weight: bold
+    }
+
+     
+    .chroma .nt {
+        font-weight: bold
+    }
+
+     
+    .chroma .sa {
+        font-style: italic
+    }
+
+     
+    .chroma .sb {
+        font-style: italic
+    }
+
+     
+    .chroma .sc {
+        font-style: italic
+    }
+
+     
+    .chroma .dl {
+        font-style: italic
+    }
+
+     
+    .chroma .sd {
+        font-style: italic
+    }
+
+     
+    .chroma .s2 {
+        font-style: italic
+    }
+
+     
+    .chroma .se {
+        font-weight: bold;
+    }
+
+     
+    .chroma .sh {
+        font-style: italic
+    }
+
+     
+    .chroma .si {
+        font-weight: bold;
+        font-style: italic
+    }
+
+     
+    .chroma .sx {
+        font-style: italic
+    }
+
+     
+    .chroma .sr {
+        font-style: italic
+    }
+
+     
+    .chroma .s1 {
+        font-style: italic
+    }
+
+     
+    .chroma .ss {
+        font-style: italic
+    }
+
+     
+    .chroma .ow {
+        font-weight: bold
+    }
+
+     
+    .chroma .c {
+        font-style: italic
+    }
+
+     
+    .chroma .ch {
+        font-style: italic
+    }
+
+     
+    .chroma .cm {
+        font-style: italic
+    }
+
+     
+    .chroma .c1 {
+        font-style: italic
+    }
+
+     
+    .chroma .cs {
+        font-style: italic
+    }
+
+     
+    .chroma .cp {}
+
+     
+    .chroma .cpf {}
+
+     
+    .chroma .ge {
+        font-style: italic
+    }
+
+     
+    .chroma .gh {
+        font-weight: bold
+    }
+
+     
+    .chroma .gp {
+        font-weight: bold
+    }
+
+     
+    .chroma .gs {
+        font-weight: bold
+    }
+
+     
+    .chroma .gu {
+        font-weight: bold
+    }
+</style>
+
+
+        
+
+        
+            
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+
+
+        
+    </head>
+
+    <body>
+        <section id=nav>
+            <h1><a href="/">Afnan Enayet</a></h1>
+            <ul>
+                
+                    <li><a href="/">Home</a></li>
+                
+                    <li><a href="/about/">About</a></li>
+                
+                    <li><a href="/">Posts</a></li>
+                
+                    <li><a href="/project/">Projects</a></li>
+                
+            </ul>
+        </section>
+
+
+<section id=content>
+  <h1> Introducing oars </h1>
+
+  
+    <div id=sub-header>
+      June 2019 · 15 minute read
+    </div>
+  
+
+  <div class="entry-content">
+    <h2 id="the-motivation-behind-oars">The Motivation Behind <code>oars</code></h2>
+
+<p>For a while now, I have been working on a library called
+<a href="https://github.com/afnanenayet/oars">oars</a> (<em>o</em>rthogonal <em>a</em>rrays <em>r</em>u<em>s</em>t).</p>
+
+<p>The need for this library was born out of the work we were doing on my
+Bachelor's <a href="/documents/undergrad_thesis.pdf">thesis</a> and related EGSR
+<a href="https://cs.dartmouth.edu/~wjarosz/publications/jarosz19orthogonal.html">paper</a>.
+The team and I were working on implementing orthogonal array construction
+methods, and using Art Owen's techniques to create point sets from these
+orthogonal arrays that are suitable for Monte Carlo integration. At first, we
+implemented these algorithms and generation methods and relied on code review
+and visualizations to ensure that these points were correct (i.e. valid
+orthogonal arrays). As I attempted to implement more complex methods, I found
+that I was having a more difficult time catching small errors, and that I was
+having a tough time verifying my work in general.  I decided to go ahead and
+create something new that would hopefully help me with my work, and be a little
+more conducive to my workflow.</p>
+
+<h2 id="orthogonal-arrays">Orthogonal Arrays</h2>
+
+<p>You may be wondering what an orthogonal array (OA) actually is. For an in-depth
+read, check out the paper or my <a href="/documents/undergrad_thesis.pdf">thesis</a>. In
+this post, I'll give a broader overview.</p>
+
+<h3 id="experiment-design">Experiment Design</h3>
+
+<p>Suppose you're a scientist that wants to measure the effect of various
+<em>factors</em> on plant growth. We'll say that we are testing out the effects of
+water, sunlight, and fertilizer. For each of these factors, we'll say that
+there are three <em>levels</em> for each factor. Each level can be something like
+none, some, and a lot. So for water, we will test out no water, some water, and
+a lot of water. Extend this to the other factors.</p>
+
+<p>Now that we have these factors and levels set up, how do we design an
+experiment so that we can accurately capture the effects of each combination of
+levels and factors? We could simply try out every single combination of levels
+and factors, but this seems inefficient.</p>
+
+<p>The idea behind orthogonal arrays is that they provide a better way to stage
+experiments, rather than needing us to try every single combination of factors
+for each level, we can try out different configurations that require less
+trials.</p>
+
+<p>First, let's look at an orthogonal array and see how it relates to experiments.</p>
+
+<table class="table table-striped">
+<thead>
+<tr>
+<th>sunlight</th>
+<th>water</th>
+<th>fertilizer</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>0</td>
+<td>2</td>
+<td>2</td>
+</tr>
+
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+</tr>
+
+<tr>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>0</td>
+<td>2</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>1</td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+<p>We can interpret this table as the configuration for each trial of the
+experiment. For example, the first trial (the first row of the column),
+dictates that we use no sunlight, water, or fertilizer. The second trial is the
+same except we use some fertilizer, and on and on. Now you may be wondering,
+how do orthogonal arrays get around the issue of having to use every possible
+combination of levels for each factor?</p>
+
+<p>There is a property of orthogonal arrays called <em>strength</em>. The strength of an
+orthogonal array is an integer that must be less than the number of factors.
+For an orthogonal array to have a strength <span  class="table table-striped" class="math">\(t\)</span> means that if you select any <span  class="table table-striped" class="math">\(t\)</span>
+factors in the orthogonal array, you are guaranteed to find every <span  class="table table-striped" class="math">\(t\)</span>-tuple of
+the levels.</p>
+
+<p>Let's break it down even further. Let's suppose <span  class="table table-striped" class="math">\(t=2\)</span>. For our levels, which we
+can define as the set <span  class="table table-striped" class="math">\(\{0, 1, 2\}\)</span>, every 2-tuple consists of the following:</p>
+
+<ul>
+<li><span  class="math">\((0, 0)\)</span></li>
+<li><span  class="math">\((0, 1)\)</span></li>
+<li><span  class="math">\((0, 2)\)</span></li>
+<li><span  class="math">\((1, 0)\)</span></li>
+<li><span  class="math">\((1, 1)\)</span></li>
+<li><span  class="math">\((1, 2)\)</span></li>
+<li><span  class="math">\((2, 0)\)</span></li>
+<li><span  class="math">\((2, 1)\)</span></li>
+<li><span  class="math">\((2, 2)\)</span></li>
+</ul>
+
+<p>This is the same as taking every possible combination of two numbers from the
+set we defined above. Now we can take any 2 columns from the orthogonal array,
+and those two columns will form this complete list. Of course, we can extend
+this all the way up however many factors there are. So for this case, we can
+have <span  class="math">\(t = \{1, 2, 3\}\)</span>.</p>
+
+<p>I mentioned earlier that the purpose of orthogonal arrays is to create
+<em>efficient</em> experiment designs, and we don't want to use every possible
+combination (of which there are <span  class="math">\(s^t\)</span> where <span  class="math">\(s\)</span> is the number of levels and
+<span  class="math">\(t\)</span> is the number of factors), since that leads to many trials, probably more
+than you need. You might realize that when the strength is equal to the number
+of factors, we have exactly that case. In the literature, this is a special
+degenerate case of an orthogonal array referred as a <em>full factorial design</em>.</p>
+
+<h3 id="construction-techniques">Construction Techniques</h3>
+
+<p>So you've got these cool arrays telling you how to conduct scientific
+experiments, now what? Well for one, you may want to know how you can generate
+these arrays. In the literature, many papers are more concerned about the
+existence of orthogonal arrays rather than demonstrating how to construct them.
+Luckily for us, there are two very efficient construction techniques that were
+introduced by Bose and Bush, called the Bose and Bush construction techniques,
+respectively.</p>
+
+<p>Oars provides extremely efficient implementations of these construction
+techniques. They are in-place (meaning that there is very little
+computation/memory overhead), and random access, so each dimension/index of an
+orthogonal array can be generated independently and on-the-fly.</p>
+
+<h3 id="monte-carlo-sampling">Monte Carlo Sampling</h3>
+
+<p>I am going to assume you are familiar with Monte Carlo integration. If you are
+not, there are a lot of resources out on the internet that explain this
+technique in finer detail.</p>
+
+<p>Suppose you want to integrate a function, <span  class="math">\(f(x)\)</span>. It's a really hard function
+to integrate, so you can generate a bunch of random numbers for <span  class="math">\(x\)</span>, evaluate
+<span  class="math">\(f(x)\)</span> for each random input, and then take the average of those numbers to get
+an approximation of the integrand. We can pack this into a nice equation:</p>
+
+<p><span  class="math">\[ \int_0^1 f(x) = \frac{1}{N} \sum_{i = 0}^N f(\bar{x}) \]</span></p>
+
+<p>It looks complicated, but the idea is very simple and intuitive. Of course, you
+may be wondering, what do orthogonal arrays have to do with Monte Carlo
+integration? Well, it turns out the way that we generate these random numbers,
+or our sampling techniques, have a significant effect on how quickly this
+technique converges to the right answer.</p>
+
+<p>If you average more random samples, you'll get a more accurate answer. Using
+more efficient sample techniques means that you start approaching the correct
+answer even faster. Another way to put this is that if we take 100 samples with
+pure random sampling, and 100 samples with a more efficient method, the more
+efficient method will be more accurate. There are several properties for point
+sets that are conducive to efficient Monte Carlo integration, such as
+low-discrepancy and good stratification, which I won't get into in this post.</p>
+
+<p>It turns out that if you take an orthogonal array, and you normalize and
+randomize it, the resulting point set works very well for Monte Carlo
+integration. Art Owen, in his book, provides the equation to transform an
+orthogonal array into a point set ready for Monte Carlo integration, and we
+implement the method in <code>oars</code>.</p>
+
+<h2 id="development">Development</h2>
+
+<p>The API design for <code>oars</code> was heavily inspired by the work that my advisor,
+Wojciech Jarosz, did with his tool SampleView. I liked the way his API was
+designed - it made sense and it was clean. I simplified the generic API for
+orthogonal arrays a little bit, since <code>oars</code> isn't a general purpose Monte
+Carlo sampling library, but specifically geared towards orthogonal arrays.</p>
+
+<p>One of the first reasons I started using Rust in the first place was because
+Rust's testing and benchmarking tools are really easy to use, and provide a
+standardized and ergonomic way to implement testing and benchmarks. This sort
+of easy verification helped me a lot in ensuring that my implementations of
+various orthogonal array construction techniques were not only correct, but
+performant. The testing harnesses made it really easy to sanity check all of my
+implementations, especially during late nights.</p>
+
+<h3 id="numeric-code">Numeric Code</h3>
+
+<p>One of Rust's strong points is its type system and extensive used of generics.
+I wanted my library to be as generic as possible, so I didn't tie my APIs to
+any particular numeric type. If you have done any heavy numeric work in Rust,
+you know how much of a pain this can be. I used the
+<a href="https://github.com/rust-num/num">num</a> crate to help facilitate numeric generic
+traits, but even then, I found the process to be lacking in ergonomics.</p>
+
+<p>Consider the following code snippet in C++:</p>
+<div class="highlight"><pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="n">T</span> <span class="n">add_one</span><span class="p">(</span><span class="n">T</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Now compare this to Rust:</p>
+<div class="highlight"><pre class="chroma"><code class="language-rust" data-lang="rust"><span class="c1">// We need to use the num crate to have generic methods over numeric types
+</span><span class="c1"></span><span class="k">use</span><span class="w"> </span><span class="n">num</span>::<span class="p">{</span><span class="n">NumCast</span><span class="p">,</span><span class="w"> </span><span class="n">FromPrimitive</span><span class="p">};</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">fn</span> <span class="nf">add_one</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">x</span>: <span class="nc">T</span><span class="p">)</span><span class="w">
+</span><span class="w"></span><span class="k">where</span><span class="w"> </span><span class="n">T</span>: <span class="nc">NumCast</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">FromPrimitive</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">Copy</span><span class="w">
+</span><span class="w"></span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">T</span>::<span class="n">from</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">unwrap</span><span class="p">()</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>While this is a smaller example, we can already see that the Rust code snippet
+is much more verbose. My codebase is littered with a lot of these calls, which
+can be slightly annoying. I understand why Rust has these safeguards in place,
+as there are many small overflow and loss of precision errors that can happen
+when C++ engages in reckless implicit casting. I've been a victim of these
+errors myself, even in this project. All the same, I wonder if there is a more
+ergonomic way we could handle numeric types in Rust and reduce some of the
+boilerplate. There is a good reason for this explicitness. Consider the
+following code snippet in C++, in which I take a vector of <code>float</code>s and try to
+sum over the vector.</p>
+<div class="highlight"><pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;numeric&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="kt">float</span> <span class="nf">sum_vec</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">accumulate</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">v</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">v</span><span class="p">{</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">};</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">sum_vec</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>For those of you who aren't familiar with the <code>accumulate</code> method, it's
+essentially a reduction over an iterable. You can use different accumulation
+methods, such as taking the sum of an iterable or multiplying every element in the
+iterable. The function call takes the beginning and end of an iterable,
+followed up by the initial value. In this case, I used <code>0</code> as my initial value
+because I just want the sum of the vector. So what output would you expect to
+see from this code snippet? <code>0.6</code> right? Wrong! Let's check the output:</p>
+
+<pre><code>0
+</code></pre>
+
+<p>We have fallen victim to implicit type coercion. Let's take a look at the
+actual signature of <code>accumulate</code>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span><span class="err"> </span><span class="nc">InputIt</span><span class="p">,</span> <span class="k">class</span><span class="err"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="n">T</span> <span class="n">accumulate</span><span class="p">(</span><span class="n">InputIt</span> <span class="n">first</span><span class="p">,</span> <span class="n">InputIt</span> <span class="n">last</span><span class="p">,</span> <span class="n">T</span> <span class="n">init</span><span class="p">);</span>
+</code></pre></div>
+<p>You can see that the return type is the same as the initialization type. If you
+look at our function above, we made a subtle mistake and passed in <code>0</code> as the
+initial value, which is an <code>int</code>, rather than <code>0.0</code>, which is a <code>double</code>. This
+led to the method taking each value, (<code>0.2</code> in this case), turning it into an
+integer, which coerces to <code>0</code>, and adding that repeatedly to the initial value
+of <code>0</code>, which is why the final output was 0.</p>
+
+<p>Here's the corrected version of the function:</p>
+<div class="highlight"><pre class="chroma"><code class="language-cpp" data-lang="cpp"><span class="kt">float</span> <span class="nf">sum_vec</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">accumulate</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">v</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="mf">0.0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>It's a very small detail, but it's an error I fell victim to and spent far too
+long debugging because it's so subtle.</p>
+
+<p>The Rust analog for the above code is a little different, since Rust provides
+methods on iterators and not methods that take iterators like the STL, so the
+analogy to the code snippet would be something like:</p>
+<div class="highlight"><pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec</span><span class="o">!</span><span class="p">[</span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">];</span><span class="w">
+</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">sum</span>: <span class="kt">f32</span> <span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">into_iter</span><span class="p">().</span><span class="n">sum</span><span class="p">();</span><span class="w">
+</span><span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&#34;{}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">sum</span><span class="p">);</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>This gives us the expected output: <code>0.6</code>.</p>
+
+<p>Now lets see how Rust handles implicit coercions. Suppose that I specified that
+my vector was a vector of integers:</p>
+<div class="highlight"><pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">v</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec</span><span class="o">!</span><span class="p">[</span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">];</span><span class="w">
+</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">sum</span>: <span class="kt">f32</span> <span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">into_iter</span><span class="p">().</span><span class="n">sum</span><span class="p">();</span><span class="w">
+</span><span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&#34;{}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">sum</span><span class="p">);</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><code>rustc</code> gives us the following output:</p>
+<div class="highlight"><pre class="chroma"><code class="language-txt" data-lang="txt">error[E0308]: mismatched types
+ --&gt; src/main.rs:2:28
+  |
+2 |     let v: Vec&lt;i32&gt; = vec![0.2, 0.2, 0.2];
+  |                            ^^^ expected i32, found floating-point number
+  |
+  = note: expected type `i32`
+             found type `{float}`</code></pre></div>
+<p>Or we can specify that the return type should be an integer:</p>
+<div class="highlight"><pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec</span><span class="o">!</span><span class="p">[</span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">];</span><span class="w">
+</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">sum</span>: <span class="kt">i32</span> <span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">into_iter</span><span class="p">().</span><span class="n">sum</span><span class="p">();</span><span class="w">
+</span><span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&#34;{}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">sum</span><span class="p">);</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>This gives us the following error:</p>
+<div class="highlight"><pre class="chroma"><code class="language-txt" data-lang="txt">error[E0277]: the trait bound `i32: std::iter::Sum&lt;{float}&gt;` is not satisfied
+ --&gt; src/main.rs:3:34
+  |
+3 |     let sum: i32 = v.into_iter().sum();
+  |                                  ^^^ the trait `std::iter::Sum&lt;{float}&gt;` is not implemented for `i32`
+  |
+  = help: the following implementations were found:
+            &lt;i32 as std::iter::Sum&lt;&amp;&#39;a i32&gt;&gt;
+            &lt;i32 as std::iter::Sum&gt;
+
+error: aborting due to previous error</code></pre></div>
+<p>Rust's mandated explicitness catches type mismatches that would have been
+implicitly coerced in C++, at the expense of some verbosity (at least with
+generic numerical types).</p>
+
+<h3 id="external-libraries">External Libraries</h3>
+
+<p>One of the biggest pain points I have with C++ development is library
+management. I prefer to use system libraries whenever I can, since I'm on Arch
+and I can easily install pretty much every library I'll ever need, but a lot of
+times when I'm collaborating with people on different platforms, we have to use
+other solutions, like bundling dependencies in tree, or use something like
+<a href="https://conan.io">Conan</a> or <a href="https://github.com/microsoft/vcpkg">vcpkg</a>. While
+both managers are really nice, I have issues with both of them, and not
+everyone always has them available. More often than not, we simply bundle
+dependencies as git submodules.</p>
+
+<p>Rust, on the other hand, has Cargo, which is an excellent package manager. I
+really enjoy how easy it is to add a dependency and link it with your project.
+Cargo feels much saner than <code>cmake</code>, and I don't have to deal with obscure
+linker errors.</p>
+
+<h2 id="the-api">The API</h2>
+
+<p>As I mentioned before, the API for this project was heavily inspired by the
+SampleView program (a program written by Dr. Jarosz to visualize sampling
+points in various dimensions for Monte Carlo integration). For each
+construction method, I have a struct which holds parameters that are filled in
+by the user. There is a trait, <code>OAConstructor</code>, which demarcates structs that
+can generate orthogonal arrays. This trait contains only one function: <code>gen()</code>,
+which returns a valid orthogonal array.  Most of the structs that implement
+this trait will also likely want some sort of verification method that ensures
+that the parameters that users pass in are valid. I didn't create a
+standardized interface for this because I wanted to leave some flexibility for
+the future and for consumers that implement the <code>OAConstructor</code> trait.
+Additionally, our research on orthogonal arrays is still fairly early, so I
+don't actually know what kind of constraints will come up as we discover new
+methods for generating orthogonal arrays.</p>
+
+<h3 id="parallelization">Parallelization</h3>
+
+<p>I also wanted to create a parallel constructor interface, since it seemed
+fairly trivial to convert the Bose and Bush construction methods to utilize
+parallelization. <code>ndarray</code> provides the <code>ndarray-parallel</code> crate, which
+integrates with <code>rayon</code>. I used rayon's parallel iterators to set up
+parallelization with the Bose and Bush methods. These construction methods are
+wrapped in a trait called <code>ParOAConstructor</code>, which provides a generic
+interface for any parallel construction method and can be extended by the user.</p>
+
+<p>Rayon is super easy to use because it can adapt iterators, so if you're writing
+function code, the changes to make your routines parallel are typically
+one-liners. Since I had my benchmarking tools set up, I used them to see
+exactly how much of a benefit parallelization yielded. To my surprise, there
+was actually no benefit, since I had tried to parallelize too much. I
+experimented a bit, and found that I got the biggest speedup from only
+constructing various columns (or dimensions) of an orthogonal array in
+parallel. Otherwise, the overhead of threading outweighed the benefits of
+staging the tasks in parallel.</p>
+
+<h3 id="stateful-types">Stateful Types</h3>
+
+<p>The implemented constructors in <code>oars</code> have parameters that are passed in as
+structs. The parameters for Bose and Bush are very specific, your base must be
+a prime number, the dimensionality of the resulting point set has to be less
+than the base, and so on. At first, I had the structs implement a
+function, <code>verify(&amp;self) -&gt; bool</code>, that would be called whenever the end user
+tried to generate an orthogonal array. I wasn't a huge fan of this implicit
+behavior, because verifying large prime numbers can be expensive, and on top of
+that, I wanted a more transparent and optional way to do parameter checks.</p>
+
+<p>I learned about stateful types in Rust, and decided to use this principle for
+parameter checking as well. The constructors for OAs have two variants: a
+checked variant and a &quot;direct&quot; variant. The checked variant is simply a struct
+that checks parameters, and upon success, consumes the struct and returns the
+regular constructor, which implements the trait for generating OAs.</p>
+
+<p>The general flow for the verification states is as follows:</p>
+<div class="highlight"><pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BoseChecked</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="n">verify</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">OarsResult</span><span class="o">&lt;</span><span class="n">Bose</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">        </span><span class="c1">// verify things here
+</span><span class="c1"></span><span class="w">        </span><span class="c1">// ...
+</span><span class="c1"></span><span class="w">
+</span><span class="w">        </span><span class="c1">// invalid parameters
+</span><span class="c1"></span><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">OarsError</span>::<span class="n">new</span><span class="p">(</span><span class="s">&#34;bad params&#34;</span><span class="p">);</span><span class="w">
+</span><span class="w">
+</span><span class="w">        </span><span class="c1">// valid parameters
+</span><span class="c1"></span><span class="w">        </span><span class="n">Bose</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">            </span><span class="c1">// ...
+</span><span class="c1"></span><span class="w">        </span><span class="p">}</span><span class="w">
+</span><span class="w">    </span><span class="p">}</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>What happens here is that the user supplies some values to the struct. This
+method performs some checking, and upon success, the <code>BoseChecked</code> struct is
+consumed so it can't be used anymore, and is replaced by the <code>Bose</code> struct,
+which implements the proper traits so it can generate an orthogonal array. Of
+course, if you don't want to incur the overhead of checking the parameters, you
+are free to just use the <code>Bose</code> struct directly, but improper parameters will
+lead to invalid orthogonal arrays, so it is up to the user to verify their own
+parameters.</p>
+
+<p>The stateful typing system allows for some pretty ergonomic code. The general
+flow for generating orthogonal arrays with checked code goes like this:</p>
+<div class="highlight"><pre class="chroma"><code class="language-rust" data-lang="rust"><span class="kd">let</span><span class="w"> </span><span class="n">bose</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BoseChecked</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="n">prime_base</span>: <span class="mi">3</span><span class="p">,</span><span class="w">
+</span><span class="w">    </span><span class="n">dimensions</span>: <span class="mi">3</span><span class="p">,</span><span class="w">
+</span><span class="w"></span><span class="p">};</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="kd">let</span><span class="w"> </span><span class="n">oa</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bose</span><span class="p">.</span><span class="n">verify</span><span class="p">()</span><span class="o">?</span><span class="p">.</span><span class="n">gen</span><span class="p">()</span><span class="o">?</span><span class="p">;</span><span class="w">
+</span></code></pre></div>
+<h3 id="procedural-macros">Procedural Macros</h3>
+
+<p>One of the consequences of utilizing stateful types for my library was that
+each constructor struct needed to have a variant that had the exact same
+fields. So for example, I have a struct for the <code>Bose</code> constructor, as well as
+a struct called <code>BoseChecked</code>. The library follows a consistent naming
+convention where the checked variant of a constructor (<code>Ctor</code>) is suffixed by
+&quot;Checked&quot;, so <code>Ctor -&gt; CtorChecked</code>. As you can imagine, it would be really
+annoying to have to create duplicate structs for each constructor, and on top
+of that, you introduce the potential for copy/paste errors.</p>
+
+<p>Luckily, Rust has a solution for this in the form of procedural macros. If
+you're not familiar with Rust's macros, they are very powerful tools that are
+also much safer than the macros you encounter in C/C++. Whereas those macros
+are simple text substitution and allow for a lot of error, Rust's macro system
+is checked by the compiler, and has some very strong reflection capabilities. I
+created a derive macro called <code>Checked</code> which automatically creates a copy of a
+struct, but changes its name to be suffixed by <code>Checked</code>. Usage is very simple:</p>
+<div class="highlight"><pre class="chroma"><code class="language-rust" data-lang="rust"><span class="c1">// creates a struct called `BoseChecked` with identical parameters, comments,
+</span><span class="c1">// visibility, etc.
+</span><span class="c1"></span><span class="cp">#[derive(Checked)]</span><span class="w">
+</span><span class="w"></span><span class="k">struct</span> <span class="nc">Bose</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="c1">// ...
+</span><span class="c1"></span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>Developing this macro was very nice because the compiler was able to catch
+errors as I developed. Had I used simple text substitution, catching bugs would
+be a much more arduous and lengthy process.</p>
+
+<p>The macro itself actually creates a syntax tree from the code block that it's
+applied on, so if for example, this macro is applied to something besides a
+struct, the macro will invoke a compilation error. Additionally, modifying a
+syntax tree rather than working with text means that the way I am replacing the
+identifier for the struct is much easier and safer than doing complex string
+parsing.</p>
+
+<h2 id="resourceslinks">Resources/Links</h2>
+
+<ul>
+<li><a href="https://cs.dartmouth.edu/~wjarosz/publications/jarosz19orthogonal.html">EGSR paper</a></li>
+<li><a href="https://www.cs.dartmouth.edu/~trdata/reports/abstracts/TR2019-872/">Bachelor's thesis</a></li>
+<li><a href="https://docs.rs/oars">Library documentation</a></li>
+<li><a href="https://github.com/afnanenayet/oars">Github link</a></li>
+<li><a href="https://statweb.stanford.edu/~owen/mc/">Art Owen's book</a></li>
+</ul>
+
+<p><em>Thanks to Zach Misso, Lucy Xiao for pointing out improvements/errata.</em></p>
+
+  </div>
+
+  <div id=links>
+    
+      <a class="basic-alignment left" href="https://afnan.io/posts/2019-04-05-explaining-the-hashed-permutation/">&laquo; A Memory and Space Constant Shuffling Algorithm</a>
+    
+    
+  </div>
+</section>
+
+    
+</body>
+</html>
+

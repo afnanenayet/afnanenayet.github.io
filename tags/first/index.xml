@@ -13,10 +13,10 @@
     
     <item>
       <title>Parallel Microservices with Dependencies</title>
-      <link>https://afnan.io/post/2018-01-01-parallel-microservices-and-dependencies/</link>
+      <link>https://afnan.io/posts/2018-01-01-parallel-microservices-and-dependencies/</link>
       <pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://afnan.io/post/2018-01-01-parallel-microservices-and-dependencies/</guid>
+      <guid>https://afnan.io/posts/2018-01-01-parallel-microservices-and-dependencies/</guid>
       <description>You can find the link to the actual code here.
 The problem Right now, I&#39;m a software engineering intern on the infrastructure team at Blend Labs. We run a standard microservice architecture over k8s running on AWS instances. Internal apps make it convenient to run and deploy microservices, abstracting away a lot of k8s stuff. It&#39;s simple. You just register an image or a git repo and let our tools do the rest.</description>
     </item>

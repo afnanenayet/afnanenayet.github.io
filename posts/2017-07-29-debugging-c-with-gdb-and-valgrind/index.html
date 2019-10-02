@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="chrome=1">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="referrer" content="no-referrer">
+        <meta name="description" content="A personal site">
+
+        
+            <link href='https://fonts.googleapis.com/css?family=Open+Sans:400|Old+Standard+TT:400' rel='stylesheet' type='text/css'>
+        
+
+        <link rel="icon" type="image/png" href="/favicon_16x16.png" sizes="16x16">
+        <link rel="icon" type="image/png" href="/favicon_32x32.png" sizes="32x32">
+        <link rel="icon" type="image/png" href="/favicon_128x128.png" sizes="128x128">
+
+        <title>
+            
+            
+                 Debugging C with GDB and Valgrind 
+                
+        </title>
+        <link rel="canonical" href="https://afnan.io/posts/2017-07-29-debugging-c-with-gdb-and-valgrind/">
+
+        <style>
+    * {
+        border: 0;
+        font: inherit;
+        font-size: 100%;
+        vertical-align: baseline;
+        margin: 0;
+        padding: 0;
+        color: black;
+        text-decoration-skip: ink;
+    }
+
+    body {
+        font-family: 'Open Sans', 'Myriad Pro', Myriad, sans-serif;
+        font-size: 17px;
+        line-height: 160%;
+        color: #1d1313;
+        max-width: 700px;
+        margin: auto;
+    }
+
+    p {
+        margin: 20px 0;
+    }
+
+    a img {
+        border: none;
+    }
+
+    img {
+        margin: 10px auto 10px auto;
+        max-width: 100%;
+        display: block;
+    }
+
+    .left-justify {
+        float: left;
+    }
+
+    .right-justify {
+        float: right;
+    }
+
+    pre,
+    code {
+        font: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+        background-color: #f7f7f7;
+    }
+
+    code {
+        padding: 2px;
+    }
+
+    pre {
+        margin-top: 0;
+        margin-bottom: 16px;
+        word-wrap: normal;
+        padding: 16px;
+        overflow: auto;
+        font-size: 85%;
+        line-height: 1.45;
+    }
+
+    pre>code {
+        padding: 0;
+        margin: 0;
+        font-size: 100%;
+        word-break: normal;
+        white-space: pre;
+        background: transparent;
+        border: 0;
+    }
+
+    pre code {
+        display: inline;
+        max-width: auto;
+        padding: 0;
+        margin: 0;
+        overflow: visible;
+        line-height: inherit;
+        word-wrap: normal;
+        background-color: transparent;
+        border: 0;
+    }
+
+    pre code::before,
+    pre code::after {
+        content: normal;
+    }
+
+    em,
+    q,
+    em,
+    dfn {
+        font-style: italic;
+    }
+
+    .sans,
+    html .gist .gist-file .gist-meta {
+        font-family: "Open Sans", "Myriad Pro", Myriad, sans-serif;
+    }
+
+    .mono,
+    pre,
+    code,
+    tt,
+    p code,
+    li code {
+        font-family: Menlo, Monaco, "Andale Mono", "lucida console", "Courier New", monospace;
+    }
+
+    .serif {
+        font-family: "Old Standard TT", serif;
+    }
+
+    strong {
+        font-weight: 600;
+    }
+
+    q:before {
+        content: "\201C";
+    }
+
+    q:after {
+        content: "\201D";
+    }
+
+    del,
+    s {
+        text-decoration: line-through;
+    }
+
+    blockquote {
+        font-family: "Old Standard TT", serif;
+        text-align: center;
+        padding: 50px;
+    }
+
+    blockquote p {
+        display: inline-block;
+        font-style: italic;
+    }
+
+    blockquote:before,
+    blockquote:after {
+        font-family: "Old Standard TT", serif;
+        content: '\201C';
+        font-size: 35px;
+        color: #403c3b;
+    }
+
+    blockquote:after {
+        content: '\201D';
+    }
+
+    hr {
+        width: 40%;
+        height: 1px;
+        background: #403c3b;
+        margin: 25px auto;
+    }
+
+    h1 {
+        font-size: 35px;
+    }
+
+    h2 {
+        font-size: 28px;
+    }
+
+    h3 {
+        font-size: 22px;
+        margin-top: 18px;
+    }
+
+    h1 a,
+    h2 a,
+    h3 a {
+        text-decoration: none;
+    }
+
+    h1,
+    h2 {
+        margin-top: 28px;
+    }
+
+    #sub-header,
+    time {
+        color: #403c3b;
+        font-size: 13px;
+    }
+
+    #sub-header {
+        margin: 0 4px;
+    }
+
+    #nav h1 a {
+        font-size: 35px;
+        color: #1d1313;
+        line-height: 120%;
+    }
+
+    .posts_listing a,
+    #nav a {
+        text-decoration: none;
+    }
+
+    li {
+        margin-left: 20px;
+    }
+
+    ul li {
+        margin-left: 5px;
+    }
+
+    ul li {
+        list-style-type: none;
+    }
+
+    ul li:before {
+        content: "\00BB \0020";
+    }
+
+    #nav ul li:before,
+    .posts_listing li:before {
+        content: '';
+        margin-right: 0;
+    }
+
+    #content {
+        text-align: left;
+        width: 100%;
+        font-size: 15px;
+        padding: 60px 0 80px;
+    }
+
+    #content h1,
+    #content h2 {
+        margin-bottom: 5px;
+    }
+
+    #content h2 {
+        font-size: 25px;
+    }
+
+    #content .entry-content {
+        margin-top: 15px;
+    }
+
+    #content time {
+        margin-left: 3px;
+    }
+
+    #content h1 {
+        font-size: 30px;
+    }
+
+    .highlight {
+        margin: 10px 0;
+    }
+
+    .posts_listing {
+        margin: 0 0 50px;
+    }
+
+    .posts_listing li {
+        margin: 0 0 25px 15px;
+    }
+
+    .posts_listing li a:hover,
+    #nav a:hover {
+        text-decoration: underline;
+    }
+
+    #nav {
+        text-align: center;
+        position: static;
+        margin-top: 60px;
+    }
+
+    #nav ul {
+        display: table;
+        margin: 8px auto 0 auto;
+    }
+
+    #nav li {
+        list-style-type: none;
+        display: table-cell;
+        font-size: 15px;
+        padding: 0 20px;
+    }
+
+    #links {
+        margin: 50px 0 0 0;
+    }
+
+    #links :nth-child(2) {
+        float: right;
+    }
+
+    #not-found {
+        text-align: center;
+    }
+
+    #not-found a {
+        font-family: "Old Standard TT", serif;
+        font-size: 200px;
+        text-decoration: none;
+        display: inline-block;
+        padding-top: 225px;
+    }
+
+    @media (max-width: 750px) {
+        body {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        #nav h1 a {
+            font-size: 28px;
+        }
+
+        #nav li {
+            font-size: 13px;
+            padding: 0 15px;
+        }
+
+        #content {
+            margin-top: 0;
+            padding-top: 50px;
+            font-size: 14px;
+        }
+
+        #content h1 {
+            font-size: 25px;
+        }
+
+        #content h2 {
+            font-size: 22px;
+        }
+
+        .posts_listing li div {
+            font-size: 12px;
+        }
+    }
+
+    @media (max-width: 400px) {
+        body {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        #nav h1 a {
+            font-size: 22px;
+        }
+
+        #nav li {
+            font-size: 12px;
+            padding: 0 10px;
+        }
+
+        #content {
+            margin-top: 0;
+            padding-top: 20px;
+            font-size: 12px;
+        }
+
+        #content h1 {
+            font-size: 20px;
+        }
+
+        #content h2 {
+            font-size: 18px;
+        }
+
+        .posts_listing li div {
+            font-size: 12px;
+        }
+    }
+
+    @media (prefers-color-scheme: dark) {
+
+        *,
+        #nav h1 a {
+            color: #FDFDFD;
+        }
+
+        body {
+            background: #121212;
+        }
+
+        pre,
+        code {
+            background-color: #262626;
+        }
+
+        #sub-header,
+        time {
+            color: #BABABA;
+        }
+
+        hr {
+            background: #EBEBEB;
+        }
+
+        .highlight>pre {
+            background-color: #262626;
+        }
+
+        highlight>pre {
+            background-color: #262626;
+        }
+    }
+
+     
+    .chroma {
+        background-color: #f7f7f7
+    }
+
+    @media (prefers-color-scheme: dark) {
+        .chroma {
+            background-color: #262626
+        }
+    }
+
+     
+    .chroma .err {}
+
+     
+    .chroma .lntd {
+        vertical-align: top;
+        padding: 0;
+        margin: 0;
+        border: 0;
+    }
+
+     
+    .chroma .lntable {
+        border-spacing: 0;
+        padding: 0;
+        margin: 0;
+        border: 0;
+        width: auto;
+        overflow: auto;
+        display: block;
+    }
+
+     
+    .chroma .hl {
+        display: block;
+        width: 100%;
+        background-color: #ffffcc
+    }
+
+     
+    .chroma .lnt {
+        margin-right: 0.4em;
+        padding: 0 0.4em 0 0.4em;
+        color: #7f7f7f
+    }
+
+     
+    .chroma .ln {
+        margin-right: 0.4em;
+        padding: 0 0.4em 0 0.4em;
+        color: #7f7f7f
+    }
+
+     
+    .chroma .k {
+        font-weight: bold
+    }
+
+     
+    .chroma .kc {
+        font-weight: bold
+    }
+
+     
+    .chroma .kd {
+        font-weight: bold
+    }
+
+     
+    .chroma .kn {
+        font-weight: bold
+    }
+
+     
+    .chroma .kp {}
+
+     
+    .chroma .kr {
+        font-weight: bold
+    }
+
+     
+    .chroma .kt {}
+
+     
+    .chroma .nc {
+        font-weight: bold
+    }
+
+     
+    .chroma .ni {
+        font-weight: bold
+    }
+
+     
+    .chroma .ne {
+        font-weight: bold
+    }
+
+     
+    .chroma .nn {
+        font-weight: bold
+    }
+
+     
+    .chroma .nt {
+        font-weight: bold
+    }
+
+     
+    .chroma .sa {
+        font-style: italic
+    }
+
+     
+    .chroma .sb {
+        font-style: italic
+    }
+
+     
+    .chroma .sc {
+        font-style: italic
+    }
+
+     
+    .chroma .dl {
+        font-style: italic
+    }
+
+     
+    .chroma .sd {
+        font-style: italic
+    }
+
+     
+    .chroma .s2 {
+        font-style: italic
+    }
+
+     
+    .chroma .se {
+        font-weight: bold;
+    }
+
+     
+    .chroma .sh {
+        font-style: italic
+    }
+
+     
+    .chroma .si {
+        font-weight: bold;
+        font-style: italic
+    }
+
+     
+    .chroma .sx {
+        font-style: italic
+    }
+
+     
+    .chroma .sr {
+        font-style: italic
+    }
+
+     
+    .chroma .s1 {
+        font-style: italic
+    }
+
+     
+    .chroma .ss {
+        font-style: italic
+    }
+
+     
+    .chroma .ow {
+        font-weight: bold
+    }
+
+     
+    .chroma .c {
+        font-style: italic
+    }
+
+     
+    .chroma .ch {
+        font-style: italic
+    }
+
+     
+    .chroma .cm {
+        font-style: italic
+    }
+
+     
+    .chroma .c1 {
+        font-style: italic
+    }
+
+     
+    .chroma .cs {
+        font-style: italic
+    }
+
+     
+    .chroma .cp {}
+
+     
+    .chroma .cpf {}
+
+     
+    .chroma .ge {
+        font-style: italic
+    }
+
+     
+    .chroma .gh {
+        font-weight: bold
+    }
+
+     
+    .chroma .gp {
+        font-weight: bold
+    }
+
+     
+    .chroma .gs {
+        font-weight: bold
+    }
+
+     
+    .chroma .gu {
+        font-weight: bold
+    }
+</style>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <section id=nav>
+            <h1><a href="/">Afnan Enayet</a></h1>
+            <ul>
+                
+                    <li><a href="/">Home</a></li>
+                
+                    <li><a href="/about/">About</a></li>
+                
+                    <li><a href="/">Posts</a></li>
+                
+                    <li><a href="/project/">Projects</a></li>
+                
+            </ul>
+        </section>
+
+
+<section id=content>
+  <h1> Debugging C with GDB and Valgrind </h1>
+
+  
+    <div id=sub-header>
+      July 2017 · 12 minute read
+    </div>
+  
+
+  <div class="entry-content">
+    <p>Debugging C can be a chore, but being able to pinpoint your memory leaks with
+Valgrind and monitoring the flow of your program with GDB (or LLDB) can
+speed up the development of your code significantly. It's a significant
+improvement over sticking a bunch of <code>printf</code> statements in your code and
+taking them out before production (which should by no means be your sole
+tool for debugging).</p>
+
+<h2 id="setup">Setup</h2>
+
+<p>Installing gdb is pretty easy on both OS X and Linux. Use your favorite package
+manager to install <a href="https://gcc.gnu.org">gcc</a> and
+<a href="https://www.gnu.org/software/gdb/">gdb</a>. You can also install the
+<a href="https://llvm.org">LLVM</a> compiler collection
+which uses lldb as its debugging tool rather than gdb.</p>
+
+<p>Installing <a href="http://valgrind.org">Valgrind</a> is similar - fire up your favorite
+package manager, build from source, or download a release directly from the
+webpage. On MacOS, there are some caveats if you're trying to install
+Valgrind on MacOS &gt; 10.12.</p>
+
+<h2 id="usage">Usage</h2>
+
+<h3 id="gdblldb">GDB/LLDB</h3>
+
+<p>GDB and LLDB allow a user to scrutizine the execution of their programs
+line by line. You can look at the state of your program, inspecting variables,
+seeing what is executing, and even evaluating arbitrary statements based on
+the state of your program. We will examine how to use these programs.</p>
+
+<h4 id="the-basics">The basics</h4>
+
+<p>Both GDB/LLDB provide some basic debugging functions like:</p>
+
+<ul>
+<li>step next</li>
+<li>step over</li>
+<li>continue execution</li>
+<li>step into</li>
+<li>break</li>
+</ul>
+
+<p>GDB allows you to inspect your code by viewing its state as it executes
+on a per line basis. You can step through your program line by line. More
+commonly, if you suspect that your problem is in a particular segment of
+code, you can create a breakpoint at a function or a line number. You can
+do some powerful things while you step through your program like inspect
+what variables are in your program, and execute arbitrary statements
+based on the state of your program.</p>
+
+<p>GDB/LLDB gives you access to certain key commands that will help you debug your
+program. <code>next</code> will execute the current line, and the pause at the next line.
+This will not go into any functions, it will block gdb until the instructions on
+the current line have been executed. <code>step</code> (aka step into) will actually step
+into the function on the current line. If you have a function call on the current
+line, then GDB will &quot;step into&quot; that function, allowing you to continue debugging
+line by line inside the function. <code>finish</code> is like stepping out - it will continue
+execution until the function of the current line finishes executing/until it
+returns.</p>
+
+<hr>
+
+<p>You can find a reference for these commands (in GDB)
+<a href="http://darkdust.net/files/GDB%20Cheat%20Sheet.pdf">here</a>.
+<a href="http://lldb.llvm.org/lldb-gdb.html">Here</a>
+is a cheat sheet from LLVM with LLDB commands and their gdb equivalents.</p>
+
+<h4 id="usage-1">Usage</h4>
+
+<p>In order to run gdb, you need to make sure that your binary has debug symbols
+so that GDB knows the relationship between what is being executed and your
+code. You compiling with optimization flags (<code>-OX</code>) can cause issues because
+an optimization may not necessarily stay true to your code. For example,
+a compiler will not keep unused variables because they waste stack space.
+To stay safe, compile debug builds without any optimizations. You can
+use an optimization flag with the debug symbols. The flag is <code>-g</code>, so
+when compiling with gcc, add the <code>-g</code> flag to your list of flags. We will
+explore an example with an example program I created.</p>
+
+<h3 id="example">Example</h3>
+
+<h4 id="setup-1">Setup</h4>
+
+<p>You can download my example source code <a href="https://gist.github.com/afnanenayet/1c0a71b40a67b63a42773fe2a9539f5e">here</a></p>
+
+<p>You can compile the code with this command</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">gcc -g gdb_valgrind_example.c -o gve -Wall -Wextra -std<span class="o">=</span>c11 -pedantic
+-Wmissing-prototypes -Wstrict-prototypes -Wold-style-definition</code></pre></div>
+<p>Try running the code. It seems like it should work. It's simple, it just
+allocates a string and initializes it to <code>&quot;hello&quot;</code>.</p>
+
+<p>You can run the code with the following command:</p>
+
+<pre><code>./gve
+</code></pre>
+
+<p>The output I got was:</p>
+
+<pre><code>This next string should be blank...
+zsh: segmentation fault (core dumped)  ./gve
+</code></pre>
+
+<p>So what happened? Let's step through this program with GDB. Using LLDB should
+be extremely similar.</p>
+
+<h4 id="debug">Debug</h4>
+
+<p>In order to start running gdb, we have to give it a program to run. GDB
+takes a binary followed by its arguments to initialize the debug runtime.</p>
+
+<pre><code>gdb --args gve
+</code></pre>
+
+<p>If we had arguments, we'd use something like <code>gdb --args gve arg1 arg2 ...</code></p>
+
+<p>Now GDB is initialized with our program, <code>gve</code> (<em>G</em>DB <em>V</em>algrind <em>E</em>xample)</p>
+
+<p>Here's what you'll see at first (or something like this)</p>
+
+<pre><code>GNU gdb (GDB) Fedora 7.12.1-48.fc25
+Copyright (C) 2017 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later &lt;http://gnu.org/licenses/gpl.html&gt;
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type &quot;show copying&quot;
+and &quot;show warranty&quot; for details.
+This GDB was configured as &quot;x86_64-redhat-linux-gnu&quot;.
+Type &quot;show configuration&quot; for configuration details.
+For bug reporting instructions, please see:
+&lt;http://www.gnu.org/software/gdb/bugs/&gt;.
+Find the GDB manual and other documentation resources online at:
+&lt;http://www.gnu.org/software/gdb/documentation/&gt;.
+For help, type &quot;help&quot;.
+Type &quot;apropos word&quot; to search for commands related to &quot;word&quot;...
+Reading symbols from gve...(no debugging symbols found)...done.
+(gdb)
+</code></pre>
+
+<p>We want to set a breakpoint at the <code>main</code> function. Otherwise, GDB will just
+run without giving us anything useful to look at.</p>
+
+<pre><code>(gdb) break main
+Breakpoint 1 at 0x400577
+</code></pre>
+
+<p>Let's run the program, (just type in <code>run</code>)</p>
+
+<pre><code>Starting program: /net/ifs-users/afnan/gve
+
+Breakpoint 1, 0x0000000000400577 in main ()
+</code></pre>
+
+<p>Now GDB is frozen at the beginning of the <code>main</code> function. Let's step through
+the main function and see what's happening to the <code>str</code> variable before and
+after we call <code>init_str</code>.</p>
+
+<pre><code>Breakpoint 1, main () at gdb_valgrind_example.c:32
+32	    char *str = NULL;
+(gdb) n
+33	    printf(&quot;This next string should be blank...\n&quot;);
+(gdb) n
+This next string should be blank...
+34	    init_str(str);
+</code></pre>
+
+<p>Right before we call <code>init_str</code>, let's check the value of <code>str</code> by calling
+<code>p str</code></p>
+
+<pre><code>(gdb) p str
+$1 = 0x0
+</code></pre>
+
+<p>We can see that <code>str</code> is <code>NULL</code>, as it was assigned. Let's step and see what
+happens after we call <code>init_str</code>. Theoretically, <code>str</code> should be changed
+to &quot;hello&quot; after <code>init_str</code> is called.</p>
+
+<pre><code>(gdb) n
+35	    printf(&quot;%s\n&quot;, str);
+(gdb) p str
+$3 = 0x0
+</code></pre>
+
+<p>We can see that <code>str</code> is still <code>NULL</code>. Now we know the function is not working
+as intended. We could do two things: we could rerun the program and step until
+we reach the <code>init_str</code> function call, or we could just set a breakpoint
+directly at the function. Let's set a breakpoint, since it'll be faster.</p>
+
+<p>We've already gone past the function call, so we will have to restart the
+program. Let's set a breakpoint at <code>init_str</code> then restart the program.</p>
+
+<pre><code>(gdb) break init_str
+Breakpoint 2 at 0x400552: file gdb_valgrind_example.c, line 25.
+(gdb) run
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+Starting program: /net/ifs-users/afnan/gve
+
+Breakpoint 1, main () at gdb_valgrind_example.c:32
+32	    char *str = NULL;
+(gdb)
+</code></pre>
+
+<p>Our breakpoint set earlier is still there (at <code>main</code>). We don't want to
+step all the way to the function, so let's continue until we hit the
+next breakpoint.</p>
+
+<pre><code>(gdb) c
+Continuing.
+This next string should be blank...
+
+Breakpoint 2, init_str (str=0x0) at gdb_valgrind_example.c:25
+25	    str = malloc(5);
+</code></pre>
+
+<p>Now we've reached the start of the <code>init_str</code> function. GDB tells us which
+file and line the breakpoint is one. It also tells us the value of the argument:
+<code>str = 0x0</code>. So we know <code>str=NULL</code> when <code>init_str</code> is starting. Let's step through
+the function, inspecting the variables as we go through, so we can see what's going
+on.</p>
+
+<pre><code>25	    str = malloc(5);
+(gdb) n
+26	    strcpy(str, &quot;hello&quot;);
+(gdb) p str
+$4 = 0x602420 &quot;&quot;
+(gdb) n
+27	}
+(gdb) p str
+$5 = 0x602420 &quot;hello&quot;
+(gdb) n
+main () at gdb_valgrind_example.c:35
+35	    printf(&quot;%s\n&quot;, str);
+(gdb) p str
+$6 = 0x0
+</code></pre>
+
+<p>It looks like <code>str</code> gets allocated correctly as evidence by <code>$4</code>. It is assigned
+correctly with <code>strcpy</code>, but when we return, <code>str</code> becomes <code>NULL</code> again.</p>
+
+<p>This means that we're not actually changing <code>str</code> outside of the scope of
+<code>init_str</code>. This is because we need some pointer indirection - to affect a
+variable outside of its enclosing scope, we need a pointer to that variable.
+It's essentially the same here: we need a pointer to our <code>char*</code>.</p>
+
+<p>We can easily rectify the problem by passing a reference to our string rather
+than passing in the string directly. This is called indirection. Let's
+fix the program:</p>
+<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="cm">/* gdb_valgrind_example.c    Afnan Enayet
+</span><span class="cm"> *
+</span><span class="cm"> * An example designed to help a user understand how to
+</span><span class="cm"> * use GDB/LLDB and Valgrind
+</span><span class="cm"> *
+</span><span class="cm"> * Functions:
+</span><span class="cm"> *   - init_str: a functions that initializes a string
+</span><span class="cm"> *     to &#34;hello&#34;
+</span><span class="cm"> *
+</span><span class="cm"> */</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="cm">/****** Function prototypes ******/</span>
+
+<span class="k">static</span> <span class="kt">void</span> <span class="nf">init_str</span><span class="p">(</span><span class="kt">char</span> <span class="o">**</span><span class="n">str</span><span class="p">);</span>
+
+<span class="cm">/****** Function definitions *****/</span>
+
+<span class="cm">/* Initializes and creates a string that says &#34;hello&#34;
+</span><span class="cm">*/</span>
+<span class="k">static</span> <span class="kt">void</span> <span class="nf">init_str</span><span class="p">(</span><span class="kt">char</span> <span class="o">**</span><span class="n">str</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="o">*</span><span class="n">str</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+    <span class="n">strcpy</span><span class="p">(</span><span class="o">*</span><span class="n">str</span><span class="p">,</span> <span class="s">&#34;hello&#34;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Allocating a string with the literal &#34;hello&#34;
+</span><span class="c1"></span>    <span class="kt">char</span> <span class="o">*</span><span class="n">str</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;This next string should say hello...</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+    <span class="n">init_str</span><span class="p">(</span><span class="o">&amp;</span><span class="n">str</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;%s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">str</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+<p>Let's go ahead and check that the program is working as intended. Recompile
+the file and load it with GDB. Let's set a breakpoint right before and
+right after the function call so we can see if <code>str</code> was allocated/set
+properly.</p>
+
+<pre><code>(gdb) break 33
+Breakpoint 1 at 0x40058c: file gdb_valgrind_example.c, line 33.
+(gdb) break 35
+Breakpoint 2 at 0x4005a2: file gdb_valgrind_example.c, line 35.
+(gdb) r
+Starting program: /net/ifs-users/afnan/gve
+
+Breakpoint 1, main () at gdb_valgrind_example.c:33
+33	    printf(&quot;This next string should say hello...\n&quot;);
+(gdb) p str
+$1 = 0x0
+(gdb) n
+This next string should say hello...
+34	    init_str(&amp;str);
+(gdb) n
+
+Breakpoint 2, main () at gdb_valgrind_example.c:35
+35	    printf(&quot;%s\n&quot;, str);
+(gdb) p str
+$2 = 0x602420 &quot;hello&quot;
+</code></pre>
+
+<p>We can see that the string now reads &quot;hello&quot;. The program has been corrected.</p>
+
+<h3 id="valgrind">Valgrind</h3>
+
+<p>Even if a program is working correctly or appears to be working correctly, memory
+errors could be present that you'll never see, or will pop up seemingly randomly
+in a manner that makes it difficult to diagnose with GDB.</p>
+
+<p>Valgrind is a tool that inspects your binary to see if there are any memory errors
+or leaks. It's a very powerful tool that you should use to inspect your programs
+to ensure program correctness.</p>
+
+<h4 id="the-basics-1">The basics</h4>
+
+<p>Valgrind contains a number of tools that you can use to help you diagnose/inspect
+your program. You can initialize a certain tool by passing an argument flag to
+Valgrind. We're going to use memcheck, which is described
+<a href="http://valgrind.org/info/tools.html">here</a>. There are other tools available that
+are very helpful for increasing the performance of your C/C++ programs, but this
+particular post will not cover them. The memcheck tool will run your program, display
+output, and display errors as they arise while the program is executing.</p>
+
+<p>The example usage for our program would be <code>valgrind --tool=memcheck --leak-check=full</code></p>
+
+<p>Let's try it</p>
+
+<pre><code>==27065== Memcheck, a memory error detector
+==27065== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==27065== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==27065== Command: ./gve
+==27065==
+This next string should say hello...
+==27065== Invalid write of size 2
+==27065==    at 0x400573: init_str (gdb_valgrind_example.c:26)
+==27065==    by 0x4005A1: main (gdb_valgrind_example.c:34)
+==27065==  Address 0x5200484 is 4 bytes inside a block of size 5 alloc'd
+==27065==    at 0x4C2DB9D: malloc (vg_replace_malloc.c:299)
+==27065==    by 0x40055B: init_str (gdb_valgrind_example.c:25)
+==27065==    by 0x4005A1: main (gdb_valgrind_example.c:34)
+==27065==
+==27065== Invalid read of size 1
+==27065==    at 0x4C30BC4: strlen (vg_replace_strmem.c:454)
+==27065==    by 0x4EAAA61: puts (ioputs.c:35)
+==27065==    by 0x4005AD: main (gdb_valgrind_example.c:35)
+==27065==  Address 0x5200485 is 0 bytes after a block of size 5 alloc'd
+==27065==    at 0x4C2DB9D: malloc (vg_replace_malloc.c:299)
+==27065==    by 0x40055B: init_str (gdb_valgrind_example.c:25)
+==27065==    by 0x4005A1: main (gdb_valgrind_example.c:34)
+==27065==
+hello
+==27065==
+==27065== HEAP SUMMARY:
+==27065==     in use at exit: 5 bytes in 1 blocks
+==27065==   total heap usage: 2 allocs, 1 frees, 1,029 bytes allocated
+==27065==
+==27065== 5 bytes in 1 blocks are definitely lost in loss record 1 of 1
+==27065==    at 0x4C2DB9D: malloc (vg_replace_malloc.c:299)
+==27065==    by 0x40055B: init_str (gdb_valgrind_example.c:25)
+==27065==    by 0x4005A1: main (gdb_valgrind_example.c:34)
+==27065==
+==27065== LEAK SUMMARY:
+==27065==    definitely lost: 5 bytes in 1 blocks
+==27065==    indirectly lost: 0 bytes in 0 blocks
+==27065==      possibly lost: 0 bytes in 0 blocks
+==27065==    still reachable: 0 bytes in 0 blocks
+==27065==         suppressed: 0 bytes in 0 blocks
+==27065==
+==27065== For counts of detected and suppressed errors, rerun with: -v
+==27065== ERROR SUMMARY: 4 errors from 3 contexts (suppressed: 0 from 0)
+</code></pre>
+
+<p>We have a memory leak! We've lost 5 bytes from where we called <code>malloc</code> in
+the <code>init_str</code> method. This means that we forgot to free the string that
+we allocated. Let's fix this and then run Valgrind again.</p>
+
+<p>Here is the corrected program:</p>
+<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="cm">/* gdb_valgrind_example.c    Afnan Enayet
+</span><span class="cm"> *
+</span><span class="cm"> * An example designed to help a user understand how to
+</span><span class="cm"> * use GDB/LLDB and Valgrind
+</span><span class="cm"> *
+</span><span class="cm"> * Functions:
+</span><span class="cm"> *   - change_str: a functions that converts all of the
+</span><span class="cm"> *     characters in a string to spaces
+</span><span class="cm"> *
+</span><span class="cm"> */</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="cm">/****** Function prototypes ******/</span>
+<span class="k">static</span> <span class="kt">void</span> <span class="nf">init_str</span><span class="p">(</span><span class="kt">char</span> <span class="o">**</span><span class="n">str</span><span class="p">);</span>
+
+<span class="cm">/****** Function definitions *****/</span>
+
+<span class="cm">/* Initializes and creates a string that says &#34;hello&#34;
+</span><span class="cm">*/</span>
+<span class="k">static</span> <span class="kt">void</span> <span class="nf">init_str</span><span class="p">(</span><span class="kt">char</span> <span class="o">**</span><span class="n">str</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="o">*</span><span class="n">str</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="mi">5</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">char</span><span class="p">));</span>
+    <span class="n">strcpy</span><span class="p">(</span><span class="o">*</span><span class="n">str</span><span class="p">,</span> <span class="s">&#34;hello&#34;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Allocating a string with the literal &#34;hello&#34;
+</span><span class="c1"></span>    <span class="kt">char</span> <span class="o">*</span><span class="n">str</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;This next string should say hello...</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+    <span class="n">init_str</span><span class="p">(</span><span class="o">&amp;</span><span class="n">str</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;%s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">str</span><span class="p">);</span>
+    <span class="n">free</span><span class="p">(</span><span class="n">str</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+<p>Here is the Valgrind output:</p>
+
+<pre><code>[afnan@moose]~% valgrind --tool=memcheck --leak-check=full ./gve
+==27500== Memcheck, a memory error detector
+==27500== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==27500== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==27500== Command: ./gve
+==27500==
+This next string should say hello...
+==27500== Invalid write of size 2
+==27500==    at 0x4005B3: init_str (gdb_valgrind_example.c:26)
+==27500==    by 0x4005E1: main (gdb_valgrind_example.c:34)
+==27500==  Address 0x5200484 is 4 bytes inside a block of size 5 alloc'd
+==27500==    at 0x4C2DB9D: malloc (vg_replace_malloc.c:299)
+==27500==    by 0x40059B: init_str (gdb_valgrind_example.c:25)
+==27500==    by 0x4005E1: main (gdb_valgrind_example.c:34)
+==27500==
+==27500== Invalid read of size 1
+==27500==    at 0x4C30BC4: strlen (vg_replace_strmem.c:454)
+==27500==    by 0x4EAAA61: puts (ioputs.c:35)
+==27500==    by 0x4005ED: main (gdb_valgrind_example.c:35)
+==27500==  Address 0x5200485 is 0 bytes after a block of size 5 alloc'd
+==27500==    at 0x4C2DB9D: malloc (vg_replace_malloc.c:299)
+==27500==    by 0x40059B: init_str (gdb_valgrind_example.c:25)
+==27500==    by 0x4005E1: main (gdb_valgrind_example.c:34)
+==27500==
+hello
+==27500==
+==27500== HEAP SUMMARY:
+==27500==     in use at exit: 0 bytes in 0 blocks
+==27500==   total heap usage: 2 allocs, 2 frees, 1,029 bytes allocated
+==27500==
+==27500== All heap blocks were freed -- no leaks are possible
+==27500==
+==27500== For counts of detected and suppressed errors, rerun with: -v
+==27500== ERROR SUMMARY: 3 errors from 2 contexts (suppressed: 0 from 0)
+</code></pre>
+
+<p>There are some errors, but we fixed the memory leak! I will address these
+errors later or in another blog post.</p>
+
+<p>Happy debugging!</p>
+
+  </div>
+
+  <div id=links>
+    
+      <a class="basic-alignment left" href="https://afnan.io/posts/2017-07-27-a-primer-on-pointers/">&laquo; A Primer on Pointers</a>
+    
+    
+      <a class="basic-alignment left" href="https://afnan.io/posts/2017-09-27-exposing-terminal-variables-with-c/">Exposing terminal variables with C &raquo;</a>
+    
+  </div>
+</section>
+
+    
+</body>
+</html>
+

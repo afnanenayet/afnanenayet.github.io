@@ -13,10 +13,10 @@
     
     <item>
       <title>All possible encodings from a numerical mapping</title>
-      <link>https://afnan.io/post/2018-03-12-all-possible-encodings-from-numerical-mapping/</link>
+      <link>https://afnan.io/posts/2018-03-12-all-possible-encodings-from-numerical-mapping/</link>
       <pubDate>Mon, 12 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://afnan.io/post/2018-03-12-all-possible-encodings-from-numerical-mapping/</guid>
+      <guid>https://afnan.io/posts/2018-03-12-all-possible-encodings-from-numerical-mapping/</guid>
       <description>I haven&#39;t done interview prep in a while, and I decided to get back into it after I saw a practice problem that caught my eye. I got it from this mailing list.
 The problem Suppose we have a mapping of letters to numbers, or an encoding, such that \(a = 1, b = 2, \cdots z = 26\).
 Given a string of digits, find the number of possible ways that this message could be decoded.</description>
