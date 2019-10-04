@@ -1,762 +1,27 @@
-<!DOCTYPE html>
-<html lang="en-us">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="chrome=1">
-        <meta name="HandheldFriendly" content="True">
-        <meta name="MobileOptimized" content="320">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="referrer" content="no-referrer">
-        <meta name="description" content="A personal site">
-
-        
-            <link href='https://fonts.googleapis.com/css?family=Open+Sans:400|Old+Standard+TT:400' rel='stylesheet' type='text/css'>
-        
-
-        <link rel="icon" type="image/png" href="/favicon_16x16.png" sizes="16x16">
-        <link rel="icon" type="image/png" href="/favicon_32x32.png" sizes="32x32">
-        <link rel="icon" type="image/png" href="/favicon_128x128.png" sizes="128x128">
-
-        <title>
-            
-            
-                 Diagnosing livers with machine learning 
-                
-        </title>
-        <link rel="canonical" href="https://afnan.io/posts/2017-10-31-using-k-means-clustering-in-scikit-learn/">
-
-        <style>
-    * {
-        border: 0;
-        font: inherit;
-        font-size: 100%;
-        vertical-align: baseline;
-        margin: 0;
-        padding: 0;
-        color: black;
-        text-decoration-skip: ink;
-    }
-
-    @font-face {
-        font-family: 'Open Sans', sans-serif;
-        font-display: auto;
-        src: local('Open Sans'), url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
-    }
-
-    body {
-        font-family: 'Open Sans', 'Myriad Pro', Myriad, sans-serif;
-        font-size: 17px;
-        line-height: 160%;
-        color: #1d1313;
-        max-width: 700px;
-        margin: auto;
-    }
-
-    p {
-        margin: 20px 0;
-    }
-
-    a img {
-        border: none;
-    }
-
-    img {
-        margin: 10px auto 10px auto;
-        max-width: 100%;
-        display: block;
-    }
-
-    .left-justify {
-        float: left;
-    }
-
-    .right-justify {
-        float: right;
-    }
-
-    pre,
-    code {
-        font: Consolas, "Liberation Mono", Menlo, Courier, monospace;
-        background-color: #f7f7f7;
-    }
-
-    code {
-        padding: 2px;
-    }
-
-    pre {
-        margin-top: 0;
-        margin-bottom: 16px;
-        word-wrap: normal;
-        padding: 16px;
-        overflow: auto;
-        font-size: 85%;
-        line-height: 1.45;
-    }
-
-    pre>code {
-        padding: 0;
-        margin: 0;
-        font-size: 100%;
-        word-break: normal;
-        white-space: pre;
-        background: transparent;
-        border: 0;
-    }
-
-    pre code {
-        display: inline;
-        max-width: auto;
-        padding: 0;
-        margin: 0;
-        overflow: visible;
-        line-height: inherit;
-        word-wrap: normal;
-        background-color: transparent;
-        border: 0;
-    }
-
-    pre code::before,
-    pre code::after {
-        content: normal;
-    }
-
-    em,
-    q,
-    em,
-    dfn {
-        font-style: italic;
-    }
-
-    .sans,
-    html .gist .gist-file .gist-meta {
-        font-family: "Open Sans", "Myriad Pro", Myriad, sans-serif;
-    }
-
-    .mono,
-    pre,
-    code,
-    tt,
-    p code,
-    li code {
-        font-family: Menlo, Monaco, "Andale Mono", "lucida console", "Courier New", monospace;
-    }
-
-    .serif {
-        font-family: "Old Standard TT", serif;
-    }
-
-    strong {
-        font-weight: 600;
-    }
-
-    q:before {
-        content: "\201C";
-    }
-
-    q:after {
-        content: "\201D";
-    }
-
-    del,
-    s {
-        text-decoration: line-through;
-    }
-
-    blockquote {
-        font-family: "Old Standard TT", serif;
-        text-align: center;
-        padding: 50px;
-    }
-
-    blockquote p {
-        display: inline-block;
-        font-style: italic;
-    }
-
-    blockquote:before,
-    blockquote:after {
-        font-family: "Old Standard TT", serif;
-        content: '\201C';
-        font-size: 35px;
-        color: #403c3b;
-    }
-
-    blockquote:after {
-        content: '\201D';
-    }
-
-    hr {
-        width: 40%;
-        height: 1px;
-        background: #403c3b;
-        margin: 25px auto;
-    }
-
-    h1 {
-        font-size: 35px;
-    }
-
-    h2 {
-        font-size: 28px;
-    }
-
-    h3 {
-        font-size: 22px;
-        margin-top: 18px;
-    }
-
-    h1 a,
-    h2 a,
-    h3 a {
-        text-decoration: none;
-    }
-
-    h1,
-    h2 {
-        margin-top: 28px;
-    }
-
-    #sub-header,
-    time {
-        color: #403c3b;
-        font-size: 13px;
-    }
-
-    #sub-header {
-        margin: 0 4px;
-    }
-
-    #nav h1 a {
-        font-size: 35px;
-        color: #1d1313;
-        line-height: 120%;
-    }
-
-    .posts_listing a,
-    #nav a {
-        text-decoration: none;
-    }
-
-    li {
-        margin-left: 20px;
-    }
-
-    ul li {
-        margin-left: 5px;
-    }
-
-    ul li {
-        list-style-type: none;
-    }
-
-    ul li:before {
-        content: "\00BB \0020";
-    }
-
-    #nav ul li:before,
-    .posts_listing li:before {
-        content: '';
-        margin-right: 0;
-    }
-
-    #content {
-        text-align: left;
-        width: 100%;
-        font-size: 15px;
-        padding: 60px 0 80px;
-    }
-
-    #content h1,
-    #content h2 {
-        margin-bottom: 5px;
-    }
-
-    #content h2 {
-        font-size: 25px;
-    }
-
-    #content .entry-content {
-        margin-top: 15px;
-    }
-
-    #content time {
-        margin-left: 3px;
-    }
-
-    #content h1 {
-        font-size: 30px;
-    }
-
-    .highlight {
-        margin: 10px 0;
-    }
-
-    .posts_listing {
-        margin: 0 0 50px;
-    }
-
-    .posts_listing li {
-        margin: 0 0 25px 15px;
-    }
-
-    .posts_listing li a:hover,
-    #nav a:hover {
-        text-decoration: underline;
-    }
-
-    #nav {
-        text-align: center;
-        position: static;
-        margin-top: 60px;
-    }
-
-    #nav ul {
-        display: table;
-        margin: 8px auto 0 auto;
-    }
-
-    #nav li {
-        list-style-type: none;
-        display: table-cell;
-        font-size: 15px;
-        padding: 0 20px;
-    }
-
-    #links {
-        margin: 50px 0 0 0;
-    }
-
-    #links :nth-child(2) {
-        float: right;
-    }
-
-    #not-found {
-        text-align: center;
-    }
-
-    #not-found a {
-        font-family: "Old Standard TT", serif;
-        font-size: 200px;
-        text-decoration: none;
-        display: inline-block;
-        padding-top: 225px;
-    }
-
-    @media (max-width: 750px) {
-        body {
-            padding-left: 20px;
-            padding-right: 20px;
-        }
-
-        #nav h1 a {
-            font-size: 28px;
-        }
-
-        #nav li {
-            font-size: 13px;
-            padding: 0 15px;
-        }
-
-        #content {
-            margin-top: 0;
-            padding-top: 50px;
-            font-size: 14px;
-        }
-
-        #content h1 {
-            font-size: 25px;
-        }
-
-        #content h2 {
-            font-size: 22px;
-        }
-
-        .posts_listing li div {
-            font-size: 12px;
-        }
-    }
-
-    @media (max-width: 400px) {
-        body {
-            padding-left: 20px;
-            padding-right: 20px;
-        }
-
-        #nav h1 a {
-            font-size: 22px;
-        }
-
-        #nav li {
-            font-size: 12px;
-            padding: 0 10px;
-        }
-
-        #content {
-            margin-top: 0;
-            padding-top: 20px;
-            font-size: 14px;
-        }
-
-        #content h1 {
-            font-size: 20px;
-        }
-
-        #content h2 {
-            font-size: 18px;
-        }
-
-        .posts_listing li div {
-            font-size: 12px;
-        }
-    }
-
-    @media (prefers-color-scheme: dark) {
-
-        *,
-        #nav h1 a {
-            color: #FDFDFD;
-        }
-
-        body {
-            background: #121212;
-        }
-
-        pre,
-        code {
-            background-color: #262626;
-        }
-
-        #sub-header,
-        time {
-            color: #BABABA;
-        }
-
-        hr {
-            background: #EBEBEB;
-        }
-
-        .highlight>pre {
-            background-color: #262626;
-        }
-
-        highlight>pre {
-            background-color: #262626;
-        }
-    }
-
-     
-    .chroma {
-        background-color: #f7f7f7
-    }
-
-    @media (prefers-color-scheme: dark) {
-        .chroma {
-            background-color: #262626
-        }
-    }
-
-     
-    .chroma .lntd {
-        vertical-align: top;
-        padding: 0;
-        margin: 0;
-        border: 0;
-    }
-
-     
-    .chroma .lntable {
-        border-spacing: 0;
-        padding: 0;
-        margin: 0;
-        border: 0;
-        width: auto;
-        overflow: auto;
-        display: block;
-    }
-
-     
-    .chroma .hl {
-        display: block;
-        width: 100%;
-        background-color: #ffffcc
-    }
-
-     
-    .chroma .lnt {
-        margin-right: 0.4em;
-        padding: 0 0.4em 0 0.4em;
-        color: #7f7f7f
-    }
-
-     
-    .chroma .ln {
-        margin-right: 0.4em;
-        padding: 0 0.4em 0 0.4em;
-        color: #7f7f7f
-    }
-
-     
-    .chroma .k {
-        font-weight: bold
-    }
-
-     
-    .chroma .kc {
-        font-weight: bold
-    }
-
-     
-    .chroma .kd {
-        font-weight: bold
-    }
-
-     
-    .chroma .kn {
-        font-weight: bold
-    }
-
-     
-    .chroma .kr {
-        font-weight: bold
-    }
-
-     
-    .chroma .nc {
-        font-weight: bold
-    }
-
-     
-    .chroma .ni {
-        font-weight: bold
-    }
-
-     
-    .chroma .ne {
-        font-weight: bold
-    }
-
-     
-    .chroma .nn {
-        font-weight: bold
-    }
-
-     
-    .chroma .nt {
-        font-weight: bold
-    }
-
-     
-    .chroma .sa {
-        font-style: italic
-    }
-
-     
-    .chroma .sb {
-        font-style: italic
-    }
-
-     
-    .chroma .sc {
-        font-style: italic
-    }
-
-     
-    .chroma .dl {
-        font-style: italic
-    }
-
-     
-    .chroma .sd {
-        font-style: italic
-    }
-
-     
-    .chroma .s2 {
-        font-style: italic
-    }
-
-     
-    .chroma .se {
-        font-weight: bold;
-    }
-
-     
-    .chroma .sh {
-        font-style: italic
-    }
-
-     
-    .chroma .si {
-        font-weight: bold;
-        font-style: italic
-    }
-
-     
-    .chroma .sx {
-        font-style: italic
-    }
-
-     
-    .chroma .sr {
-        font-style: italic
-    }
-
-     
-    .chroma .s1 {
-        font-style: italic
-    }
-
-     
-    .chroma .ss {
-        font-style: italic
-    }
-
-     
-    .chroma .ow {
-        font-weight: bold
-    }
-
-     
-    .chroma .c {
-        font-style: italic
-    }
-
-     
-    .chroma .ch {
-        font-style: italic
-    }
-
-     
-    .chroma .cm {
-        font-style: italic
-    }
-
-     
-    .chroma .c1 {
-        font-style: italic
-    }
-
-     
-    .chroma .cs {
-        font-style: italic
-    }
-
-     
-    .chroma .ge {
-        font-style: italic
-    }
-
-     
-    .chroma .gh {
-        font-weight: bold
-    }
-
-     
-    .chroma .gp {
-        font-weight: bold
-    }
-
-     
-    .chroma .gs {
-        font-weight: bold
-    }
-
-     
-    .chroma .gu {
-        font-weight: bold
-    }
-</style>
-
-
-        
-
-        
-    </head>
-
-    <body>
-        <section id=nav>
-            <h1><a href="/">Afnan Enayet</a></h1>
-            <ul>
-                
-                    <li><a href="/">Home</a></li>
-                
-                    <li><a href="/about/">About</a></li>
-                
-                    <li><a href="/">Posts</a></li>
-                
-                    <li><a href="/project/">Projects</a></li>
-                
-            </ul>
-        </section>
-
-
-<section id=content>
-  <h1> Diagnosing livers with machine learning </h1>
-
-  
-    <div id=sub-header>
-      October 2017 · 7 minute read
-    </div>
-  
-
-  <div class="entry-content">
-    <p>We will examine an unlabeled dataset of recorded data about livers that are believed to be indicative of liver disorders/liver disease, as well as the frequency of drinks per day per person to create a model. We will use K-means clustering to find interesting groups/clusters within the dataset. We will also use cross validation and ensemble learning to fine-tune the model.</p>
-
-<h2 id="exploring-the-data">Exploring the data</h2>
-
-<p>We will examine the traits of the liver dataset so we can understand the relationships in the data and understand the shape of the dataset.</p>
-
-<p>We will begin by importing all of the appropriate Python libraries.</p>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">sklearn</span> <span class="kn">as</span> <span class="nn">sk</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="kn">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">normalize</span><span class="p">,</span> <span class="n">MinMaxScaler</span>
-<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">KFold</span><span class="p">,</span> <span class="n">GridSearchCV</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">silhouette_score</span></code></pre></div>
-<p>Now we will load our <code>csv</code> file into a Pandas Dataframe so we can manipulate and read the data. We will load the data and preview the data.</p>
-
-<p>The structure of the data is as follows (also found <a href="http://archive.ics.uci.edu/ml/machine-learning-databases/liver-disorders/bupa.names">here</a>)</p>
-
-<ol>
-<li>mcv: mean corpuscular volume</li>
-<li>alkphos: alkaline phosphotase</li>
-<li>sgpt: alamine aminotransferase</li>
-<li>sgot: aspartate aminotransferase</li>
-<li>gammagt: gamma-glutamyl transpeptidase</li>
-<li>drinks: number of half-pint equivalents of alcoholic beverages drunk per day</li>
-<li>selector field used to split data into two sets</li>
-</ol>
-
-<p>It appears that column 7 is arbitrary.</p>
-
-<p>We can explore the relationship between the data and the number of drinks to see if there's some sort of polynomial relationship or heavy clustering. Right now, we will decide that the number of drinks, whether as some threshold, or some polynomial relationship, is our <code>y</code> value</p>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">col_names</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&#34;mcv&#34;</span><span class="p">,</span>
-    <span class="s2">&#34;alkphos&#34;</span><span class="p">,</span>
-    <span class="s2">&#34;sgpt&#34;</span><span class="p">,</span>
-    <span class="s2">&#34;sgot&#34;</span><span class="p">,</span>
-    <span class="s2">&#34;gammagt&#34;</span><span class="p">,</span>
-    <span class="s2">&#34;drinks&#34;</span><span class="p">,</span>
-    <span class="s2">&#34;gt5&#34;</span><span class="p">,</span>  <span class="c1"># &#34;greater than 5&#34;, this is the selector as described above</span>
-<span class="p">]</span>
-<span class="n">raw_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&#34;data/liver_data.csv&#34;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">col_names</span><span class="p">)</span></code></pre></div>
-<p>Let's look at the data's attributes. We will start by looking at the first 5 entries.</p>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="n">raw_data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span></code></pre></div>
-<pre><code>   mcv  alkphos  sgpt  sgot  gammagt  drinks  gt5
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="chrome=1"><meta name=HandheldFriendly content=True><meta name=MobileOptimized content=320><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content=no-referrer><meta name=description content="A personal site"><link href="https://fonts.googleapis.com/css?family=Open+Sans:400|Old+Standard+TT:400" rel=stylesheet type=text/css><link rel=icon type=image/png href=/favicon_16x16.png sizes=16x16><link rel=icon type=image/png href=/favicon_32x32.png sizes=32x32><link rel=icon type=image/png href=/favicon_128x128.png sizes=128x128><title>Diagnosing livers with machine learning</title><link rel=canonical href=https://afnan.io/posts/2017-10-31-using-k-means-clustering-in-scikit-learn/><style>*{border:0;font:inherit;font-size:100%;vertical-align:baseline;margin:0;padding:0;color:#000;text-decoration-skip:ink}@font-face{font-family:open sans,sans-serif;font-display:auto;src:local('Open Sans'),url(https://fonts.googleapis.com/css?family=Open+Sans&display=swap)}body{font-family:open sans,myriad pro,Myriad,sans-serif;font-size:17px;line-height:160%;color:#1d1313;max-width:700px;margin:auto}p{margin:20px 0}a img{border:none}img{margin:10px auto;max-width:100%;display:block}.left-justify{float:left}.right-justify{float:right}pre,code{font:Consolas,liberation mono,Menlo,Courier,monospace;background-color:#f7f7f7}code{padding:2px}pre{margin-top:0;margin-bottom:16px;word-wrap:normal;padding:16px;overflow:auto;font-size:85%;line-height:1.45}pre>code{padding:0;margin:0;font-size:100%;word-break:normal;white-space:pre;background:transparent;border:0}pre code{display:inline;max-width:auto;padding:0;margin:0;overflow:visible;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}pre code::before,pre code::after{content:normal}em,q,em,dfn{font-style:italic}.sans,html .gist .gist-file .gist-meta{font-family:open sans,myriad pro,Myriad,sans-serif}.mono,pre,code,tt,p code,li code{font-family:Menlo,Monaco,andale mono,lucida console,courier new,monospace}.serif{font-family:old standard tt,serif}strong{font-weight:600}q:before{content:"\201C"}q:after{content:"\201D"}del,s{text-decoration:line-through}blockquote{font-family:old standard tt,serif;text-align:center;padding:50px}blockquote p{display:inline-block;font-style:italic}blockquote:before,blockquote:after{font-family:old standard tt,serif;content:'\201C';font-size:35px;color:#403c3b}blockquote:after{content:'\201D'}hr{width:40%;height:1px;background:#403c3b;margin:25px auto}h1{font-size:35px}h2{font-size:28px}h3{font-size:22px;margin-top:18px}h1 a,h2 a,h3 a{text-decoration:none}h1,h2{margin-top:28px}#sub-header,time{color:#403c3b;font-size:13px}#sub-header{margin:0 4px}#nav h1 a{font-size:35px;color:#1d1313;line-height:120%}.posts_listing a,#nav a{text-decoration:none}li{margin-left:20px}ul li{margin-left:5px}ul li{list-style-type:none}ul li:before{content:"\00BB \0020"}#nav ul li:before,.posts_listing li:before{content:'';margin-right:0}#content{text-align:left;width:100%;font-size:15px;padding:60px 0 80px}#content h1,#content h2{margin-bottom:5px}#content h2{font-size:25px}#content .entry-content{margin-top:15px}#content time{margin-left:3px}#content h1{font-size:30px}.highlight{margin:10px 0}.posts_listing{margin:0 0 50px}.posts_listing li{margin:0 0 25px 15px}.posts_listing li a:hover,#nav a:hover{text-decoration:underline}#nav{text-align:center;position:static;margin-top:60px}#nav ul{display:table;margin:8px auto 0}#nav li{list-style-type:none;display:table-cell;font-size:15px;padding:0 20px}#links{margin:50px 0 0}#links :nth-child(2){float:right}#not-found{text-align:center}#not-found a{font-family:old standard tt,serif;font-size:200px;text-decoration:none;display:inline-block;padding-top:225px}@media(max-width:750px){body{padding-left:20px;padding-right:20px}#nav h1 a{font-size:28px}#nav li{font-size:13px;padding:0 15px}#content{margin-top:0;padding-top:50px;font-size:14px}#content h1{font-size:25px}#content h2{font-size:22px}.posts_listing li div{font-size:12px}}@media(max-width:400px){body{padding-left:20px;padding-right:20px}#nav h1 a{font-size:22px}#nav li{font-size:12px;padding:0 10px}#content{margin-top:0;padding-top:20px;font-size:14px}#content h1{font-size:20px}#content h2{font-size:18px}.posts_listing li div{font-size:12px}}@media(prefers-color-scheme:dark){*,#nav h1 a{color:#fdfdfd}body{background:#121212}pre,code{background-color:#262626}#sub-header,time{color:#bababa}hr{background:#ebebeb}.highlight>pre{background-color:#262626}highlight>pre{background-color:#262626}}.chroma{background-color:#f7f7f7}@media(prefers-color-scheme:dark){.chroma{background-color:#262626}}.chroma .lntd{vertical-align:top;padding:0;margin:0;border:0}.chroma .lntable{border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block}.chroma .hl{display:block;width:100%;background-color:#ffc}.chroma .lnt{margin-right:.4em;padding:0 .4em;color:#7f7f7f}.chroma .ln{margin-right:.4em;padding:0 .4em;color:#7f7f7f}.chroma .k{font-weight:700}.chroma .kc{font-weight:700}.chroma .kd{font-weight:700}.chroma .kn{font-weight:700}.chroma .kr{font-weight:700}.chroma .nc{font-weight:700}.chroma .ni{font-weight:700}.chroma .ne{font-weight:700}.chroma .nn{font-weight:700}.chroma .nt{font-weight:700}.chroma .sa{font-style:italic}.chroma .sb{font-style:italic}.chroma .sc{font-style:italic}.chroma .dl{font-style:italic}.chroma .sd{font-style:italic}.chroma .s2{font-style:italic}.chroma .se{font-weight:700}.chroma .sh{font-style:italic}.chroma .si{font-weight:700;font-style:italic}.chroma .sx{font-style:italic}.chroma .sr{font-style:italic}.chroma .s1{font-style:italic}.chroma .ss{font-style:italic}.chroma .ow{font-weight:700}.chroma .c{font-style:italic}.chroma .ch{font-style:italic}.chroma .cm{font-style:italic}.chroma .c1{font-style:italic}.chroma .cs{font-style:italic}.chroma .ge{font-style:italic}.chroma .gh{font-weight:700}.chroma .gp{font-weight:700}.chroma .gs{font-weight:700}.chroma .gu{font-weight:700}</style></head><body><section id=nav><h1><a href=/>Afnan Enayet</a></h1><ul><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/>Posts</a></li><li><a href=/project/>Projects</a></li></ul></section><section id=content><h1>Diagnosing livers with machine learning</h1><div id=sub-header>October 2017 · 7 minute read</div><div class=entry-content><p>We will examine an unlabeled dataset of recorded data about livers that are believed to be indicative of liver disorders/liver disease, as well as the frequency of drinks per day per person to create a model. We will use K-means clustering to find interesting groups/clusters within the dataset. We will also use cross validation and ensemble learning to fine-tune the model.</p><h2 id=exploring-the-data>Exploring the data</h2><p>We will examine the traits of the liver dataset so we can understand the relationships in the data and understand the shape of the dataset.</p><p>We will begin by importing all of the appropriate Python libraries.</p><div class=highlight><pre class=chroma><code class=language-python data-lang=python><span class=kn>import</span> <span class=nn>pandas</span> <span class=kn>as</span> <span class=nn>pd</span>
+<span class=kn>import</span> <span class=nn>sklearn</span> <span class=kn>as</span> <span class=nn>sk</span>
+<span class=kn>import</span> <span class=nn>numpy</span> <span class=kn>as</span> <span class=nn>np</span>
+<span class=kn>import</span> <span class=nn>matplotlib</span> <span class=kn>as</span> <span class=nn>plt</span>
+<span class=kn>from</span> <span class=nn>sklearn.preprocessing</span> <span class=kn>import</span> <span class=n>normalize</span><span class=p>,</span> <span class=n>MinMaxScaler</span>
+<span class=kn>from</span> <span class=nn>sklearn.cluster</span> <span class=kn>import</span> <span class=n>KMeans</span>
+<span class=kn>from</span> <span class=nn>sklearn.model_selection</span> <span class=kn>import</span> <span class=n>KFold</span><span class=p>,</span> <span class=n>GridSearchCV</span>
+<span class=kn>from</span> <span class=nn>sklearn.metrics</span> <span class=kn>import</span> <span class=n>silhouette_score</span></code></pre></div><p>Now we will load our <code>csv</code> file into a Pandas Dataframe so we can manipulate and read the data. We will load the data and preview the data.</p><p>The structure of the data is as follows (also found <a href=http://archive.ics.uci.edu/ml/machine-learning-databases/liver-disorders/bupa.names>here</a>)</p><ol><li>mcv: mean corpuscular volume</li><li>alkphos: alkaline phosphotase</li><li>sgpt: alamine aminotransferase</li><li>sgot: aspartate aminotransferase</li><li>gammagt: gamma-glutamyl transpeptidase</li><li>drinks: number of half-pint equivalents of alcoholic beverages drunk per day</li><li>selector field used to split data into two sets</li></ol><p>It appears that column 7 is arbitrary.</p><p>We can explore the relationship between the data and the number of drinks to see if there's some sort of polynomial relationship or heavy clustering. Right now, we will decide that the number of drinks, whether as some threshold, or some polynomial relationship, is our <code>y</code> value</p><div class=highlight><pre class=chroma><code class=language-python data-lang=python><span class=n>col_names</span> <span class=o>=</span> <span class=p>[</span>
+    <span class=s2>&#34;mcv&#34;</span><span class=p>,</span>
+    <span class=s2>&#34;alkphos&#34;</span><span class=p>,</span>
+    <span class=s2>&#34;sgpt&#34;</span><span class=p>,</span>
+    <span class=s2>&#34;sgot&#34;</span><span class=p>,</span>
+    <span class=s2>&#34;gammagt&#34;</span><span class=p>,</span>
+    <span class=s2>&#34;drinks&#34;</span><span class=p>,</span>
+    <span class=s2>&#34;gt5&#34;</span><span class=p>,</span>  <span class=c1># &#34;greater than 5&#34;, this is the selector as described above</span>
+<span class=p>]</span>
+<span class=n>raw_data</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>read_csv</span><span class=p>(</span><span class=s2>&#34;data/liver_data.csv&#34;</span><span class=p>,</span> <span class=n>header</span><span class=o>=</span><span class=bp>None</span><span class=p>,</span> <span class=n>names</span><span class=o>=</span><span class=n>col_names</span><span class=p>)</span></code></pre></div><p>Let's look at the data's attributes. We will start by looking at the first 5 entries.</p><div class=highlight><pre class=chroma><code class=language-python data-lang=python><span class=k>print</span><span class=p>(</span><span class=n>raw_data</span><span class=o>.</span><span class=n>head</span><span class=p>(</span><span class=mi>5</span><span class=p>))</span></code></pre></div><pre><code>   mcv  alkphos  sgpt  sgot  gammagt  drinks  gt5
 0   85       92    45    27       31     0.0    1
 1   85       64    59    32       23     0.0    2
 2   86       54    33    16       54     0.0    2
 3   91       78    34    24       36     0.0    2
 4   87       70    12    28       10     0.0    2
-</code></pre>
-
-<p>The selector column is useless for our purposes, so we will delete that column from the dataset. If we want to split the data, we can do it ourselves with a random split or with <code>scikit-learn</code>'s K-fold cross validation functions. We will then look at the dataframe's metadata.</p>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">del</span> <span class="n">raw_data</span><span class="p">[</span><span class="s2">&#34;gt5&#34;</span><span class="p">]</span>
-<span class="n">raw_data</span><span class="o">.</span><span class="n">info</span><span class="p">()</span></code></pre></div>
-<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+</code></pre><p>The selector column is useless for our purposes, so we will delete that column from the dataset. If we want to split the data, we can do it ourselves with a random split or with <code>scikit-learn</code>'s K-fold cross validation functions. We will then look at the dataframe's metadata.</p><div class=highlight><pre class=chroma><code class=language-python data-lang=python><span class=k>del</span> <span class=n>raw_data</span><span class=p>[</span><span class=s2>&#34;gt5&#34;</span><span class=p>]</span>
+<span class=n>raw_data</span><span class=o>.</span><span class=n>info</span><span class=p>()</span></code></pre></div><pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
 RangeIndex: 345 entries, 0 to 344
 Data columns (total 6 columns):
 mcv        345 non-null int64
@@ -767,24 +32,16 @@ gammagt    345 non-null int64
 drinks     345 non-null float64
 dtypes: float64(1), int64(5)
 memory usage: 16.2 KB
-</code></pre>
+</code></pre><p>We will now normalize the data with <code>L1</code> normalization. Having different scales for different features can bias the machine learning model and it is generally better to have normalized data for the sake of computation.</p><p>We will also make the assumption that the traits present in the dataset have a distribution close to the normal distribution amongst the general population.</p><div class=highlight><pre class=chroma><code class=language-python data-lang=python><span class=n>norm_data</span> <span class=o>=</span> <span class=n>normalize</span><span class=p>(</span><span class=n>raw_data</span><span class=p>,</span> <span class=n>norm</span><span class=o>=</span><span class=s2>&#34;l1&#34;</span><span class=p>,</span> <span class=n>axis</span><span class=o>=</span><span class=mi>0</span><span class=p>)</span>
+<span class=n>norm_data</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>DataFrame</span><span class=p>(</span><span class=n>columns</span><span class=o>=</span><span class=n>raw_data</span><span class=o>.</span><span class=n>columns</span><span class=p>,</span> <span class=n>data</span><span class=o>=</span><span class=n>norm_data</span><span class=p>)</span>
 
-<p>We will now normalize the data with <code>L1</code> normalization. Having different scales for different features can bias the machine learning model and it is generally better to have normalized data for the sake of computation.</p>
+<span class=n>scaler</span> <span class=o>=</span> <span class=n>MinMaxScaler</span><span class=p>()</span>
+<span class=n>m_norm_data</span> <span class=o>=</span> <span class=n>normalize</span><span class=p>(</span><span class=n>raw_data</span><span class=p>,</span> <span class=n>norm</span><span class=o>=</span><span class=s2>&#34;max&#34;</span><span class=p>,</span> <span class=n>axis</span><span class=o>=</span><span class=mi>0</span><span class=p>)</span>
+<span class=n>m_norm_data</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>DataFrame</span><span class=p>(</span><span class=n>columns</span><span class=o>=</span><span class=n>raw_data</span><span class=o>.</span><span class=n>columns</span><span class=p>,</span> <span class=n>data</span><span class=o>=</span><span class=n>m_norm_data</span><span class=p>)</span>  <span class=c1># convert back to a dataframe</span>
+<span class=n>norm_data</span><span class=p>[</span><span class=s2>&#34;drinks&#34;</span><span class=p>]</span> <span class=o>=</span> <span class=n>m_norm_data</span><span class=p>[</span><span class=s2>&#34;drinks&#34;</span><span class=p>]</span></code></pre></div><p>Scikit-learn returned a <code>numpy</code> array. We will convert it back to a Pandas Dataframe and bring back the column headers found in <code>raw_data</code>, since they were removed by the normalization function.</p><div class=highlight><pre class=chroma><code class=language-python data-lang=python><span class=n>norm_data</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>DataFrame</span><span class=p>(</span><span class=n>columns</span><span class=o>=</span><span class=n>raw_data</span><span class=o>.</span><span class=n>columns</span><span class=p>,</span> <span class=n>data</span><span class=o>=</span><span class=n>norm_data</span><span class=p>)</span>
 
-<p>We will also make the assumption that the traits present in the dataset have a distribution close to the normal distribution amongst the general population.</p>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">norm_data</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">raw_data</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="s2">&#34;l1&#34;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">norm_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">raw_data</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">norm_data</span><span class="p">)</span>
-
-<span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
-<span class="n">m_norm_data</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">raw_data</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="s2">&#34;max&#34;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">m_norm_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">raw_data</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">m_norm_data</span><span class="p">)</span>  <span class="c1"># convert back to a dataframe</span>
-<span class="n">norm_data</span><span class="p">[</span><span class="s2">&#34;drinks&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m_norm_data</span><span class="p">[</span><span class="s2">&#34;drinks&#34;</span><span class="p">]</span></code></pre></div>
-<p>Scikit-learn returned a <code>numpy</code> array. We will convert it back to a Pandas Dataframe and bring back the column headers found in <code>raw_data</code>, since they were removed by the normalization function.</p>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">norm_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">raw_data</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">norm_data</span><span class="p">)</span>
-
-<span class="k">print</span><span class="p">(</span><span class="n">norm_data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="n">norm_data</span><span class="o">.</span><span class="n">info</span><span class="p">())</span></code></pre></div>
-<pre><code>        mcv   alkphos      sgpt      sgot   gammagt  drinks
+<span class=k>print</span><span class=p>(</span><span class=n>norm_data</span><span class=o>.</span><span class=n>head</span><span class=p>(</span><span class=mi>5</span><span class=p>))</span>
+<span class=k>print</span><span class=p>(</span><span class=n>norm_data</span><span class=o>.</span><span class=n>info</span><span class=p>())</span></code></pre></div><pre><code>        mcv   alkphos      sgpt      sgot   gammagt  drinks
 0  0.002733  0.003817  0.004290  0.003176  0.002347     0.0
 1  0.002733  0.002655  0.005624  0.003764  0.001741     0.0
 2  0.002765  0.002240  0.003146  0.001882  0.004088     0.0
@@ -802,50 +59,34 @@ drinks     345 non-null float64
 dtypes: float64(6)
 memory usage: 16.2 KB
 None
-</code></pre>
-
-<p>Let's create a correlation matrix and see the correlation values between each attribute</p>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">corr_matrix</span> <span class="o">=</span> <span class="n">norm_data</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="n">corr_matrix</span><span class="p">)</span></code></pre></div>
-<pre><code>              mcv   alkphos      sgpt      sgot   gammagt    drinks
+</code></pre><p>Let's create a correlation matrix and see the correlation values between each attribute</p><div class=highlight><pre class=chroma><code class=language-python data-lang=python><span class=n>corr_matrix</span> <span class=o>=</span> <span class=n>norm_data</span><span class=o>.</span><span class=n>corr</span><span class=p>()</span>
+<span class=k>print</span><span class=p>(</span><span class=n>corr_matrix</span><span class=p>)</span></code></pre></div><pre><code>              mcv   alkphos      sgpt      sgot   gammagt    drinks
 mcv      1.000000  0.044103  0.147695  0.187765  0.222314  0.312680
 alkphos  0.044103  1.000000  0.076208  0.146057  0.133140  0.100796
 sgpt     0.147695  0.076208  1.000000  0.739675  0.503435  0.206848
 sgot     0.187765  0.146057  0.739675  1.000000  0.527626  0.279588
 gammagt  0.222314  0.133140  0.503435  0.527626  1.000000  0.341224
 drinks   0.312680  0.100796  0.206848  0.279588  0.341224  1.000000
-</code></pre>
+</code></pre><h2 id=generating-a-model>Generating a model</h2><p>We can see that the <code>drinks</code> column doesn't have a strong correlation with any of the other data points. Regressions will probably not provide good results. We can try to cluster the data into two different groups with K-means clustering using k-fold cross validation, and see how effectively it divides the dataset into groups. We will try several different hyperparameters using <code>GridSearchCV</code> in <code>scikit-learn</code> to find the best model via ensemble learning.</p><p>We will first configure the cross validation split. We are going to use K-fold cross validation with random shuffling (since the data is sorted by drinks). Since we only have 345 data entries, we will keep <code>k</code> small, and set <code>k=3</code>. We set the random entropy seed so we yield the same results every time this model is generated.</p><div class=highlight><pre class=chroma><code class=language-python data-lang=python><span class=n>RAND_STATE</span><span class=o>=</span><span class=mi>50</span>  <span class=c1># for reproducibility and consistency</span>
+<span class=n>folds</span><span class=o>=</span><span class=mi>3</span>
+<span class=n>k_fold</span> <span class=o>=</span> <span class=n>KFold</span><span class=p>(</span><span class=n>n_splits</span><span class=o>=</span><span class=n>folds</span><span class=p>,</span> <span class=n>shuffle</span><span class=o>=</span><span class=bp>True</span><span class=p>,</span> <span class=n>random_state</span><span class=o>=</span><span class=n>RAND_STATE</span><span class=p>)</span>  <span class=c1># setting generator for k-fold splitting</span></code></pre></div><p>Now we will define the hyperparameters we want iterate through in order to find the best model</p><div class=highlight><pre class=chroma><code class=language-python data-lang=python><span class=c1># Dictionary of hyperparameters to iterate through</span>
+<span class=c1># GridSearchCV will try every combination of these hyperparameters and</span>
+<span class=c1># return the model with the best score via KFold validation</span>
+<span class=n>hyperparams</span> <span class=o>=</span> <span class=p>{</span>
+    <span class=s2>&#34;n_clusters&#34;</span><span class=p>:</span> <span class=p>[</span><span class=mi>2</span><span class=p>,</span> <span class=mi>3</span><span class=p>],</span>
+    <span class=s2>&#34;n_init&#34;</span><span class=p>:</span> <span class=p>[</span><span class=mi>10</span><span class=p>,</span> <span class=mi>15</span><span class=p>,</span> <span class=mi>20</span><span class=p>],</span>
+    <span class=s2>&#34;max_iter&#34;</span><span class=p>:</span> <span class=p>[</span><span class=mi>100</span><span class=p>,</span> <span class=mi>200</span><span class=p>,</span> <span class=mi>300</span><span class=p>,</span> <span class=mi>400</span><span class=p>,</span> <span class=mi>500</span><span class=p>],</span>
+    <span class=s2>&#34;tol&#34;</span><span class=p>:</span> <span class=p>[</span><span class=o>.</span><span class=mo>0000001</span><span class=p>,</span> <span class=o>.</span><span class=mo>000001</span><span class=p>,</span> <span class=o>.</span><span class=mo>00001</span><span class=p>,</span> <span class=o>.</span><span class=mo>0001</span><span class=p>],</span>
+<span class=p>}</span>
 
-<h2 id="generating-a-model">Generating a model</h2>
+<span class=n>k_means</span> <span class=o>=</span> <span class=n>KMeans</span><span class=p>()</span>  <span class=c1># sets jobs equal to number of cores</span>
 
-<p>We can see that the <code>drinks</code> column doesn't have a strong correlation with any of the other data points. Regressions will probably not provide good results. We can try to cluster the data into two different groups with K-means clustering using k-fold cross validation, and see how effectively it divides the dataset into groups. We will try several different hyperparameters using <code>GridSearchCV</code> in <code>scikit-learn</code> to find the best model via ensemble learning.</p>
-
-<p>We will first configure the cross validation split. We are going to use K-fold cross validation with random shuffling (since the data is sorted by drinks). Since we only have 345 data entries, we will keep <code>k</code> small, and set <code>k=3</code>. We set the random entropy seed so we yield the same results every time this model is generated.</p>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">RAND_STATE</span><span class="o">=</span><span class="mi">50</span>  <span class="c1"># for reproducibility and consistency</span>
-<span class="n">folds</span><span class="o">=</span><span class="mi">3</span>
-<span class="n">k_fold</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="n">folds</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">RAND_STATE</span><span class="p">)</span>  <span class="c1"># setting generator for k-fold splitting</span></code></pre></div>
-<p>Now we will define the hyperparameters we want iterate through in order to find the best model</p>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># Dictionary of hyperparameters to iterate through</span>
-<span class="c1"># GridSearchCV will try every combination of these hyperparameters and</span>
-<span class="c1"># return the model with the best score via KFold validation</span>
-<span class="n">hyperparams</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&#34;n_clusters&#34;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
-    <span class="s2">&#34;n_init&#34;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span>
-    <span class="s2">&#34;max_iter&#34;</span><span class="p">:</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">500</span><span class="p">],</span>
-    <span class="s2">&#34;tol&#34;</span><span class="p">:</span> <span class="p">[</span><span class="o">.</span><span class="mo">0000001</span><span class="p">,</span> <span class="o">.</span><span class="mo">000001</span><span class="p">,</span> <span class="o">.</span><span class="mo">00001</span><span class="p">,</span> <span class="o">.</span><span class="mo">0001</span><span class="p">],</span>
-<span class="p">}</span>
-
-<span class="n">k_means</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">()</span>  <span class="c1"># sets jobs equal to number of cores</span>
-
-<span class="n">ensemble</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span>
-    <span class="n">estimator</span><span class="o">=</span><span class="n">k_means</span><span class="p">,</span>
-    <span class="n">param_grid</span><span class="o">=</span><span class="n">hyperparams</span><span class="p">,</span>
-    <span class="n">cv</span><span class="o">=</span><span class="n">k_fold</span><span class="p">,</span>
-    <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span>
-<span class="p">)</span></code></pre></div>
-<p>Now we will fit the estimator to our data employing the methods discussed above.</p>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">ensemble</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">norm_data</span><span class="p">)</span></code></pre></div>
-<pre><code>GridSearchCV(cv=KFold(n_splits=3, random_state=50, shuffle=True),
+<span class=n>ensemble</span> <span class=o>=</span> <span class=n>GridSearchCV</span><span class=p>(</span>
+    <span class=n>estimator</span><span class=o>=</span><span class=n>k_means</span><span class=p>,</span>
+    <span class=n>param_grid</span><span class=o>=</span><span class=n>hyperparams</span><span class=p>,</span>
+    <span class=n>cv</span><span class=o>=</span><span class=n>k_fold</span><span class=p>,</span>
+    <span class=n>n_jobs</span><span class=o>=-</span><span class=mi>1</span>
+<span class=p>)</span></code></pre></div><p>Now we will fit the estimator to our data employing the methods discussed above.</p><div class=highlight><pre class=chroma><code class=language-python data-lang=python><span class=n>ensemble</span><span class=o>.</span><span class=n>fit</span><span class=p>(</span><span class=n>norm_data</span><span class=p>)</span></code></pre></div><pre><code>GridSearchCV(cv=KFold(n_splits=3, random_state=50, shuffle=True),
        error_score='raise',
        estimator=KMeans(algorithm='auto', copy_x=True, init='k-means++', max_iter=300,
     n_clusters=8, n_init=10, n_jobs=1, precompute_distances='auto',
@@ -854,67 +95,37 @@ drinks   0.312680  0.100796  0.206848  0.279588  0.341224  1.000000
        param_grid={'max_iter': [100, 200, 300, 400, 500], 'n_init': [10, 15, 20], 'tol': [1e-07, 1e-06, 1e-05, 0.0001], 'n_clusters': [2, 3]},
        pre_dispatch='2*n_jobs', refit=True, return_train_score=True,
        scoring=None, verbose=0)
-</code></pre>
-
-<p>Now, we need to evaluate the effectiveness of the clustering model. This is difficult to do because the <code>score()</code> doesn't provide a good metric, since there is no &quot;ground truth&quot; for the model, since it's unlabeled. We can look at the silhoutte score, which shows how close the points are to the center of their clusters (tighter clusters will give us a better score, if the data points are very scattered, this indicates that our clusters are too loose). The values for the score range from <code>[-1, 1]</code> and a score of <code>1</code> is ideal.</p>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># Generate labels for data with model with raw data, compute score</span>
-<span class="n">labels</span> <span class="o">=</span> <span class="n">ensemble</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">norm_data</span><span class="p">)</span>
-<span class="n">score</span> <span class="o">=</span> <span class="n">silhouette_score</span><span class="p">(</span><span class="n">norm_data</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">ensemble</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span></code></pre></div>
-<pre><code>0.67850734737
+</code></pre><p>Now, we need to evaluate the effectiveness of the clustering model. This is difficult to do because the <code>score()</code> doesn't provide a good metric, since there is no &quot;ground truth&quot; for the model, since it's unlabeled. We can look at the silhoutte score, which shows how close the points are to the center of their clusters (tighter clusters will give us a better score, if the data points are very scattered, this indicates that our clusters are too loose). The values for the score range from <code>[-1, 1]</code> and a score of <code>1</code> is ideal.</p><div class=highlight><pre class=chroma><code class=language-python data-lang=python><span class=c1># Generate labels for data with model with raw data, compute score</span>
+<span class=n>labels</span> <span class=o>=</span> <span class=n>ensemble</span><span class=o>.</span><span class=n>predict</span><span class=p>(</span><span class=n>norm_data</span><span class=p>)</span>
+<span class=n>score</span> <span class=o>=</span> <span class=n>silhouette_score</span><span class=p>(</span><span class=n>norm_data</span><span class=p>,</span> <span class=n>labels</span><span class=p>)</span>
+<span class=k>print</span><span class=p>(</span><span class=n>score</span><span class=p>)</span>
+<span class=k>print</span><span class=p>(</span><span class=n>ensemble</span><span class=o>.</span><span class=n>best_params_</span><span class=p>)</span></code></pre></div><pre><code>0.67850734737
 {'max_iter': 100, 'n_init': 10, 'tol': 1e-07, 'n_clusters': 3}
-</code></pre>
+</code></pre><p>Now we have split our data into clusters, without any knowledge of what the data actually signifies--we don't know what these groups actually consitute. We tried the model with 20 clusters, and got a very good score, but that is probably overfitting and not very generalization (since we only have 345 samples), so we shaved off some of the more extreme possibilities with the grid search, slowly paring down the number of groups as to prevent overfitting and to keep the model useful and generalizable. This left us with the parameters listed above.</p><p>Without having any labels, we were able to deduce three interesting groups within our data with a fairly high silhouette score.</p><p>If we want to turn this into a binary classification (say to diagnose those with normal livers and those that don't), we simply set <code>n_clusters=2</code> to try to divide the data into 2 groups. Let's do that below.</p><div class=highlight><pre class=chroma><code class=language-python data-lang=python><span class=c1># hyperparameters to try out for binary classification with KNN</span>
+<span class=n>bin_params</span> <span class=o>=</span> <span class=p>{</span>
+    <span class=s2>&#34;n_init&#34;</span><span class=p>:</span> <span class=p>[</span><span class=mi>10</span><span class=p>,</span> <span class=mi>15</span><span class=p>,</span> <span class=mi>20</span><span class=p>],</span>
+    <span class=s2>&#34;max_iter&#34;</span><span class=p>:</span> <span class=p>[</span><span class=mi>100</span><span class=p>,</span> <span class=mi>200</span><span class=p>,</span> <span class=mi>300</span><span class=p>,</span> <span class=mi>400</span><span class=p>,</span> <span class=mi>500</span><span class=p>],</span>
+    <span class=s2>&#34;tol&#34;</span><span class=p>:</span> <span class=p>[</span><span class=o>.</span><span class=mo>0000001</span><span class=p>,</span> <span class=o>.</span><span class=mo>000001</span><span class=p>,</span> <span class=o>.</span><span class=mo>00001</span><span class=p>,</span> <span class=o>.</span><span class=mo>0001</span><span class=p>],</span>
+<span class=p>}</span>
 
-<p>Now we have split our data into clusters, without any knowledge of what the data actually signifies--we don't know what these groups actually consitute. We tried the model with 20 clusters, and got a very good score, but that is probably overfitting and not very generalization (since we only have 345 samples), so we shaved off some of the more extreme possibilities with the grid search, slowly paring down the number of groups as to prevent overfitting and to keep the model useful and generalizable. This left us with the parameters listed above.</p>
+<span class=n>bin_k_means</span> <span class=o>=</span> <span class=n>KMeans</span><span class=p>(</span><span class=n>n_clusters</span><span class=o>=</span><span class=mi>2</span><span class=p>)</span>  <span class=c1># set 2 clusters</span>
 
-<p>Without having any labels, we were able to deduce three interesting groups within our data with a fairly high silhouette score.</p>
+<span class=n>binary_ensemble</span> <span class=o>=</span> <span class=n>GridSearchCV</span><span class=p>(</span>
+    <span class=n>estimator</span><span class=o>=</span><span class=n>bin_k_means</span><span class=p>,</span>
+    <span class=n>param_grid</span><span class=o>=</span><span class=n>bin_params</span><span class=p>,</span>
+    <span class=n>cv</span><span class=o>=</span><span class=n>k_fold</span><span class=p>,</span>
+    <span class=n>n_jobs</span><span class=o>=-</span><span class=mi>1</span>
+<span class=p>)</span>
 
-<p>If we want to turn this into a binary classification (say to diagnose those with normal livers and those that don't), we simply set <code>n_clusters=2</code> to try to divide the data into 2 groups. Let's do that below.</p>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># hyperparameters to try out for binary classification with KNN</span>
-<span class="n">bin_params</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&#34;n_init&#34;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span>
-    <span class="s2">&#34;max_iter&#34;</span><span class="p">:</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">500</span><span class="p">],</span>
-    <span class="s2">&#34;tol&#34;</span><span class="p">:</span> <span class="p">[</span><span class="o">.</span><span class="mo">0000001</span><span class="p">,</span> <span class="o">.</span><span class="mo">000001</span><span class="p">,</span> <span class="o">.</span><span class="mo">00001</span><span class="p">,</span> <span class="o">.</span><span class="mo">0001</span><span class="p">],</span>
-<span class="p">}</span>
+<span class=n>binary_ensemble</span><span class=o>.</span><span class=n>fit</span><span class=p>(</span><span class=n>norm_data</span><span class=p>)</span>  <span class=c1># fit model to data and return best model</span>
 
-<span class="n">bin_k_means</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># set 2 clusters</span>
+<span class=c1># Generate labels for data with model with raw data, compute score</span>
+<span class=n>bin_labels</span> <span class=o>=</span> <span class=n>binary_ensemble</span><span class=o>.</span><span class=n>predict</span><span class=p>(</span><span class=n>norm_data</span><span class=p>)</span>
+<span class=n>bin_score</span> <span class=o>=</span> <span class=n>silhouette_score</span><span class=p>(</span><span class=n>norm_data</span><span class=p>,</span> <span class=n>bin_labels</span><span class=p>)</span>
 
-<span class="n">binary_ensemble</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span>
-    <span class="n">estimator</span><span class="o">=</span><span class="n">bin_k_means</span><span class="p">,</span>
-    <span class="n">param_grid</span><span class="o">=</span><span class="n">bin_params</span><span class="p">,</span>
-    <span class="n">cv</span><span class="o">=</span><span class="n">k_fold</span><span class="p">,</span>
-    <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span>
-<span class="p">)</span>
-
-<span class="n">binary_ensemble</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">norm_data</span><span class="p">)</span>  <span class="c1"># fit model to data and return best model</span>
-
-<span class="c1"># Generate labels for data with model with raw data, compute score</span>
-<span class="n">bin_labels</span> <span class="o">=</span> <span class="n">binary_ensemble</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">norm_data</span><span class="p">)</span>
-<span class="n">bin_score</span> <span class="o">=</span> <span class="n">silhouette_score</span><span class="p">(</span><span class="n">norm_data</span><span class="p">,</span> <span class="n">bin_labels</span><span class="p">)</span>
-
-<span class="c1"># Output score to user</span>
-<span class="k">print</span><span class="p">(</span><span class="n">bin_score</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">binary_ensemble</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span></code></pre></div>
-<pre><code>0.639223346286
+<span class=c1># Output score to user</span>
+<span class=k>print</span><span class=p>(</span><span class=n>bin_score</span><span class=p>)</span>
+<span class=k>print</span><span class=p>(</span><span class=n>binary_ensemble</span><span class=o>.</span><span class=n>best_params_</span><span class=p>)</span></code></pre></div><pre><code>0.639223346286
 {'max_iter': 100, 'tol': 1e-07, 'n_init': 10}
-</code></pre>
-
-<p>We can see that binary classification has a pretty decent score that isn't too much lower than when we divided the data into three groups.</p>
-
-  </div>
-
-  <div id=links>
-    
-      <a class="basic-alignment left" href="https://afnan.io/posts/2017-09-28-explaining-gradient-descent/">&laquo; Explaining Gradient Descent</a>
-    
-    
-      <a class="basic-alignment left" href="https://afnan.io/posts/2018-01-01-parallel-microservices-and-dependencies/">Parallel Microservices with Dependencies &raquo;</a>
-    
-  </div>
-</section>
-
-    
-</body>
-</html>
-
+</code></pre><p>We can see that binary classification has a pretty decent score that isn't too much lower than when we divided the data into three groups.</p></div><div id=links><a class="basic-alignment left" href=https://afnan.io/posts/2017-09-28-explaining-gradient-descent/>&laquo; Explaining Gradient Descent</a>
+<a class="basic-alignment left" href=https://afnan.io/posts/2018-01-01-parallel-microservices-and-dependencies/>Parallel Microservices with Dependencies &raquo;</a></div></section></body></html>
