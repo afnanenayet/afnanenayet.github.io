@@ -1,10 +1,11 @@
-<!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="chrome=1"><meta name=HandheldFriendly content=True><meta name=MobileOptimized content=320><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content=no-referrer><meta name=description content="A personal site"><link href="https://fonts.googleapis.com/css?family=Open+Sans:400|Old+Standard+TT:400" rel=stylesheet type=text/css><link rel=icon type=image/png href=/favicon_16x16.png sizes=16x16><link rel=icon type=image/png href=/favicon_32x32.png sizes=32x32><link rel=icon type=image/png href=/favicon_128x128.png sizes=128x128><link rel=stylesheet href=/style.css><title>Semigroups and Monoids</title><link rel=canonical href=https://afnan.io/posts/semigroups-and-monoids/></head><body><section id=nav><h1><a href=/>Afnan Enayet</a></h1><ul><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/>Posts</a></li><li><a href=/project/>Projects</a></li></ul></section><section id=content><h1>Semigroups and Monoids</h1><div id=sub-header>October 2019 · 3 minute read</div><div class=entry-content><p>In functional programming there are two concepts that are surprisingly simple
-that are mentioned a lot that sound a little intimidating: the semigroup and the
-monoid. These concepts originate from
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="chrome=1"><meta name=HandheldFriendly content=True><meta name=MobileOptimized content=320><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content=no-referrer><meta name=description content="A personal site"><link href="https://fonts.googleapis.com/css?family=Open+Sans:400|Old+Standard+TT:400" rel=stylesheet type=text/css><link rel=icon type=image/png href=/favicon_16x16.png sizes=16x16><link rel=icon type=image/png href=/favicon_32x32.png sizes=32x32><link rel=icon type=image/png href=/favicon_128x128.png sizes=128x128><link rel=stylesheet href=/style.css><title>Semigroups and Monoids</title><link rel=canonical href=https://afnan.io/posts/semigroups-and-monoids/></head><body><section id=nav><h1><a href=/>Afnan Enayet</a></h1><ul><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/>Posts</a></li><li><a href=/project/>Projects</a></li></ul></section><section id=content><h1>Semigroups and Monoids</h1><div id=sub-header>October 2019 · 3 minute read</div><div class=entry-content><p>In functional programming there are two concepts that are mentioned a lot that
+may sound intimidating: the semigroup and the monoid. These concepts originate
+from
 <a href=https://en.wikipedia.org/wiki/Category_theory>category theory</a>, which is a
 branch of math that aims to reason about the entirety of math through graphs
-called &quot;categories&quot;. While they sound complex, they are a simple but powerful
-abstraction that allow you to generically combine data types.</p><h2 id=semigroups>Semigroups</h2><p>Before we get into monads, we first need to define a <code>Semigroup</code>, since the
+called &quot;categories&quot;. While monoids and semigroups sound complex, they are a
+simple but powerful abstraction that allow you to generically combine data
+types.</p><h2 id=semigroups>Semigroups</h2><p>Before we get into monads, we first need to define a <code>Semigroup</code>, since the
 monad is a strict subset of the semigroup. A semigroup is basically a set with
 an associative multiplication operation defined on it. In Haskell, we don't
 have a multiplication operation, but rather, the <code>&lt;&gt;</code> operator. Both of these
@@ -42,8 +43,7 @@ your semigroup implementation by default.</p><div class=highlight><pre class=chr
 know the identity element in addition.</p><div class=highlight><pre class=chroma><code class=language-haskell data-lang=haskell><span class=kr>instance</span> <span class=kt>Monoid</span> <span class=p>(</span><span class=kt>Point2D</span> <span class=n>a</span> <span class=n>b</span><span class=p>)</span> <span class=kr>where</span>
     <span class=n>mempty</span> <span class=ow>=</span> <span class=kt>Point2D</span> <span class=mi>0</span> <span class=mi>0</span></code></pre></div><p>We can play around with using the methods provided by the monoid class. For
 example, let's define a few points:</p><div class=highlight><pre class=chroma><code class=language-haskell data-lang=haskell><span class=nf>p1</span> <span class=ow>=</span> <span class=kt>Point2D</span> <span class=mi>1</span> <span class=mi>2</span>
-<span class=nf>p2</span> <span class=ow>=</span> <span class=kt>Point2D</span> <span class=mi>2</span> <span class=mi>3</span></code></pre></div><p>We can combine these points using <code>mconcat</code> or <code>&lt;&gt;</code> (since they're the same
-function):</p><div class=highlight><pre class=chroma><code class=language-txt data-lang=txt>mconcat [p1, p2]
+<span class=nf>p2</span> <span class=ow>=</span> <span class=kt>Point2D</span> <span class=mi>2</span> <span class=mi>3</span></code></pre></div><p>We can combine these points using <code>mconcat</code>, <code>&lt;&gt;</code>, or <code>mappend</code>:</p><div class=highlight><pre class=chroma><code class=language-txt data-lang=txt>mconcat [p1, p2]
 
 &gt; Point2D 3 5
 
