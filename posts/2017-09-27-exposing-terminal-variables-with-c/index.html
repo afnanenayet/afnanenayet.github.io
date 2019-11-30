@@ -1,4 +1,4 @@
-<!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="chrome=1"><meta name=HandheldFriendly content="True"><meta name=MobileOptimized content="320"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content="no-referrer"><meta name=description content="A personal site"><link href="https://fonts.googleapis.com/css?family=Open+Sans:400|Old+Standard+TT:400" rel=stylesheet type=text/css><link rel=icon type=image/png href=/favicon_16x16.png sizes=16x16><link rel=icon type=image/png href=/favicon_32x32.png sizes=32x32><link rel=icon type=image/png href=/favicon_128x128.png sizes=128x128><link rel=stylesheet href=/style.css><title>Exposing terminal variables with C</title><link rel=canonical href=https://afnan.io/posts/2017-09-27-exposing-terminal-variables-with-c/></head><body><section id=nav><h1><a href=/>Afnan Enayet</a></h1><ul><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/>Posts</a></li><li><a href=/project/>Projects</a></li><li><a href=https://github.com/afnanenayet>Github</a></li></ul></section><section id=content><h1>Exposing terminal variables with C</h1><div id=sub-header>September 2017 · 2 minute read</div><div class=entry-content><p>I was writing a C program that took in some arguments and printed those
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="chrome=1"><meta name=HandheldFriendly content="True"><meta name=MobileOptimized content="320"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content="no-referrer"><meta name=description content="A personal site"><link href="https://fonts.googleapis.com/css?family=Open+Sans:400|Old+Standard+TT:400" rel=stylesheet type=text/css><link rel=icon type=image/png href=/favicon_16x16.png sizes=16x16><link rel=icon type=image/png href=/favicon_32x32.png sizes=32x32><link rel=icon type=image/png href=/favicon_128x128.png sizes=128x128><link rel=stylesheet href=/style.css><title>Exposing terminal variables with C</title><link rel=canonical href=https://afnan.io/posts/2017-09-27-exposing-terminal-variables-with-c/></head><body><section id=nav><h1><a href=/>Afnan Enayet</a></h1><ul><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/project/>Projects</a></li><li><a href=https://github.com/afnanenayet>Github</a></li></ul></section><section id=content><h1>Exposing terminal variables with C</h1><div id=sub-header>September 2017 · 2 minute read</div><div class=entry-content><p>I was writing a C program that took in some arguments and printed those
 arguments when I encountered some unexpected output -- all of my terminal
 variables.</p><h2 id=code>Code</h2><p>The code to print out a number of variables is as follows, (I decided to
 continue printing variables through <code>UNSIGNED_LONG</code>).</p><div class=highlight><pre class=chroma><code class=language-c data-lang=c><span class=cm>/* Afnan Enayet    leak_data.c
@@ -6,22 +6,22 @@ continue printing variables through <code>UNSIGNED_LONG</code>).</p><div class=h
 </span><span class=cm>* A script written to read terminal variables
 </span><span class=cm>*/</span>
 
-<span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;limits.h&gt;</span><span class=cp>
+<span class=cp>#</span><span class=cp>include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span><span class=cp></span><span class=cp>#</span><span class=cp>include</span> <span class=cpf>&lt;limits.h&gt;</span><span class=cp>
 </span><span class=cp></span>
 <span class=cm>/****** function prototypes ******/</span>
 
-<span class=kt>void</span> <span class=nf>print_vars</span><span class=p>(</span><span class=kt>char</span> <span class=o>**</span><span class=n>args</span><span class=p>);</span>
+<span class=kt>void</span> <span class=nf>print_vars</span><span class=p>(</span><span class=kt>char</span> <span class=o>*</span><span class=o>*</span><span class=n>args</span><span class=p>)</span><span class=p>;</span>
 
 <span class=cm>/****** function definitions ******/</span>
 
-<span class=kt>int</span> <span class=nf>main</span><span class=p>(</span><span class=kt>int</span> <span class=n>argc</span><span class=p>,</span> <span class=kt>char</span> <span class=o>*</span><span class=n>argv</span><span class=p>[])</span>
+<span class=kt>int</span> <span class=nf>main</span><span class=p>(</span><span class=kt>int</span> <span class=n>argc</span><span class=p>,</span> <span class=kt>char</span> <span class=o>*</span><span class=n>argv</span><span class=p>[</span><span class=p>]</span><span class=p>)</span>
 <span class=p>{</span>
-    <span class=n>print_vars</span><span class=p>(</span><span class=n>argv</span><span class=p>);</span>
+    <span class=n>print_vars</span><span class=p>(</span><span class=n>argv</span><span class=p>)</span><span class=p>;</span>
     <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
 <span class=p>}</span>
 
-<span class=kt>void</span> <span class=nf>print_vars</span><span class=p>(</span><span class=kt>char</span> <span class=o>**</span><span class=n>args</span><span class=p>)</span>
+<span class=kt>void</span> <span class=nf>print_vars</span><span class=p>(</span><span class=kt>char</span> <span class=o>*</span><span class=o>*</span><span class=n>args</span><span class=p>)</span>
 <span class=p>{</span>
     <span class=k>const</span> <span class=kt>unsigned</span> <span class=kt>long</span> <span class=n>loop_limit</span> <span class=o>=</span> <span class=n>ULONG_MAX</span><span class=p>;</span>
 
@@ -29,8 +29,8 @@ continue printing variables through <code>UNSIGNED_LONG</code>).</p><div class=h
 </span><span class=c1></span>    <span class=c1>// (should bleed into term vars)
 </span><span class=c1></span>    <span class=c1>// Prints lines in the following format...
 </span><span class=c1></span>    <span class=c1>// address: string corresponding to that address
-</span><span class=c1></span>    <span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;</span> <span class=n>loop_limit</span><span class=p>;</span> <span class=n>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
-        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;%p: %s</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>args</span> <span class=o>+</span> <span class=n>i</span><span class=p>,</span> <span class=n>args</span><span class=p>[</span><span class=n>i</span><span class=p>]);</span>
+</span><span class=c1></span>    <span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;</span> <span class=n>loop_limit</span><span class=p>;</span> <span class=n>i</span><span class=o>+</span><span class=o>+</span><span class=p>)</span> <span class=p>{</span>
+        <span class=n>printf</span><span class=p>(</span><span class=sa></span><span class=s>&#34;</span><span class=s>%p: %s</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>args</span> <span class=o>+</span> <span class=n>i</span><span class=p>,</span> <span class=n>args</span><span class=p>[</span><span class=n>i</span><span class=p>]</span><span class=p>)</span><span class=p>;</span>
     <span class=p>}</span>
 <span class=p>}</span></code></pre></div><p>Compilation: <code>clang leak_data.c -o leak</code></p><h2 id=what-it-gives-us>What it gives us</h2><p>The code runs and prints out the first couple of arguments, if any were supplied.
 The first argument will be the name of the program. The next couple of lines will
@@ -43,13 +43,13 @@ look at the output I got.</p><p>I ran <code>./leak arg1 arg2 arg3</code></p><div
 0x7ffeebc30848: <span class=nv>TERM_SESSION_ID</span><span class=o>=</span>w1t0p0:2143472D-FCA6-48BF-986B-C4BC658CE8A1
 0x7ffeebc30850: <span class=nv>SSH_AUTH_SOCK</span><span class=o>=</span>/private/tmp/com.apple.launchd.Eger9zAfyh/Listeners
 0x7ffeebc30858: <span class=nv>Apple_PubSub_Socket_Render</span><span class=o>=</span>/private/tmp/com.apple.launchd.kys2B1tfHZ/Render
-0x7ffeebc30860: <span class=nv>COLORFGBG</span><span class=o>=</span><span class=m>12</span><span class=p>;</span><span class=m>8</span>
+0x7ffeebc30860: <span class=nv>COLORFGBG</span><span class=o>=</span>12<span class=p>;</span><span class=m>8</span>
 0x7ffeebc30868: <span class=nv>ITERM_PROFILE</span><span class=o>=</span>Default
 0x7ffeebc30870: <span class=nv>XPC_FLAGS</span><span class=o>=</span>0x0
 0x7ffeebc30878: <span class=nv>LANG</span><span class=o>=</span>en_US.UTF-8
 0x7ffeebc30880: <span class=nv>PWD</span><span class=o>=</span>/Users/aenayet/Documents/Programming/ptr_hack
 0x7ffeebc30888: <span class=nv>SHELL</span><span class=o>=</span>/bin/zsh
-0x7ffeebc30890: <span class=nv>TERM_PROGRAM_VERSION</span><span class=o>=</span><span class=m>3</span>.1.2
+0x7ffeebc30890: <span class=nv>TERM_PROGRAM_VERSION</span><span class=o>=</span>3.1.2
 0x7ffeebc30898: <span class=nv>TERM_PROGRAM</span><span class=o>=</span>iTerm.app
 0x7ffeebc308a0: <span class=nv>PATH</span><span class=o>=</span>/Users/aenayet/.cargo/bin:/usr/local/opt/curl/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/TeX/texbin:/usr/local/MacGPG2/bin:/opt/X11/bin
 0x7ffeebc308a8: <span class=nv>DISPLAY</span><span class=o>=</span>/private/tmp/com.apple.launchd.N2bb7ZxPPp/org.macosforge.xquartz:0

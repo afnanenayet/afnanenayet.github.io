@@ -1,4 +1,4 @@
-<!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="chrome=1"><meta name=HandheldFriendly content="True"><meta name=MobileOptimized content="320"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content="no-referrer"><meta name=description content="A personal site"><link href="https://fonts.googleapis.com/css?family=Open+Sans:400|Old+Standard+TT:400" rel=stylesheet type=text/css><link rel=icon type=image/png href=/favicon_16x16.png sizes=16x16><link rel=icon type=image/png href=/favicon_32x32.png sizes=32x32><link rel=icon type=image/png href=/favicon_128x128.png sizes=128x128><link rel=stylesheet href=/style.css><title>Debugging C with GDB and Valgrind</title><link rel=canonical href=https://afnan.io/posts/2017-07-29-debugging-c-with-gdb-and-valgrind/></head><body><section id=nav><h1><a href=/>Afnan Enayet</a></h1><ul><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/>Posts</a></li><li><a href=/project/>Projects</a></li><li><a href=https://github.com/afnanenayet>Github</a></li></ul></section><section id=content><h1>Debugging C with GDB and Valgrind</h1><div id=sub-header>July 2017 · 12 minute read</div><div class=entry-content><p>Debugging C can be a chore, but being able to pinpoint your memory leaks with
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="chrome=1"><meta name=HandheldFriendly content="True"><meta name=MobileOptimized content="320"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content="no-referrer"><meta name=description content="A personal site"><link href="https://fonts.googleapis.com/css?family=Open+Sans:400|Old+Standard+TT:400" rel=stylesheet type=text/css><link rel=icon type=image/png href=/favicon_16x16.png sizes=16x16><link rel=icon type=image/png href=/favicon_32x32.png sizes=32x32><link rel=icon type=image/png href=/favicon_128x128.png sizes=128x128><link rel=stylesheet href=/style.css><title>Debugging C with GDB and Valgrind</title><link rel=canonical href=https://afnan.io/posts/2017-07-29-debugging-c-with-gdb-and-valgrind/></head><body><section id=nav><h1><a href=/>Afnan Enayet</a></h1><ul><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/project/>Projects</a></li><li><a href=https://github.com/afnanenayet>Github</a></li></ul></section><section id=content><h1>Debugging C with GDB and Valgrind</h1><div id=sub-header>July 2017 · 12 minute read</div><div class=entry-content><p>Debugging C can be a chore, but being able to pinpoint your memory leaks with
 Valgrind and monitoring the flow of your program with GDB (or LLDB) can
 speed up the development of your code significantly. It's a significant
 improvement over sticking a bunch of <code>printf</code> statements in your code and
@@ -10,7 +10,7 @@ manager to install <a href=https://gcc.gnu.org>gcc</a> and
 which uses lldb as its debugging tool rather than gdb.</p><p>Installing <a href=http://valgrind.org>Valgrind</a> is similar - fire up your favorite
 package manager, build from source, or download a release directly from the
 webpage. On MacOS, there are some caveats if you're trying to install
-Valgrind on MacOS &gt; 10.12.</p><h2 id=usage>Usage</h2><h3 id=gdblldb>GDB/LLDB</h3><p>GDB and LLDB allow a user to scrutizine the execution of their programs
+Valgrind on MacOS > 10.12.</p><h2 id=usage>Usage</h2><h3 id=gdblldb>GDB/LLDB</h3><p>GDB and LLDB allow a user to scrutizine the execution of their programs
 line by line. You can look at the state of your program, inspecting variables,
 seeing what is executing, and even evaluating arbitrary statements based on
 the state of your program. We will examine how to use these programs.</p><h4 id=the-basics>The basics</h4><p>Both GDB/LLDB provide some basic debugging functions like:</p><ul><li>step next</li><li>step over</li><li>continue execution</li><li>step into</li><li>break</li></ul><p>GDB allows you to inspect your code by viewing its state as it executes
@@ -24,7 +24,7 @@ program. <code>next</code> will execute the current line, and the pause at the n
 This will not go into any functions, it will block gdb until the instructions on
 the current line have been executed. <code>step</code> (aka step into) will actually step
 into the function on the current line. If you have a function call on the current
-line, then GDB will &quot;step into&quot; that function, allowing you to continue debugging
+line, then GDB will "step into" that function, allowing you to continue debugging
 line by line inside the function. <code>finish</code> is like stepping out - it will continue
 execution until the function of the current line finishes executing/until it
 returns.</p><hr><p>You can find a reference for these commands (in GDB)
@@ -40,53 +40,44 @@ use an optimization flag with the debug symbols. The flag is <code>-g</code>, so
 when compiling with gcc, add the <code>-g</code> flag to your list of flags. We will
 explore an example with an example program I created.</p><h3 id=example>Example</h3><h4 id=setup-1>Setup</h4><p>You can download my example source code <a href=https://gist.github.com/afnanenayet/1c0a71b40a67b63a42773fe2a9539f5e>here</a></p><p>You can compile the code with this command</p><div class=highlight><pre class=chroma><code class=language-sh data-lang=sh>gcc -g gdb_valgrind_example.c -o gve -Wall -Wextra -std<span class=o>=</span>c11 -pedantic
 -Wmissing-prototypes -Wstrict-prototypes -Wold-style-definition</code></pre></div><p>Try running the code. It seems like it should work. It's simple, it just
-allocates a string and initializes it to <code>&quot;hello&quot;</code>.</p><p>You can run the code with the following command:</p><pre><code>./gve
-</code></pre><p>The output I got was:</p><pre><code>This next string should be blank...
-zsh: segmentation fault (core dumped)  ./gve
-</code></pre><p>So what happened? Let's step through this program with GDB. Using LLDB should
+allocates a string and initializes it to <code>"hello"</code>.</p><p>You can run the code with the following command:</p><pre><code>./gve</code></pre><p>The output I got was:</p><pre><code>This next string should be blank...
+zsh: segmentation fault (core dumped)  ./gve</code></pre><p>So what happened? Let's step through this program with GDB. Using LLDB should
 be extremely similar.</p><h4 id=debug>Debug</h4><p>In order to start running gdb, we have to give it a program to run. GDB
-takes a binary followed by its arguments to initialize the debug runtime.</p><pre><code>gdb --args gve
-</code></pre><p>If we had arguments, we'd use something like <code>gdb --args gve arg1 arg2 ...</code></p><p>Now GDB is initialized with our program, <code>gve</code> (<em>G</em>DB <em>V</em>algrind <em>E</em>xample)</p><p>Here's what you'll see at first (or something like this)</p><pre><code>GNU gdb (GDB) Fedora 7.12.1-48.fc25
+takes a binary followed by its arguments to initialize the debug runtime.</p><pre><code>gdb --args gve</code></pre><p>If we had arguments, we'd use something like <code>gdb --args gve arg1 arg2 ...</code></p><p>Now GDB is initialized with our program, <code>gve</code> (<em>G</em>DB <em>V</em>algrind <em>E</em>xample)</p><p>Here's what you'll see at first (or something like this)</p><pre><code>GNU gdb (GDB) Fedora 7.12.1-48.fc25
 Copyright (C) 2017 Free Software Foundation, Inc.
-License GPLv3+: GNU GPL version 3 or later &lt;http://gnu.org/licenses/gpl.html&gt;
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.  Type &quot;show copying&quot;
-and &quot;show warranty&quot; for details.
-This GDB was configured as &quot;x86_64-redhat-linux-gnu&quot;.
-Type &quot;show configuration&quot; for configuration details.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-redhat-linux-gnu".
+Type "show configuration" for configuration details.
 For bug reporting instructions, please see:
-&lt;http://www.gnu.org/software/gdb/bugs/&gt;.
+<http://www.gnu.org/software/gdb/bugs>.
 Find the GDB manual and other documentation resources online at:
-&lt;http://www.gnu.org/software/gdb/documentation/&gt;.
-For help, type &quot;help&quot;.
-Type &quot;apropos word&quot; to search for commands related to &quot;word&quot;...
+<http://www.gnu.org/software/gdb/documentation>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
 Reading symbols from gve...(no debugging symbols found)...done.
-(gdb)
-</code></pre><p>We want to set a breakpoint at the <code>main</code> function. Otherwise, GDB will just
+(gdb)</code></pre><p>We want to set a breakpoint at the <code>main</code> function. Otherwise, GDB will just
 run without giving us anything useful to look at.</p><pre><code>(gdb) break main
-Breakpoint 1 at 0x400577
-</code></pre><p>Let's run the program, (just type in <code>run</code>)</p><pre><code>Starting program: /net/ifs-users/afnan/gve
+Breakpoint 1 at 0x400577</code></pre><p>Let's run the program, (just type in <code>run</code>)</p><pre><code>Starting program: /net/ifs-users/afnan/gve
 
-Breakpoint 1, 0x0000000000400577 in main ()
-</code></pre><p>Now GDB is frozen at the beginning of the <code>main</code> function. Let's step through
+Breakpoint 1, 0x0000000000400577 in main ()</code></pre><p>Now GDB is frozen at the beginning of the <code>main</code> function. Let's step through
 the main function and see what's happening to the <code>str</code> variable before and
 after we call <code>init_str</code>.</p><pre><code>Breakpoint 1, main () at gdb_valgrind_example.c:32
 32	    char *str = NULL;
 (gdb) n
-33	    printf(&quot;This next string should be blank...\n&quot;);
+33	    printf("This next string should be blank...\n");
 (gdb) n
 This next string should be blank...
-34	    init_str(str);
-</code></pre><p>Right before we call <code>init_str</code>, let's check the value of <code>str</code> by calling
+34	    init_str(str);</code></pre><p>Right before we call <code>init_str</code>, let's check the value of <code>str</code> by calling
 <code>p str</code></p><pre><code>(gdb) p str
-$1 = 0x0
-</code></pre><p>We can see that <code>str</code> is <code>NULL</code>, as it was assigned. Let's step and see what
+$1 = 0x0</code></pre><p>We can see that <code>str</code> is <code>NULL</code>, as it was assigned. Let's step and see what
 happens after we call <code>init_str</code>. Theoretically, <code>str</code> should be changed
-to &quot;hello&quot; after <code>init_str</code> is called.</p><pre><code>(gdb) n
-35	    printf(&quot;%s\n&quot;, str);
+to "hello" after <code>init_str</code> is called.</p><pre><code>(gdb) n
+35	    printf("%s\n", str);
 (gdb) p str
-$3 = 0x0
-</code></pre><p>We can see that <code>str</code> is still <code>NULL</code>. Now we know the function is not working
+$3 = 0x0</code></pre><p>We can see that <code>str</code> is still <code>NULL</code>. Now we know the function is not working
 as intended. We could do two things: we could rerun the program and step until
 we reach the <code>init_str</code> function call, or we could just set a breakpoint
 directly at the function. Let's set a breakpoint, since it'll be faster.</p><p>We've already gone past the function call, so we will have to restart the
@@ -99,34 +90,31 @@ Starting program: /net/ifs-users/afnan/gve
 
 Breakpoint 1, main () at gdb_valgrind_example.c:32
 32	    char *str = NULL;
-(gdb)
-</code></pre><p>Our breakpoint set earlier is still there (at <code>main</code>). We don't want to
+(gdb)</code></pre><p>Our breakpoint set earlier is still there (at <code>main</code>). We don't want to
 step all the way to the function, so let's continue until we hit the
 next breakpoint.</p><pre><code>(gdb) c
 Continuing.
 This next string should be blank...
 
 Breakpoint 2, init_str (str=0x0) at gdb_valgrind_example.c:25
-25	    str = malloc(5);
-</code></pre><p>Now we've reached the start of the <code>init_str</code> function. GDB tells us which
+25	    str = malloc(5);</code></pre><p>Now we've reached the start of the <code>init_str</code> function. GDB tells us which
 file and line the breakpoint is one. It also tells us the value of the argument:
 <code>str = 0x0</code>. So we know <code>str=NULL</code> when <code>init_str</code> is starting. Let's step through
 the function, inspecting the variables as we go through, so we can see what's going
 on.</p><pre><code>25	    str = malloc(5);
 (gdb) n
-26	    strcpy(str, &quot;hello&quot;);
+26	    strcpy(str, "hello");
 (gdb) p str
-$4 = 0x602420 &quot;&quot;
+$4 = 0x602420 ""
 (gdb) n
 27	}
 (gdb) p str
-$5 = 0x602420 &quot;hello&quot;
+$5 = 0x602420 "hello"
 (gdb) n
 main () at gdb_valgrind_example.c:35
-35	    printf(&quot;%s\n&quot;, str);
+35	    printf("%s\n", str);
 (gdb) p str
-$6 = 0x0
-</code></pre><p>It looks like <code>str</code> gets allocated correctly as evidence by <code>$4</code>. It is assigned
+$6 = 0x0</code></pre><p>It looks like <code>str</code> gets allocated correctly as evidence by <code>$4</code>. It is assigned
 correctly with <code>strcpy</code>, but when we return, <code>str</code> becomes <code>NULL</code> again.</p><p>This means that we're not actually changing <code>str</code> outside of the scope of
 <code>init_str</code>. This is because we need some pointer indirection - to affect a
 variable outside of its enclosing scope, we need a pointer to that variable.
@@ -143,31 +131,31 @@ fix the program:</p><div class=highlight><pre class=chroma><code class=language-
 </span><span class=cm> *
 </span><span class=cm> */</span>
 
-<span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;stdlib.h&gt;</span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;string.h&gt;</span><span class=cp>
+<span class=cp>#</span><span class=cp>include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span><span class=cp></span><span class=cp>#</span><span class=cp>include</span> <span class=cpf>&lt;stdlib.h&gt;</span><span class=cp>
+</span><span class=cp></span><span class=cp>#</span><span class=cp>include</span> <span class=cpf>&lt;string.h&gt;</span><span class=cp>
 </span><span class=cp></span>
 <span class=cm>/****** Function prototypes ******/</span>
 
-<span class=k>static</span> <span class=kt>void</span> <span class=nf>init_str</span><span class=p>(</span><span class=kt>char</span> <span class=o>**</span><span class=n>str</span><span class=p>);</span>
+<span class=k>static</span> <span class=kt>void</span> <span class=nf>init_str</span><span class=p>(</span><span class=kt>char</span> <span class=o>*</span><span class=o>*</span><span class=n>str</span><span class=p>)</span><span class=p>;</span>
 
 <span class=cm>/****** Function definitions *****/</span>
 
 <span class=cm>/* Initializes and creates a string that says &#34;hello&#34;
 </span><span class=cm>*/</span>
-<span class=k>static</span> <span class=kt>void</span> <span class=nf>init_str</span><span class=p>(</span><span class=kt>char</span> <span class=o>**</span><span class=n>str</span><span class=p>)</span>
+<span class=k>static</span> <span class=kt>void</span> <span class=nf>init_str</span><span class=p>(</span><span class=kt>char</span> <span class=o>*</span><span class=o>*</span><span class=n>str</span><span class=p>)</span>
 <span class=p>{</span>
-    <span class=o>*</span><span class=n>str</span> <span class=o>=</span> <span class=n>malloc</span><span class=p>(</span><span class=mi>5</span><span class=p>);</span>
-    <span class=n>strcpy</span><span class=p>(</span><span class=o>*</span><span class=n>str</span><span class=p>,</span> <span class=s>&#34;hello&#34;</span><span class=p>);</span>
+    <span class=o>*</span><span class=n>str</span> <span class=o>=</span> <span class=n>malloc</span><span class=p>(</span><span class=mi>5</span><span class=p>)</span><span class=p>;</span>
+    <span class=n>strcpy</span><span class=p>(</span><span class=o>*</span><span class=n>str</span><span class=p>,</span> <span class=sa></span><span class=s>&#34;</span><span class=s>hello</span><span class=s>&#34;</span><span class=p>)</span><span class=p>;</span>
 <span class=p>}</span>
 
 <span class=kt>int</span> <span class=nf>main</span><span class=p>(</span><span class=kt>void</span><span class=p>)</span>
 <span class=p>{</span>
     <span class=c1>// Allocating a string with the literal &#34;hello&#34;
 </span><span class=c1></span>    <span class=kt>char</span> <span class=o>*</span><span class=n>str</span> <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span>
-    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;This next string should say hello...</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>);</span>
-    <span class=n>init_str</span><span class=p>(</span><span class=o>&amp;</span><span class=n>str</span><span class=p>);</span>
-    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;%s</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>str</span><span class=p>);</span>
+    <span class=n>printf</span><span class=p>(</span><span class=sa></span><span class=s>&#34;</span><span class=s>This next string should say hello...</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>)</span><span class=p>;</span>
+    <span class=n>init_str</span><span class=p>(</span><span class=o>&amp;</span><span class=n>str</span><span class=p>)</span><span class=p>;</span>
+    <span class=n>printf</span><span class=p>(</span><span class=sa></span><span class=s>&#34;</span><span class=s>%s</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>str</span><span class=p>)</span><span class=p>;</span>
     <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
 <span class=p>}</span></code></pre></div><p>Let's go ahead and check that the program is working as intended. Recompile
 the file and load it with GDB. Let's set a breakpoint right before and
@@ -180,19 +168,18 @@ Breakpoint 2 at 0x4005a2: file gdb_valgrind_example.c, line 35.
 Starting program: /net/ifs-users/afnan/gve
 
 Breakpoint 1, main () at gdb_valgrind_example.c:33
-33	    printf(&quot;This next string should say hello...\n&quot;);
+33	    printf("This next string should say hello...\n");
 (gdb) p str
 $1 = 0x0
 (gdb) n
 This next string should say hello...
-34	    init_str(&amp;str);
+34	    init_str(&str);
 (gdb) n
 
 Breakpoint 2, main () at gdb_valgrind_example.c:35
-35	    printf(&quot;%s\n&quot;, str);
+35	    printf("%s\n", str);
 (gdb) p str
-$2 = 0x602420 &quot;hello&quot;
-</code></pre><p>We can see that the string now reads &quot;hello&quot;. The program has been corrected.</p><h3 id=valgrind>Valgrind</h3><p>Even if a program is working correctly or appears to be working correctly, memory
+$2 = 0x602420 "hello"</code></pre><p>We can see that the string now reads "hello". The program has been corrected.</p><h3 id=valgrind>Valgrind</h3><p>Even if a program is working correctly or appears to be working correctly, memory
 errors could be present that you'll never see, or will pop up seemingly randomly
 in a manner that makes it difficult to diagnose with GDB.</p><p>Valgrind is a tool that inspects your binary to see if there are any memory errors
 or leaks. It's a very powerful tool that you should use to inspect your programs
@@ -244,8 +231,7 @@ hello
 ==27065==         suppressed: 0 bytes in 0 blocks
 ==27065==
 ==27065== For counts of detected and suppressed errors, rerun with: -v
-==27065== ERROR SUMMARY: 4 errors from 3 contexts (suppressed: 0 from 0)
-</code></pre><p>We have a memory leak! We've lost 5 bytes from where we called <code>malloc</code> in
+==27065== ERROR SUMMARY: 4 errors from 3 contexts (suppressed: 0 from 0)</code></pre><p>We have a memory leak! We've lost 5 bytes from where we called <code>malloc</code> in
 the <code>init_str</code> method. This means that we forgot to free the string that
 we allocated. Let's fix this and then run Valgrind again.</p><p>Here is the corrected program:</p><div class=highlight><pre class=chroma><code class=language-c data-lang=c><span class=cm>/* gdb_valgrind_example.c    Afnan Enayet
 </span><span class=cm> *
@@ -258,31 +244,31 @@ we allocated. Let's fix this and then run Valgrind again.</p><p>Here is the corr
 </span><span class=cm> *
 </span><span class=cm> */</span>
 
-<span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;stdlib.h&gt;</span><span class=cp>
-</span><span class=cp>#include</span> <span class=cpf>&lt;string.h&gt;</span><span class=cp>
+<span class=cp>#</span><span class=cp>include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span><span class=cp></span><span class=cp>#</span><span class=cp>include</span> <span class=cpf>&lt;stdlib.h&gt;</span><span class=cp>
+</span><span class=cp></span><span class=cp>#</span><span class=cp>include</span> <span class=cpf>&lt;string.h&gt;</span><span class=cp>
 </span><span class=cp></span>
 <span class=cm>/****** Function prototypes ******/</span>
-<span class=k>static</span> <span class=kt>void</span> <span class=nf>init_str</span><span class=p>(</span><span class=kt>char</span> <span class=o>**</span><span class=n>str</span><span class=p>);</span>
+<span class=k>static</span> <span class=kt>void</span> <span class=nf>init_str</span><span class=p>(</span><span class=kt>char</span> <span class=o>*</span><span class=o>*</span><span class=n>str</span><span class=p>)</span><span class=p>;</span>
 
 <span class=cm>/****** Function definitions *****/</span>
 
 <span class=cm>/* Initializes and creates a string that says &#34;hello&#34;
 </span><span class=cm>*/</span>
-<span class=k>static</span> <span class=kt>void</span> <span class=nf>init_str</span><span class=p>(</span><span class=kt>char</span> <span class=o>**</span><span class=n>str</span><span class=p>)</span>
+<span class=k>static</span> <span class=kt>void</span> <span class=nf>init_str</span><span class=p>(</span><span class=kt>char</span> <span class=o>*</span><span class=o>*</span><span class=n>str</span><span class=p>)</span>
 <span class=p>{</span>
-    <span class=o>*</span><span class=n>str</span> <span class=o>=</span> <span class=n>malloc</span><span class=p>(</span><span class=mi>5</span> <span class=o>*</span> <span class=k>sizeof</span><span class=p>(</span><span class=kt>char</span><span class=p>));</span>
-    <span class=n>strcpy</span><span class=p>(</span><span class=o>*</span><span class=n>str</span><span class=p>,</span> <span class=s>&#34;hello&#34;</span><span class=p>);</span>
+    <span class=o>*</span><span class=n>str</span> <span class=o>=</span> <span class=n>malloc</span><span class=p>(</span><span class=mi>5</span> <span class=o>*</span> <span class=k>sizeof</span><span class=p>(</span><span class=kt>char</span><span class=p>)</span><span class=p>)</span><span class=p>;</span>
+    <span class=n>strcpy</span><span class=p>(</span><span class=o>*</span><span class=n>str</span><span class=p>,</span> <span class=sa></span><span class=s>&#34;</span><span class=s>hello</span><span class=s>&#34;</span><span class=p>)</span><span class=p>;</span>
 <span class=p>}</span>
 
 <span class=kt>int</span> <span class=nf>main</span><span class=p>(</span><span class=kt>void</span><span class=p>)</span>
 <span class=p>{</span>
     <span class=c1>// Allocating a string with the literal &#34;hello&#34;
 </span><span class=c1></span>    <span class=kt>char</span> <span class=o>*</span><span class=n>str</span> <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span>
-    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;This next string should say hello...</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>);</span>
-    <span class=n>init_str</span><span class=p>(</span><span class=o>&amp;</span><span class=n>str</span><span class=p>);</span>
-    <span class=n>printf</span><span class=p>(</span><span class=s>&#34;%s</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>str</span><span class=p>);</span>
-    <span class=n>free</span><span class=p>(</span><span class=n>str</span><span class=p>);</span>
+    <span class=n>printf</span><span class=p>(</span><span class=sa></span><span class=s>&#34;</span><span class=s>This next string should say hello...</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>)</span><span class=p>;</span>
+    <span class=n>init_str</span><span class=p>(</span><span class=o>&amp;</span><span class=n>str</span><span class=p>)</span><span class=p>;</span>
+    <span class=n>printf</span><span class=p>(</span><span class=sa></span><span class=s>&#34;</span><span class=s>%s</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>str</span><span class=p>)</span><span class=p>;</span>
+    <span class=n>free</span><span class=p>(</span><span class=n>str</span><span class=p>)</span><span class=p>;</span>
     <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
 <span class=p>}</span></code></pre></div><p>Here is the Valgrind output:</p><pre><code>[afnan@moose]~% valgrind --tool=memcheck --leak-check=full ./gve
 ==27500== Memcheck, a memory error detector
@@ -317,6 +303,5 @@ hello
 ==27500== All heap blocks were freed -- no leaks are possible
 ==27500==
 ==27500== For counts of detected and suppressed errors, rerun with: -v
-==27500== ERROR SUMMARY: 3 errors from 2 contexts (suppressed: 0 from 0)
-</code></pre><p>There are some errors, but we fixed the memory leak! I will address these
+==27500== ERROR SUMMARY: 3 errors from 2 contexts (suppressed: 0 from 0)</code></pre><p>There are some errors, but we fixed the memory leak! I will address these
 errors later or in another blog post.</p><p>Happy debugging!</p></div></section></body></html>
