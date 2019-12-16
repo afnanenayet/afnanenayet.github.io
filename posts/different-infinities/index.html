@@ -1,0 +1,128 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="chrome=1"><meta name=HandheldFriendly content="True"><meta name=MobileOptimized content="320"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content="no-referrer"><meta name=description content="A personal site"><link href="https://fonts.googleapis.com/css?family=Open+Sans:400|Old+Standard+TT:400" rel=stylesheet type=text/css><link rel=icon type=image/png href=/favicon_16x16.png sizes=16x16><link rel=icon type=image/png href=/favicon_32x32.png sizes=32x32><link rel=icon type=image/png href=/favicon_128x128.png sizes=128x128><link rel=stylesheet href=/style.css><title>My Infinity is Bigger Than Yours</title><link rel=canonical href=https://afnan.io/posts/different-infinities/><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css integrity=sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq crossorigin=anonymous><script defer src=https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js integrity=sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz crossorigin=anonymous></script><script defer src=https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js integrity=sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI crossorigin=anonymous onload=renderMathInElement(document.body);></script></head><body><section id=nav><h1><a href=/>Afnan Enayet</a></h1><ul><li><a href=/about/>About</a></li><li><a href=/project/>Projects</a></li><li><a href=https://github.com/afnanenayet>Github</a></li></ul></section><section id=content><h1>My Infinity is Bigger Than Yours</h1><div id=sub-header>December 2019 · 9 minute read</div><div class=entry-content><h2 id=what-is-infinity>What is Infinity?</h2><p>We are going to start this post by trying to figure out what infinity is. What
+do you think of when you think of infinity? Most people know that it's this
+uncountable number or thing (or is it...?). There is no beginning or end, it
+just goes on forever.</p><p><span class=math>\(\infty\)</span> is defined slightly differently based on what field of math its used
+in. For example, in calculus (or real analysis), infinity is used to define an
+unbounded limit. Far more interesting is how infinity is used in set theory.
+Georg Cantor created set theory and was fascinated by the idea of infinite
+sets, such as the set of all natural numbers, or the set of real numbers. He
+had this notion that there are different "sizes" of infinity, that different
+sets can be infinite, but there are sets that are bigger than others even
+amongst these infinite sets.</p><p>Cantor realized that there are different infinite sets with different
+cardinalities. Some infinite sets are bigger than others, but how could that
+be? I mean, they're both <em>infinite</em>, there is no actual "count," so to speak.
+How could you possibly begin to say that one infinity is bigger than another?</p><h2 id=a-little-bit-of-set-theory>A Little Bit of Set Theory</h2><p>In order to explain how we can have different sizes of infinity, we need to
+formalize some mathematical definitions concerning sets, functions, and
+cardinality.</p><h3 id=set-and-functions>Set and Functions</h3><p>Most people are familiar with the basics of functions, so a lot of this
+shouldn't be new information. I just want to clear up a little bit of notation.</p><p>Let's suppose we have a function <span class=math>\(f\)</span> that provides some sort of relationship
+or mapping from the set <span class=math>\(X\)</span> to the set <span class=math>\(Y\)</span>. We can denote this as <span class=math>\(f: X
+\to Y\)</span>. We call <span class=math>\(X\)</span> the <em>domain</em> of the function, and <span class=math>\(Y\)</span> the <em>codomain</em>.
+The codomain is the set of outputs a function can <em>possibly</em> have. Now, if we
+know what the input set actually is, we can determine the <em>image</em> of the
+function, which is simply the set of the outputs that the function actually
+produces.</p><p>As an example, I will define <span class=math>\(f\)</span> as <span class=math>\(f(x) = 2x\)</span>, and say that <span class=math>\(f: R \to
+R\)</span>. The function <span class=math>\(f\)</span>, in this example, is a function that provides a mapping
+from the set of real numbers to the set of real numbers. Now suppose that I
+have a set of inputs I am using: <span class=math>\(i = \{0, 1, 2\}\)</span>. The image (also known as
+range) is <span class=math>\(r = \{0, 2, 4\}\)</span>, because those are the values that the function
+actually produced. The codomain, just to reiterate, is the set of outputs that
+the function <em>can</em> produce, whether or not we actually produce all of them.</p><p>In set theory, there are three types of functions that are critical to
+understanding cardinality and the concept of infinite sets:</p><ul><li>injective functions (1-1 mappings)</li><li>surjective functions (onto mappings)</li><li>bijective functions</li></ul><h4 id=injective-functions>Injective Functions</h4><p>We define a function <span class=math>\(f: X \to Y\)</span> as injective if and only if:</p><p><span class=math>\[
+\forall a, b \in X, f(a) = f(b) \implies a = b
+\]</span></p><p>What this is really saying is that the function has to have a unique mapping
+between the set <span class=math>\(X\)</span> and set <span class=math>\(Y\)</span>. For every element in <span class=math>\(X\)</span>, there is a
+unique element in <span class=math>\(Y\)</span>, so the only time that <span class=math>\(f(x) = f(y)\)</span> is if <span class=math>\(x = y\)</span>.
+If there is ever a case where different input values that lead to the same
+output value, the function is not an injective function. For example, if we
+define <span class=math>\(f(x) = x^2\)</span>, we can trivially prove that it's not injective. <span class=math>\(f(-2)
+= f(2)\)</span>, but <span class=math>\(-2 \neq 2\)</span>. This fails the test for injective functions
+because it is not a unique mapping between <span class=math>\(X\)</span> and <span class=math>\(Y\)</span>. The uniqueness
+factor also makes it clear why bijective functions are often referred to as a
+1-1 correspondence or a 1-1 mapping.</p><h4 id=surjective-functions>Surjective Functions</h4><p>A function <span class=math>\(f: X \to Y\)</span> is surjective if and only if:</p><p><span class=math>\[
+\forall y \in Y, \exists \in X, f(x) = y
+\]</span></p><p>To break this down a little more, we have this set <span class=math>\(Y\)</span>, which represents
+every possible output from the function <span class=math>\(f\)</span>. According to this definition,
+a function is surjective if for every value in the set <span class=math>\(Y\)</span>, there exists some
+value in <span class=math>\(X\)</span> such that <span class=math>\(f(x) = y\)</span>. Really, we're just saying that for every
+element in the output set, there needs to be <em>some</em> value in the input set that
+can produce the output.</p><p>Let's go back to having <span class=math>\(f(x) = x^2\)</span>. Is this surjective? I don't know,
+because we don't know what the mapping is between sets. If we define <span class=math>\(f: Z \to
+N\)</span> (<span class=math>\(f\)</span> is a function from the integers to natural numbers), then yes! It is
+surjective, because for every natural number, there is some integer where
+<span class=math>\(f(x) = y\)</span>. Also, remember that it doesn't have to be a 1-1 mapping like with
+injective functions. If we defined <span class=math>\(f: Z \to Z\)</span> (a mapping from the natural
+numbers to the natural numbers), then <span class=math>\(f\)</span> is no longer surjective, as it
+can't produce any negative integers, and does not hit every element in the
+codomain.</p><p>The easy way to summarize this is that for every element in <span class=math>\(Y\)</span>, there's
+<em>some</em> element in <span class=math>\(X\)</span> that can produce it given our function, and it doesn't
+necessarily have to be unique.</p><h4 id=bijective-functions>Bijective Functions</h4><p>This part is easy, a bijective function must meet the criteria for both
+injective and surjective functions.</p><h3 id=cardinality>Cardinality</h3><p>You may be wondering what these different types of functions have to do with
+cardinality. Well, the way we compare the cardinalities of different sets is by
+proving that functions that meet certain criteria exist between these sets.
+Given two sets: <span class=math>\(X\)</span> and <span class=math>\(Y\)</span>, we have three cases (these can be trivially
+flipped for the greater than and greater than or equal to cases).</p><ul><li><span class=math>\(|X| = |Y|\)</span></li><li><span class=math>\(|X| \leq |Y|\)</span></li><li><span class=math>\(|X| < |Y|\)</span></li></ul><p>In order to prove that <span class=math>\(|X| = |Y|\)</span>, we need to define a bijection between
+<span class=math>\(X\)</span> and <span class=math>\(Y\)</span>. Establishing the bijection means that every element in <span class=math>\(Y\)</span>
+has only one corresponding element in <span class=math>\(X\)</span> and vice versa, which means that
+they have to have the same number of elements, which is why we can say their
+cardinalities are equal.</p><p>To say that <span class=math>\(|X| \leq |Y|\)</span>, we define an injection from <span class=math>\(X
+\to Y\)</span>. This says that for every element in <span class=math>\(X\)</span>, there is a unique
+corresponding element in <span class=math>\(Y\)</span>, but it's not necessarily that case that we can
+produce every element in <span class=math>\(Y\)</span>, so in effect we are proving that <span class=math>\(X\)</span>
+corresponds to a subset of <span class=math>\(Y\)</span>.</p><p>In order to say that <span class=math>\(|X| < |Y|\)</span> (a strict less than, which is
+different from less than or equal to), we say that there is an injection from
+<span class=math>\(X\)</span> to <span class=math>\(Y\)</span>, but no surjection, which means that while we have unique
+mappings between <span class=math>\(X\)</span> and <span class=math>\(Y\)</span>, we know that we can't cover every element in
+<span class=math>\(Y\)</span>, so <span class=math>\(X\)</span> has to correspond to a strict subset of <span class=math>\(Y\)</span>.</p><h3 id=infinite-cardinality>Infinite Cardinality</h3><p>It's pretty easy to reason about proving cardinality relationships between
+sets, but it turns out that you can do it for infinite sets too. Let's take the
+set of natural numbers (these are the integers that are greater than or equal
+to zero). It's an infinite set of numbers, and I'm going to say that the set of
+even natural numbers has the same cardinality as the set of natural numbers.
+They are infinite, but have the same size. How would we go about proving this?</p><p>Let's say the set of natural numbers is a set called <span class=math>\(N\)</span>, and the set of even
+natural numbers is called <span class=math>\(E\)</span>. I'm going to define a function <span class=math>\(f: N \to E\)</span>
+such that <span class=math>\(f(n) = 2n\)</span>. It's pretty easy to see that it's surjective, every
+even number can be produced by doubling an odd number, regardless of how big it
+is, so we know it works and will extend infinitely. We also know it's
+injective, because for every unique natural number, the doubling operation will
+provide a set of unique even numbers. If you doubt me, try to think of a
+counterexample. Is there any even natural number that can't be produced by
+doubling a natural number? Is there any case where doubling two different
+natural numbers will produce the same even number? It's almost unbelievable
+because it is so simple, but that's pretty much how it goes. The basic idea is
+intuitive: we say that two sets have the same size if you can basically
+"assign" every element from one set to an element to the other set. If we have
+a sound pairing between elements from both sets, they <em>must</em> have the same
+number of elements.</p><p>In my opinion, this is a boring result. Two infinite sets that have the same
+cardinality? I think the opposite is far more interesting: sets that are
+infinite that <em>don't</em> have the same cardinality.</p><p>We are going to use a technique by Georg Cantor is called the "diagonal
+argument" to show that there exist sets that do not have a 1-1 correspondence
+with <span class=math>\(N\)</span> (the set of natural numbers).</p><p>We start by constructing a set that we will call <span class=math>\(B\)</span> that consists of every
+possible sequence of infinite binary sequences and is bijective with <span class=math>\(N\)</span>. The
+set <span class=math>\(B\)</span> is an enumeration over all of them.</p><p><span class=math>\[
+b_1 = \{ 0, 0, 0, 0, \cdots \} \\
+b_2 = \{ 1, 1, 0, 0, \cdots \} \\
+b_3 = \{ 1, 1, 0, 0, \cdots \} \\
+b_4 = \{ 1, 1, 1, 1, \cdots \}
+\]</span></p><p>Given this sequence, we are going to get a number from the diagonals in the
+sequence. We are going to take the <span class=math>\(n^{th}\)</span> element from <span class=math>\(b_n\)</span> and make
+that the <span class=math>\(n^{th}\)</span> digit of the new number (the numbers are bolded).</p><p><span class=math>\[
+b_1 = \{ \textbf{0}, 0, 0, 0, \cdots \} \\
+b_2 = \{ 1, \textbf{1}, 0, 0, \cdots \} \\
+b_3 = \{ 1, 1, \textbf{0}, 0, \cdots \} \\
+b_4 = \{ 1, 1, 1, \textbf{1}, \cdots \}
+\]</span></p><p>So, our new number is <span class=math>\(0101 \dots\)</span>. We will create a new number by taking the
+binary complement of the number (we're just flipping the 0s and 1s), to create
+<span class=math>\(1010 \dots\)</span>.</p><p>Do you remember how I told you that that we constructed the set <span class=math>\(B\)</span> as an
+enumeration of every possible binary sequence? If that's true then how could we
+construct the new number? We know that this new number doesn't exist in the set
+<span class=math>\(B\)</span> because every digit at each position in the new number has to differ from
+the existing numbers in the set, because we specifically took the complement at
+each position. If you recall, <span class=math>\(B\)</span> is the set of all infinite binary
+sequences, and was constructed to have a binary sequence for every natural
+number. We just identified a binary sequence that's not in <span class=math>\(B\)</span>, which is
+contradictory. If there exists an extra number, that means that <span class=math>\(B\)</span> has at
+least one more number than the set of natural numbers, so we lose the bijection
+between <span class=math>\(B\)</span> and <span class=math>\(N\)</span>, meaning that <span class=math>\(|B| > |N|\)</span>.</p><p>There are two types of infinite sets: sets that are <em>countably</em> infinite and
+<em>uncountably</em> infinite sets. Countably infinite sets are bijective with the set
+of natural numbers, whereas uncountably infinite sets cannot. We just proved
+that uncountably infinite sets exist, and it turns out that infinity can be
+countable too.</p></div></section></body></html>
