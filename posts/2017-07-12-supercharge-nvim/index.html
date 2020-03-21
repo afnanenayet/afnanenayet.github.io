@@ -21,7 +21,7 @@ available on the dein Github page, which has been linked above.</p><p>The dein i
 you run the installer script. I ended up using</p><div class=highlight><pre class=chroma><code class=language-bash data-lang=bash>./installer.sh ~/.config/nvim/bundle/repos</code></pre></div><p>So I could easily manage dein as with any other plugin.</p><p>Your plugin base directory will probably be: <code>~/.config/nvim/bundle</code>.</p><p>You will probably also want to use an absolute path rather than a relative
 path like I posted above</p><h3 id=installing-plugins>Installing plugins</h3><p>Installing plugins with dein is extremely easy, you simply add a line in
 your <code>init.vim</code> file. After the <code>dein.begin</code> line, add another line with
-the format</p><pre><code class=language-vimscript data-lang=vimscript>call dein#add('github_username'/'project_name')</code></pre><p>This will prompt dein to clone the repo into your <code>bundle/repos</code> directory.
+the format</p><pre><code class=language-vimscript data-lang=vimscript>call dein#add(&#39;github_username&#39;/&#39;project_name&#39;)</code></pre><p>This will prompt dein to clone the repo into your <code>bundle/repos</code> directory.
 Dein will automatically pull from Github to keep your plugins updated. If
 you want to remove a plugin, simply delete the line that specifies that plugin
 and Dein will remove it for you.</p><h3 id=recommended-plugins>Recommended plugins</h3><p>These are the plugins I use for autocompletion:</p><ul><li><a href=https://github.com/Shougo/deoplete.nvim>deoplete</a>: the actual autocompletion engine. Note that it won't handle

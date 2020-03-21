@@ -6,22 +6,22 @@ continue printing variables through <code>UNSIGNED_LONG</code>).</p><div class=h
 </span><span class=cm>* A script written to read terminal variables
 </span><span class=cm>*/</span>
 
-<span class=cp>#</span><span class=cp>include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
-</span><span class=cp></span><span class=cp>#</span><span class=cp>include</span> <span class=cpf>&lt;limits.h&gt;</span><span class=cp>
+<span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;limits.h&gt;</span><span class=cp>
 </span><span class=cp></span>
 <span class=cm>/****** function prototypes ******/</span>
 
-<span class=kt>void</span> <span class=nf>print_vars</span><span class=p>(</span><span class=kt>char</span> <span class=o>*</span><span class=o>*</span><span class=n>args</span><span class=p>)</span><span class=p>;</span>
+<span class=kt>void</span> <span class=nf>print_vars</span><span class=p>(</span><span class=kt>char</span> <span class=o>**</span><span class=n>args</span><span class=p>);</span>
 
 <span class=cm>/****** function definitions ******/</span>
 
-<span class=kt>int</span> <span class=nf>main</span><span class=p>(</span><span class=kt>int</span> <span class=n>argc</span><span class=p>,</span> <span class=kt>char</span> <span class=o>*</span><span class=n>argv</span><span class=p>[</span><span class=p>]</span><span class=p>)</span>
+<span class=kt>int</span> <span class=nf>main</span><span class=p>(</span><span class=kt>int</span> <span class=n>argc</span><span class=p>,</span> <span class=kt>char</span> <span class=o>*</span><span class=n>argv</span><span class=p>[])</span>
 <span class=p>{</span>
-    <span class=n>print_vars</span><span class=p>(</span><span class=n>argv</span><span class=p>)</span><span class=p>;</span>
+    <span class=n>print_vars</span><span class=p>(</span><span class=n>argv</span><span class=p>);</span>
     <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
 <span class=p>}</span>
 
-<span class=kt>void</span> <span class=nf>print_vars</span><span class=p>(</span><span class=kt>char</span> <span class=o>*</span><span class=o>*</span><span class=n>args</span><span class=p>)</span>
+<span class=kt>void</span> <span class=nf>print_vars</span><span class=p>(</span><span class=kt>char</span> <span class=o>**</span><span class=n>args</span><span class=p>)</span>
 <span class=p>{</span>
     <span class=k>const</span> <span class=kt>unsigned</span> <span class=kt>long</span> <span class=n>loop_limit</span> <span class=o>=</span> <span class=n>ULONG_MAX</span><span class=p>;</span>
 
@@ -29,8 +29,8 @@ continue printing variables through <code>UNSIGNED_LONG</code>).</p><div class=h
 </span><span class=c1></span>    <span class=c1>// (should bleed into term vars)
 </span><span class=c1></span>    <span class=c1>// Prints lines in the following format...
 </span><span class=c1></span>    <span class=c1>// address: string corresponding to that address
-</span><span class=c1></span>    <span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;</span> <span class=n>loop_limit</span><span class=p>;</span> <span class=n>i</span><span class=o>+</span><span class=o>+</span><span class=p>)</span> <span class=p>{</span>
-        <span class=n>printf</span><span class=p>(</span><span class=sa></span><span class=s>&#34;</span><span class=s>%p: %s</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>args</span> <span class=o>+</span> <span class=n>i</span><span class=p>,</span> <span class=n>args</span><span class=p>[</span><span class=n>i</span><span class=p>]</span><span class=p>)</span><span class=p>;</span>
+</span><span class=c1></span>    <span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;</span> <span class=n>loop_limit</span><span class=p>;</span> <span class=n>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+        <span class=n>printf</span><span class=p>(</span><span class=s>&#34;%p: %s</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>args</span> <span class=o>+</span> <span class=n>i</span><span class=p>,</span> <span class=n>args</span><span class=p>[</span><span class=n>i</span><span class=p>]);</span>
     <span class=p>}</span>
 <span class=p>}</span></code></pre></div><p>Compilation: <code>clang leak_data.c -o leak</code></p><h2 id=what-it-gives-us>What it gives us</h2><p>The code runs and prints out the first couple of arguments, if any were supplied.
 The first argument will be the name of the program. The next couple of lines will

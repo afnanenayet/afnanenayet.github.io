@@ -34,20 +34,20 @@ the stack, and then after you get through all of the nodes on the stack,
 and you add all of those nodes to the set of visited nodes. When you are
 traversing down the stack, don't visit already visited nodes, and if you
 come across a node in the stack, you know you have a cycle.</p><p>If you get through the entire graph without coming across a node in the
-stack, the graph is acyclic.</p><p>The pseudocode looks something like this.</p><div class=highlight><pre class=chroma><code class=language-python data-lang=python><span class=k>def</span> <span class=nf>check</span><span class=p>(</span><span class=n>graph</span><span class=p>)</span><span class=p>:</span>
-    <span class=n>visited</span><span class=p>,</span> <span class=n>unvisited</span><span class=p>,</span> <span class=n>stack</span> <span class=o>=</span> <span class=nb>set</span><span class=p>(</span><span class=p>)</span><span class=p>,</span> <span class=nb>set</span><span class=p>(</span><span class=p>)</span><span class=p>,</span> <span class=nb>set</span><span class=p>(</span><span class=p>)</span>
+stack, the graph is acyclic.</p><p>The pseudocode looks something like this.</p><div class=highlight><pre class=chroma><code class=language-python data-lang=python><span class=k>def</span> <span class=nf>check</span><span class=p>(</span><span class=n>graph</span><span class=p>):</span>
+    <span class=n>visited</span><span class=p>,</span> <span class=n>unvisited</span><span class=p>,</span> <span class=n>stack</span> <span class=o>=</span> <span class=nb>set</span><span class=p>(),</span> <span class=nb>set</span><span class=p>(),</span> <span class=nb>set</span><span class=p>()</span>
 
     <span class=k>while</span> <span class=nb>len</span><span class=p>(</span><span class=n>unvisited</span><span class=p>)</span> <span class=o>&gt;</span> <span class=mi>0</span><span class=p>:</span>
         <span class=n>root</span> <span class=o>=</span> <span class=n>unvisited</span><span class=o>.</span><span class=n>remove</span><span class=p>(</span><span class=n>random</span><span class=p>)</span>
 
-        <span class=k>if</span> <span class=n>helper</span><span class=p>(</span><span class=n>graph</span><span class=p>,</span> <span class=n>root</span><span class=p>,</span> <span class=n>visited</span><span class=p>,</span> <span class=n>unvisited</span><span class=p>,</span> <span class=n>stack</span><span class=p>)</span><span class=p>:</span>
+        <span class=k>if</span> <span class=n>helper</span><span class=p>(</span><span class=n>graph</span><span class=p>,</span> <span class=n>root</span><span class=p>,</span> <span class=n>visited</span><span class=p>,</span> <span class=n>unvisited</span><span class=p>,</span> <span class=n>stack</span><span class=p>):</span>
             <span class=k>return</span> <span class=bp>True</span>
     <span class=k>return</span> <span class=bp>False</span>
 
 
-<span class=k>def</span> <span class=nf>helper</span><span class=p>(</span><span class=n>graph</span><span class=p>,</span> <span class=n>root</span><span class=p>,</span> <span class=n>unvisited</span><span class=p>,</span> <span class=n>visited</span><span class=p>,</span> <span class=n>stack</span><span class=p>)</span><span class=p>:</span>
-    <span class=sa></span><span class=s2>&#34;&#34;&#34;</span><span class=s2> returns true if a particular path has a backedge</span><span class=s2>
-</span><span class=s2></span><span class=s2>    </span><span class=s2>&#34;&#34;&#34;</span>
+<span class=k>def</span> <span class=nf>helper</span><span class=p>(</span><span class=n>graph</span><span class=p>,</span> <span class=n>root</span><span class=p>,</span> <span class=n>unvisited</span><span class=p>,</span> <span class=n>visited</span><span class=p>,</span> <span class=n>stack</span><span class=p>):</span>
+    <span class=s2>&#34;&#34;&#34; returns true if a particular path has a backedge
+</span><span class=s2>    &#34;&#34;&#34;</span>
     <span class=n>visited</span><span class=o>.</span><span class=n>add</span><span class=p>(</span><span class=n>root</span><span class=p>)</span>
 
     <span class=k>if</span> <span class=n>root</span> <span class=ow>in</span> <span class=n>stack</span><span class=p>:</span>

@@ -31,26 +31,26 @@ can be interpreted.</p><p>In recursion, it's really important to sort of just tr
 It can be hard to wrap your head around, and sometimes you might even overthink
 it and convince yourself you're wrong, but as long as you have your subproblems
 defined correctly and good base cases, you will be fine.</p><p>Our base cases are <span class=math>\( s_0 \)</span> and <span class=math>\( s_1 \)</span>. They can both be interpreted in only
-one way.</p><div class=highlight><pre class=chroma><code class=language-python data-lang=python><span class=k>def</span> <span class=nf>recursive_count</span><span class=p>(</span><span class=n>s</span><span class=p>:</span> <span class=nb>str</span><span class=p>)</span> <span class=o>-</span><span class=o>&gt;</span> <span class=nb>int</span><span class=p>:</span>
-    <span class=sa></span><span class=s2>&#34;&#34;&#34;</span><span class=s2>
-</span><span class=s2></span><span class=s2>    Determines the number of ways a string or array of digits can be decoded</span><span class=s2>
-</span><span class=s2></span><span class=s2>    given the decoding rules provided by the problem.</span><span class=s2>
-</span><span class=s2></span><span class=s2>    s: an array of single digits integers (every digit is between 1 and 26,</span><span class=s2>
-</span><span class=s2></span><span class=s2>    inclusive)</span><span class=s2>
-</span><span class=s2></span><span class=s2>    :return: the number of ways `s` can be decoded</span><span class=s2>
-</span><span class=s2></span><span class=s2>    </span><span class=s2>&#34;&#34;&#34;</span>
+one way.</p><div class=highlight><pre class=chroma><code class=language-python data-lang=python><span class=k>def</span> <span class=nf>recursive_count</span><span class=p>(</span><span class=n>s</span><span class=p>:</span> <span class=nb>str</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>int</span><span class=p>:</span>
+    <span class=s2>&#34;&#34;&#34;
+</span><span class=s2>    Determines the number of ways a string or array of digits can be decoded
+</span><span class=s2>    given the decoding rules provided by the problem.
+</span><span class=s2>    s: an array of single digits integers (every digit is between 1 and 26,
+</span><span class=s2>    inclusive)
+</span><span class=s2>    :return: the number of ways `s` can be decoded
+</span><span class=s2>    &#34;&#34;&#34;</span>
     <span class=k>if</span> <span class=ow>not</span> <span class=n>s</span> <span class=ow>or</span> <span class=nb>len</span><span class=p>(</span><span class=n>s</span><span class=p>)</span> <span class=o>==</span> <span class=mi>1</span><span class=p>:</span>
         <span class=k>return</span> <span class=mi>1</span>
 
     <span class=n>count</span> <span class=o>=</span> <span class=mi>0</span>
 
-    <span class=k>if</span> <span class=nb>int</span><span class=p>(</span><span class=n>s</span><span class=p>[</span><span class=o>-</span><span class=mi>1</span><span class=p>]</span><span class=p>)</span> <span class=o>&gt;</span> <span class=mi>0</span><span class=p>:</span>
-        <span class=n>count</span> <span class=o>=</span> <span class=n>recursive_count</span><span class=p>(</span><span class=n>s</span><span class=p>[</span><span class=p>:</span><span class=o>-</span><span class=mi>1</span><span class=p>]</span><span class=p>)</span>
+    <span class=k>if</span> <span class=nb>int</span><span class=p>(</span><span class=n>s</span><span class=p>[</span><span class=o>-</span><span class=mi>1</span><span class=p>])</span> <span class=o>&gt;</span> <span class=mi>0</span><span class=p>:</span>
+        <span class=n>count</span> <span class=o>=</span> <span class=n>recursive_count</span><span class=p>(</span><span class=n>s</span><span class=p>[:</span><span class=o>-</span><span class=mi>1</span><span class=p>])</span>
 
-    <span class=n>prev_two</span> <span class=o>=</span> <span class=p>(</span><span class=nb>int</span><span class=p>(</span><span class=n>s</span><span class=p>[</span><span class=o>-</span><span class=mi>2</span><span class=p>]</span><span class=p>)</span> <span class=o>*</span> <span class=mi>10</span><span class=p>)</span> <span class=o>+</span> <span class=nb>int</span><span class=p>(</span><span class=n>s</span><span class=p>[</span><span class=o>-</span><span class=mi>1</span><span class=p>]</span><span class=p>)</span>
+    <span class=n>prev_two</span> <span class=o>=</span> <span class=p>(</span><span class=nb>int</span><span class=p>(</span><span class=n>s</span><span class=p>[</span><span class=o>-</span><span class=mi>2</span><span class=p>])</span> <span class=o>*</span> <span class=mi>10</span><span class=p>)</span> <span class=o>+</span> <span class=nb>int</span><span class=p>(</span><span class=n>s</span><span class=p>[</span><span class=o>-</span><span class=mi>1</span><span class=p>])</span>
 
     <span class=k>if</span> <span class=mi>0</span> <span class=o>&lt;</span> <span class=n>prev_two</span> <span class=o>&lt;</span> <span class=mi>27</span><span class=p>:</span>
-        <span class=n>count</span> <span class=o>+</span><span class=o>=</span> <span class=n>recursive_count</span><span class=p>(</span><span class=n>s</span><span class=p>[</span><span class=p>:</span><span class=o>-</span><span class=mi>2</span><span class=p>]</span><span class=p>)</span>
+        <span class=n>count</span> <span class=o>+=</span> <span class=n>recursive_count</span><span class=p>(</span><span class=n>s</span><span class=p>[:</span><span class=o>-</span><span class=mi>2</span><span class=p>])</span>
     <span class=k>return</span> <span class=n>count</span></code></pre></div><p>This is not the most efficient way to go about this, however. We can optimize
 this further by memoizing. You may notice that this problem has a very
 familiar structure. We can break it down as such:</p><p>Suppose <span class=math>\( f(x) \)</span> is the function that returns the number of ways some string
@@ -67,26 +67,26 @@ that the substring from <span class=math>\(0\)</span> to <span class=math>\( i -
 the string if we remove the pair of characters we just looked at).</p><p>In a way, we're almost looking at paths. How many ways can we traverse the
 string when we can either traverse one letter at a time, or under certain
 conditions possibly skip a letter (since when you interpet a pair of letters,
-the next letter you decode is the one after that pair).</p><div class=highlight><pre class=chroma><code class=language-python data-lang=python><span class=k>def</span> <span class=nf>dp_count</span><span class=p>(</span><span class=n>s</span> <span class=p>:</span><span class=nb>str</span><span class=p>)</span> <span class=o>-</span><span class=o>&gt;</span> <span class=nb>int</span><span class=p>:</span>
-    <span class=sa></span><span class=s2>&#34;&#34;&#34;</span><span class=s2>
-</span><span class=s2></span><span class=s2>    Determines the number of ways a string or array of digits can be decoded</span><span class=s2>
-</span><span class=s2></span><span class=s2>    given the decoding rules provided by the problem.</span><span class=s2>
-</span><span class=s2></span><span class=s2>    s: an array of single digits integers (every digit is between 1 and 26,</span><span class=s2>
-</span><span class=s2></span><span class=s2>    inclusive)</span><span class=s2>
-</span><span class=s2></span><span class=s2>    :return: the number of ways `s` can be decoded</span><span class=s2>
-</span><span class=s2></span><span class=s2>    </span><span class=s2>&#34;&#34;&#34;</span>
+the next letter you decode is the one after that pair).</p><div class=highlight><pre class=chroma><code class=language-python data-lang=python><span class=k>def</span> <span class=nf>dp_count</span><span class=p>(</span><span class=n>s</span> <span class=p>:</span><span class=nb>str</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>int</span><span class=p>:</span>
+    <span class=s2>&#34;&#34;&#34;
+</span><span class=s2>    Determines the number of ways a string or array of digits can be decoded
+</span><span class=s2>    given the decoding rules provided by the problem.
+</span><span class=s2>    s: an array of single digits integers (every digit is between 1 and 26,
+</span><span class=s2>    inclusive)
+</span><span class=s2>    :return: the number of ways `s` can be decoded
+</span><span class=s2>    &#34;&#34;&#34;</span>
     <span class=c1># add an extra element because cache[len(s)] should return our answer</span>
     <span class=n>cache</span> <span class=o>=</span> <span class=p>[</span><span class=mi>0</span><span class=p>]</span> <span class=o>*</span> <span class=p>(</span><span class=nb>len</span><span class=p>(</span><span class=n>s</span><span class=p>)</span> <span class=o>+</span> <span class=mi>1</span><span class=p>)</span>
-    <span class=n>cache</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span><span class=p>,</span> <span class=n>cache</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span> <span class=o>=</span> <span class=mi>1</span><span class=p>,</span> <span class=mi>1</span>
+    <span class=n>cache</span><span class=p>[</span><span class=mi>0</span><span class=p>],</span> <span class=n>cache</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span> <span class=o>=</span> <span class=mi>1</span><span class=p>,</span> <span class=mi>1</span>
 
-    <span class=k>for</span> <span class=n>i</span> <span class=ow>in</span> <span class=nb>range</span><span class=p>(</span><span class=mi>2</span><span class=p>,</span> <span class=nb>len</span><span class=p>(</span><span class=n>s</span><span class=p>)</span> <span class=o>+</span> <span class=mi>1</span><span class=p>)</span><span class=p>:</span>
-        <span class=k>if</span> <span class=nb>int</span><span class=p>(</span><span class=n>s</span><span class=p>[</span><span class=n>i</span><span class=o>-</span><span class=mi>1</span><span class=p>]</span><span class=p>)</span> <span class=o>&gt;</span> <span class=mi>0</span><span class=p>:</span>
+    <span class=k>for</span> <span class=n>i</span> <span class=ow>in</span> <span class=nb>range</span><span class=p>(</span><span class=mi>2</span><span class=p>,</span> <span class=nb>len</span><span class=p>(</span><span class=n>s</span><span class=p>)</span> <span class=o>+</span> <span class=mi>1</span><span class=p>):</span>
+        <span class=k>if</span> <span class=nb>int</span><span class=p>(</span><span class=n>s</span><span class=p>[</span><span class=n>i</span><span class=o>-</span><span class=mi>1</span><span class=p>])</span> <span class=o>&gt;</span> <span class=mi>0</span><span class=p>:</span>
             <span class=n>cache</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>=</span> <span class=n>cache</span><span class=p>[</span><span class=n>i</span><span class=o>-</span><span class=mi>1</span><span class=p>]</span>
 
-        <span class=n>prev_two</span> <span class=o>=</span> <span class=p>(</span><span class=nb>int</span><span class=p>(</span><span class=n>s</span><span class=p>[</span><span class=n>i</span><span class=o>-</span><span class=mi>2</span><span class=p>]</span><span class=p>)</span> <span class=o>*</span> <span class=mi>10</span><span class=p>)</span> <span class=o>+</span> <span class=nb>int</span><span class=p>(</span><span class=n>s</span><span class=p>[</span><span class=n>i</span><span class=o>-</span><span class=mi>1</span><span class=p>]</span><span class=p>)</span>
+        <span class=n>prev_two</span> <span class=o>=</span> <span class=p>(</span><span class=nb>int</span><span class=p>(</span><span class=n>s</span><span class=p>[</span><span class=n>i</span><span class=o>-</span><span class=mi>2</span><span class=p>])</span> <span class=o>*</span> <span class=mi>10</span><span class=p>)</span> <span class=o>+</span> <span class=nb>int</span><span class=p>(</span><span class=n>s</span><span class=p>[</span><span class=n>i</span><span class=o>-</span><span class=mi>1</span><span class=p>])</span>
 
         <span class=k>if</span> <span class=mi>0</span> <span class=o>&lt;</span> <span class=n>prev_two</span> <span class=o>&lt;</span> <span class=mi>27</span><span class=p>:</span>
-            <span class=n>cache</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>+</span><span class=o>=</span> <span class=n>cache</span><span class=p>[</span><span class=n>i</span><span class=o>-</span><span class=mi>2</span><span class=p>]</span>
+            <span class=n>cache</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>+=</span> <span class=n>cache</span><span class=p>[</span><span class=n>i</span><span class=o>-</span><span class=mi>2</span><span class=p>]</span>
     <span class=c1># this simply returns the last element in the array</span>
     <span class=k>return</span> <span class=n>cache</span><span class=p>[</span><span class=o>-</span><span class=mi>1</span><span class=p>]</span></code></pre></div><p>Now we have a solution with <span class=math>\( O(n) \)</span> space and time complexity, which is as
 efficient as you can get.</p><p>A nice little trick you can use to determine what the best possible efficiency

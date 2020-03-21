@@ -92,12 +92,12 @@ traits, but even then, I found the process to be lacking in ergonomics.</p><p>Co
     <span class=k>return</span> <span class=n>x</span> <span class=o>+</span> <span class=mi>1</span><span class=p>;</span>
 <span class=p>}</span>
 </code></pre></div><p>Now compare this to Rust:</p><div class=highlight><pre class=chroma><code class=language-rust data-lang=rust><span class=c1>// We need to use the num crate to have generic methods over numeric types
-</span><span class=c1></span><span class=k>use</span><span class=w> </span><span class=n>num</span>::<span class=p>{</span><span class=n>NumCast</span><span class=p>,</span><span class=w> </span><span class=n>FromPrimitive</span><span class=p>}</span><span class=p>;</span><span class=w>
-</span><span class=w></span><span class=w>
+</span><span class=c1></span><span class=k>use</span><span class=w> </span><span class=n>num</span>::<span class=p>{</span><span class=n>NumCast</span><span class=p>,</span><span class=w> </span><span class=n>FromPrimitive</span><span class=p>};</span><span class=w>
+</span><span class=w>
 </span><span class=w></span><span class=k>fn</span> <span class=nf>add_one</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;</span><span class=p>(</span><span class=n>x</span>: <span class=nc>T</span><span class=p>)</span><span class=w>
 </span><span class=w></span><span class=k>where</span><span class=w> </span><span class=n>T</span>: <span class=nc>NumCast</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>FromPrimitive</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=nb>Copy</span><span class=w>
 </span><span class=w></span><span class=p>{</span><span class=w>
-</span><span class=w></span><span class=w>    </span><span class=n>x</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>T</span>::<span class=n>from</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span><span class=p>.</span><span class=n>unwrap</span><span class=p>(</span><span class=p>)</span><span class=w>
+</span><span class=w>    </span><span class=n>x</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>T</span>::<span class=n>from</span><span class=p>(</span><span class=mi>1</span><span class=p>).</span><span class=n>unwrap</span><span class=p>()</span><span class=w>
 </span><span class=w></span><span class=p>}</span><span class=w>
 </span></code></pre></div><p>While this is a smaller example, we can already see that the Rust code snippet
 is much more verbose. My codebase is littered with a lot of these calls, which
@@ -108,17 +108,17 @@ errors myself, even in this project. All the same, I wonder if there is a more
 ergonomic way we could handle numeric types in Rust and reduce some of the
 boilerplate. There is a good reason for this explicitness. Consider the
 following code snippet in C++, in which I take a vector of <code>float</code>s and try to
-sum over the vector.</p><div class=highlight><pre class=chroma><code class=language-cpp data-lang=cpp><span class=cp>#</span><span class=cp>include</span> <span class=cpf>&lt;iostream&gt;</span><span class=cp>
-</span><span class=cp></span><span class=cp>#</span><span class=cp>include</span> <span class=cpf>&lt;numeric&gt;</span><span class=cp>
-</span><span class=cp></span><span class=cp>#</span><span class=cp>include</span> <span class=cpf>&lt;vector&gt;</span><span class=cp>
+sum over the vector.</p><div class=highlight><pre class=chroma><code class=language-cpp data-lang=cpp><span class=cp>#include</span> <span class=cpf>&lt;iostream&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;numeric&gt;</span><span class=cp>
+</span><span class=cp>#include</span> <span class=cpf>&lt;vector&gt;</span><span class=cp>
 </span><span class=cp></span>
-<span class=kt>float</span> <span class=nf>sum_vec</span><span class=p>(</span><span class=k>const</span> <span class=n>std</span><span class=o>:</span><span class=o>:</span><span class=n>vector</span><span class=o>&lt;</span><span class=kt>float</span><span class=o>&gt;</span> <span class=o>&amp;</span><span class=n>v</span><span class=p>)</span> <span class=p>{</span>
-    <span class=k>return</span> <span class=n>std</span><span class=o>:</span><span class=o>:</span><span class=n>accumulate</span><span class=p>(</span><span class=n>v</span><span class=p>.</span><span class=n>begin</span><span class=p>(</span><span class=p>)</span><span class=p>,</span> <span class=n>v</span><span class=p>.</span><span class=n>end</span><span class=p>(</span><span class=p>)</span><span class=p>,</span> <span class=mi>0</span><span class=p>)</span><span class=p>;</span>
+<span class=kt>float</span> <span class=nf>sum_vec</span><span class=p>(</span><span class=k>const</span> <span class=n>std</span><span class=o>::</span><span class=n>vector</span><span class=o>&lt;</span><span class=kt>float</span><span class=o>&gt;</span> <span class=o>&amp;</span><span class=n>v</span><span class=p>)</span> <span class=p>{</span>
+    <span class=k>return</span> <span class=n>std</span><span class=o>::</span><span class=n>accumulate</span><span class=p>(</span><span class=n>v</span><span class=p>.</span><span class=n>begin</span><span class=p>(),</span> <span class=n>v</span><span class=p>.</span><span class=n>end</span><span class=p>(),</span> <span class=mi>0</span><span class=p>);</span>
 <span class=p>}</span>
 
-<span class=kt>int</span> <span class=nf>main</span><span class=p>(</span><span class=p>)</span> <span class=p>{</span>
-    <span class=n>std</span><span class=o>:</span><span class=o>:</span><span class=n>vector</span><span class=o>&lt;</span><span class=kt>float</span><span class=o>&gt;</span> <span class=n>v</span><span class=p>{</span><span class=mf>0.2</span><span class=p>,</span> <span class=mf>0.2</span><span class=p>,</span> <span class=mf>0.2</span><span class=p>}</span><span class=p>;</span>
-    <span class=n>std</span><span class=o>:</span><span class=o>:</span><span class=n>cout</span> <span class=o>&lt;</span><span class=o>&lt;</span> <span class=n>sum_vec</span><span class=p>(</span><span class=n>v</span><span class=p>)</span> <span class=o>&lt;</span><span class=o>&lt;</span> <span class=n>std</span><span class=o>:</span><span class=o>:</span><span class=n>endl</span><span class=p>;</span>
+<span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+    <span class=n>std</span><span class=o>::</span><span class=n>vector</span><span class=o>&lt;</span><span class=kt>float</span><span class=o>&gt;</span> <span class=n>v</span><span class=p>{</span><span class=mf>0.2</span><span class=p>,</span> <span class=mf>0.2</span><span class=p>,</span> <span class=mf>0.2</span><span class=p>};</span>
+    <span class=n>std</span><span class=o>::</span><span class=n>cout</span> <span class=o>&lt;&lt;</span> <span class=n>sum_vec</span><span class=p>(</span><span class=n>v</span><span class=p>)</span> <span class=o>&lt;&lt;</span> <span class=n>std</span><span class=o>::</span><span class=n>endl</span><span class=p>;</span>
 <span class=p>}</span>
 </code></pre></div><p>For those of you who aren't familiar with the <code>accumulate</code> method, it's
 essentially a reduction over an iterable. You can use different accumulation
@@ -128,28 +128,28 @@ followed up by the initial value. In this case, I used <code>0</code> as my init
 because I just want the sum of the vector. So what output would you expect to
 see from this code snippet? <code>0.6</code> right? Wrong! Let's check the output:</p><pre><code>0</code></pre><p>We have fallen victim to implicit type coercion. Let's take a look at the
 actual signature of <code>accumulate</code>:</p><div class=highlight><pre class=chroma><code class=language-cpp data-lang=cpp><span class=k>template</span><span class=o>&lt;</span><span class=k>class</span> <span class=nc>InputIt</span><span class=p>,</span> <span class=k>class</span> <span class=nc>T</span><span class=o>&gt;</span>
-<span class=n>T</span> <span class=n>accumulate</span><span class=p>(</span><span class=n>InputIt</span> <span class=n>first</span><span class=p>,</span> <span class=n>InputIt</span> <span class=n>last</span><span class=p>,</span> <span class=n>T</span> <span class=n>init</span><span class=p>)</span><span class=p>;</span>
+<span class=n>T</span> <span class=n>accumulate</span><span class=p>(</span><span class=n>InputIt</span> <span class=n>first</span><span class=p>,</span> <span class=n>InputIt</span> <span class=n>last</span><span class=p>,</span> <span class=n>T</span> <span class=n>init</span><span class=p>);</span>
 </code></pre></div><p>You can see that the return type is the same as the initialization type. If you
 look at our function above, we made a subtle mistake and passed in <code>0</code> as the
 initial value, which is an <code>int</code>, rather than <code>0.0</code>, which is a <code>double</code>. This
 led to the method taking each value, (<code>0.2</code> in this case), turning it into an
 integer, which coerces to <code>0</code>, and adding that repeatedly to the initial value
-of <code>0</code>, which is why the final output was 0.</p><p>Here's the corrected version of the function:</p><div class=highlight><pre class=chroma><code class=language-cpp data-lang=cpp><span class=kt>float</span> <span class=nf>sum_vec</span><span class=p>(</span><span class=k>const</span> <span class=n>std</span><span class=o>:</span><span class=o>:</span><span class=n>vector</span><span class=o>&lt;</span><span class=kt>float</span><span class=o>&gt;</span> <span class=o>&amp;</span><span class=n>v</span><span class=p>)</span> <span class=p>{</span>
-    <span class=k>return</span> <span class=n>std</span><span class=o>:</span><span class=o>:</span><span class=n>accumulate</span><span class=p>(</span><span class=n>v</span><span class=p>.</span><span class=n>begin</span><span class=p>(</span><span class=p>)</span><span class=p>,</span> <span class=n>v</span><span class=p>.</span><span class=n>end</span><span class=p>(</span><span class=p>)</span><span class=p>,</span> <span class=mf>0.0</span><span class=p>)</span><span class=p>;</span>
+of <code>0</code>, which is why the final output was 0.</p><p>Here's the corrected version of the function:</p><div class=highlight><pre class=chroma><code class=language-cpp data-lang=cpp><span class=kt>float</span> <span class=nf>sum_vec</span><span class=p>(</span><span class=k>const</span> <span class=n>std</span><span class=o>::</span><span class=n>vector</span><span class=o>&lt;</span><span class=kt>float</span><span class=o>&gt;</span> <span class=o>&amp;</span><span class=n>v</span><span class=p>)</span> <span class=p>{</span>
+    <span class=k>return</span> <span class=n>std</span><span class=o>::</span><span class=n>accumulate</span><span class=p>(</span><span class=n>v</span><span class=p>.</span><span class=n>begin</span><span class=p>(),</span> <span class=n>v</span><span class=p>.</span><span class=n>end</span><span class=p>(),</span> <span class=mf>0.0</span><span class=p>);</span>
 <span class=p>}</span>
 </code></pre></div><p>It's a very small detail, but it's an error I fell victim to and spent far too
 long debugging because it's so subtle.</p><p>The Rust analog for the above code is a little different, since Rust provides
 methods on iterators and not methods that take iterators like the STL, so the
-analogy to the code snippet would be something like:</p><div class=highlight><pre class=chroma><code class=language-rust data-lang=rust><span class=k>fn</span> <span class=nf>main</span><span class=p>(</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
-</span><span class=w></span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>v</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>vec</span><span class=o>!</span><span class=p>[</span><span class=mf>0.2</span><span class=p>,</span><span class=w> </span><span class=mf>0.2</span><span class=p>,</span><span class=w> </span><span class=mf>0.2</span><span class=p>]</span><span class=p>;</span><span class=w>
-</span><span class=w></span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>sum</span>: <span class=kt>f32</span> <span class=o>=</span><span class=w> </span><span class=n>v</span><span class=p>.</span><span class=n>into_iter</span><span class=p>(</span><span class=p>)</span><span class=p>.</span><span class=n>sum</span><span class=p>(</span><span class=p>)</span><span class=p>;</span><span class=w>
-</span><span class=w></span><span class=w>    </span><span class=n>println</span><span class=o>!</span><span class=p>(</span><span class=s>&#34;{}&#34;</span><span class=p>,</span><span class=w> </span><span class=n>sum</span><span class=p>)</span><span class=p>;</span><span class=w>
+analogy to the code snippet would be something like:</p><div class=highlight><pre class=chroma><code class=language-rust data-lang=rust><span class=k>fn</span> <span class=nf>main</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>v</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>vec</span><span class=o>!</span><span class=p>[</span><span class=mf>0.2</span><span class=p>,</span><span class=w> </span><span class=mf>0.2</span><span class=p>,</span><span class=w> </span><span class=mf>0.2</span><span class=p>];</span><span class=w>
+</span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>sum</span>: <span class=kt>f32</span> <span class=o>=</span><span class=w> </span><span class=n>v</span><span class=p>.</span><span class=n>into_iter</span><span class=p>().</span><span class=n>sum</span><span class=p>();</span><span class=w>
+</span><span class=w>    </span><span class=n>println</span><span class=o>!</span><span class=p>(</span><span class=s>&#34;{}&#34;</span><span class=p>,</span><span class=w> </span><span class=n>sum</span><span class=p>);</span><span class=w>
 </span><span class=w></span><span class=p>}</span><span class=w>
 </span></code></pre></div><p>This gives us the expected output: <code>0.6</code>.</p><p>Now lets see how Rust handles implicit coercions. Suppose that I specified that
-my vector was a vector of integers:</p><div class=highlight><pre class=chroma><code class=language-rust data-lang=rust><span class=k>fn</span> <span class=nf>main</span><span class=p>(</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
-</span><span class=w></span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>v</span>: <span class=nb>Vec</span><span class=o>&lt;</span><span class=kt>i32</span><span class=o>&gt;</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>vec</span><span class=o>!</span><span class=p>[</span><span class=mf>0.2</span><span class=p>,</span><span class=w> </span><span class=mf>0.2</span><span class=p>,</span><span class=w> </span><span class=mf>0.2</span><span class=p>]</span><span class=p>;</span><span class=w>
-</span><span class=w></span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>sum</span>: <span class=kt>f32</span> <span class=o>=</span><span class=w> </span><span class=n>v</span><span class=p>.</span><span class=n>into_iter</span><span class=p>(</span><span class=p>)</span><span class=p>.</span><span class=n>sum</span><span class=p>(</span><span class=p>)</span><span class=p>;</span><span class=w>
-</span><span class=w></span><span class=w>    </span><span class=n>println</span><span class=o>!</span><span class=p>(</span><span class=s>&#34;{}&#34;</span><span class=p>,</span><span class=w> </span><span class=n>sum</span><span class=p>)</span><span class=p>;</span><span class=w>
+my vector was a vector of integers:</p><div class=highlight><pre class=chroma><code class=language-rust data-lang=rust><span class=k>fn</span> <span class=nf>main</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>v</span>: <span class=nb>Vec</span><span class=o>&lt;</span><span class=kt>i32</span><span class=o>&gt;</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>vec</span><span class=o>!</span><span class=p>[</span><span class=mf>0.2</span><span class=p>,</span><span class=w> </span><span class=mf>0.2</span><span class=p>,</span><span class=w> </span><span class=mf>0.2</span><span class=p>];</span><span class=w>
+</span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>sum</span>: <span class=kt>f32</span> <span class=o>=</span><span class=w> </span><span class=n>v</span><span class=p>.</span><span class=n>into_iter</span><span class=p>().</span><span class=n>sum</span><span class=p>();</span><span class=w>
+</span><span class=w>    </span><span class=n>println</span><span class=o>!</span><span class=p>(</span><span class=s>&#34;{}&#34;</span><span class=p>,</span><span class=w> </span><span class=n>sum</span><span class=p>);</span><span class=w>
 </span><span class=w></span><span class=p>}</span><span class=w>
 </span></code></pre></div><p><code>rustc</code> gives us the following output:</p><div class=highlight><pre class=chroma><code class=language-txt data-lang=txt>error[E0308]: mismatched types
  --&gt; src/main.rs:2:28
@@ -158,10 +158,10 @@ my vector was a vector of integers:</p><div class=highlight><pre class=chroma><c
   |                            ^^^ expected i32, found floating-point number
   |
   = note: expected type `i32`
-             found type `{float}`</code></pre></div><p>Or we can specify that the return type should be an integer:</p><div class=highlight><pre class=chroma><code class=language-rust data-lang=rust><span class=k>fn</span> <span class=nf>main</span><span class=p>(</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
-</span><span class=w></span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>v</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>vec</span><span class=o>!</span><span class=p>[</span><span class=mf>0.2</span><span class=p>,</span><span class=w> </span><span class=mf>0.2</span><span class=p>,</span><span class=w> </span><span class=mf>0.2</span><span class=p>]</span><span class=p>;</span><span class=w>
-</span><span class=w></span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>sum</span>: <span class=kt>i32</span> <span class=o>=</span><span class=w> </span><span class=n>v</span><span class=p>.</span><span class=n>into_iter</span><span class=p>(</span><span class=p>)</span><span class=p>.</span><span class=n>sum</span><span class=p>(</span><span class=p>)</span><span class=p>;</span><span class=w>
-</span><span class=w></span><span class=w>    </span><span class=n>println</span><span class=o>!</span><span class=p>(</span><span class=s>&#34;{}&#34;</span><span class=p>,</span><span class=w> </span><span class=n>sum</span><span class=p>)</span><span class=p>;</span><span class=w>
+             found type `{float}`</code></pre></div><p>Or we can specify that the return type should be an integer:</p><div class=highlight><pre class=chroma><code class=language-rust data-lang=rust><span class=k>fn</span> <span class=nf>main</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>v</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>vec</span><span class=o>!</span><span class=p>[</span><span class=mf>0.2</span><span class=p>,</span><span class=w> </span><span class=mf>0.2</span><span class=p>,</span><span class=w> </span><span class=mf>0.2</span><span class=p>];</span><span class=w>
+</span><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>sum</span>: <span class=kt>i32</span> <span class=o>=</span><span class=w> </span><span class=n>v</span><span class=p>.</span><span class=n>into_iter</span><span class=p>().</span><span class=n>sum</span><span class=p>();</span><span class=w>
+</span><span class=w>    </span><span class=n>println</span><span class=o>!</span><span class=p>(</span><span class=s>&#34;{}&#34;</span><span class=p>,</span><span class=w> </span><span class=n>sum</span><span class=p>);</span><span class=w>
 </span><span class=w></span><span class=p>}</span><span class=w>
 </span></code></pre></div><p>This gives us the following error:</p><div class=highlight><pre class=chroma><code class=language-txt data-lang=txt>error[E0277]: the trait bound `i32: std::iter::Sum&lt;{float}&gt;` is not satisfied
  --&gt; src/main.rs:3:34
@@ -225,18 +225,18 @@ parameter checking as well. The constructors for OAs have two variants: a
 checked variant and a "direct" variant. The checked variant is simply a struct
 that checks parameters, and upon success, consumes the struct and returns the
 regular constructor, which implements the trait for generating OAs.</p><p>The general flow for the verification states is as follows:</p><div class=highlight><pre class=chroma><code class=language-rust data-lang=rust><span class=k>impl</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;</span><span class=w> </span><span class=n>BoseChecked</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
-</span><span class=w></span><span class=w>    </span><span class=n>verify</span><span class=p>(</span><span class=bp>self</span><span class=p>)</span><span class=w> </span>-&gt; <span class=nc>OarsResult</span><span class=o>&lt;</span><span class=n>Bose</span><span class=o>&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
-</span><span class=w></span><span class=w>        </span><span class=c1>// verify things here
+</span><span class=w>    </span><span class=n>verify</span><span class=p>(</span><span class=bp>self</span><span class=p>)</span><span class=w> </span>-&gt; <span class=nc>OarsResult</span><span class=o>&lt;</span><span class=n>Bose</span><span class=o>&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span><span class=w>        </span><span class=c1>// verify things here
 </span><span class=c1></span><span class=w>        </span><span class=c1>// ...
 </span><span class=c1></span><span class=w>
-</span><span class=w></span><span class=w>        </span><span class=c1>// invalid parameters
-</span><span class=c1></span><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=n>OarsError</span>::<span class=n>new</span><span class=p>(</span><span class=s>&#34;bad params&#34;</span><span class=p>)</span><span class=p>;</span><span class=w>
-</span><span class=w></span><span class=w>
-</span><span class=w></span><span class=w>        </span><span class=c1>// valid parameters
+</span><span class=w>        </span><span class=c1>// invalid parameters
+</span><span class=c1></span><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=n>OarsError</span>::<span class=n>new</span><span class=p>(</span><span class=s>&#34;bad params&#34;</span><span class=p>);</span><span class=w>
+</span><span class=w>
+</span><span class=w>        </span><span class=c1>// valid parameters
 </span><span class=c1></span><span class=w>        </span><span class=n>Bose</span><span class=w> </span><span class=p>{</span><span class=w>
-</span><span class=w></span><span class=w>            </span><span class=c1>// ...
+</span><span class=w>            </span><span class=c1>// ...
 </span><span class=c1></span><span class=w>        </span><span class=p>}</span><span class=w>
-</span><span class=w></span><span class=w>    </span><span class=p>}</span><span class=w>
+</span><span class=w>    </span><span class=p>}</span><span class=w>
 </span><span class=w></span><span class=p>}</span><span class=w>
 </span></code></pre></div><p>What happens here is that the user supplies some values to the struct. This
 method performs some checking, and upon success, the <code>BoseChecked</code> struct is
@@ -247,11 +247,11 @@ are free to just use the <code>Bose</code> struct directly, but improper paramet
 lead to invalid orthogonal arrays, so it is up to the user to verify their own
 parameters.</p><p>The stateful typing system allows for some pretty ergonomic code. The general
 flow for generating orthogonal arrays with checked code goes like this:</p><div class=highlight><pre class=chroma><code class=language-rust data-lang=rust><span class=kd>let</span><span class=w> </span><span class=n>bose</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>BoseChecked</span><span class=w> </span><span class=p>{</span><span class=w>
-</span><span class=w></span><span class=w>    </span><span class=n>prime_base</span>: <span class=mi>3</span><span class=p>,</span><span class=w>
-</span><span class=w></span><span class=w>    </span><span class=n>dimensions</span>: <span class=mi>3</span><span class=p>,</span><span class=w>
-</span><span class=w></span><span class=p>}</span><span class=p>;</span><span class=w>
-</span><span class=w></span><span class=w>
-</span><span class=w></span><span class=kd>let</span><span class=w> </span><span class=n>oa</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>bose</span><span class=p>.</span><span class=n>verify</span><span class=p>(</span><span class=p>)</span><span class=o>?</span><span class=p>.</span><span class=n>gen</span><span class=p>(</span><span class=p>)</span><span class=o>?</span><span class=p>;</span><span class=w>
+</span><span class=w>    </span><span class=n>prime_base</span>: <span class=mi>3</span><span class=p>,</span><span class=w>
+</span><span class=w>    </span><span class=n>dimensions</span>: <span class=mi>3</span><span class=p>,</span><span class=w>
+</span><span class=w></span><span class=p>};</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=kd>let</span><span class=w> </span><span class=n>oa</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>bose</span><span class=p>.</span><span class=n>verify</span><span class=p>()</span><span class=o>?</span><span class=p>.</span><span class=n>gen</span><span class=p>()</span><span class=o>?</span><span class=p>;</span><span class=w>
 </span></code></pre></div><h3 id=procedural-macros>Procedural Macros</h3><p>One of the consequences of utilizing stateful types for my library was that
 each constructor struct needed to have a variant that had the exact same
 fields. So for example, I have a struct for the <code>Bose</code> constructor, as well as
@@ -266,10 +266,10 @@ are simple text substitution and allow for a lot of error, Rust's macro system
 is checked by the compiler, and has some very strong reflection capabilities. I
 created a derive macro called <code>Checked</code> which automatically creates a copy of a
 struct, but changes its name to be suffixed by <code>Checked</code>. Usage is very simple:</p><div class=highlight><pre class=chroma><code class=language-rust data-lang=rust><span class=c1>// creates a struct called `BoseChecked` with identical parameters, comments,
-</span><span class=c1></span><span class=c1>// visibility, etc.
-</span><span class=c1></span><span class=cp>#[</span><span class=cp>derive(Checked)</span><span class=cp>]</span><span class=w>
+</span><span class=c1>// visibility, etc.
+</span><span class=c1></span><span class=cp>#[derive(Checked)]</span><span class=w>
 </span><span class=w></span><span class=k>struct</span> <span class=nc>Bose</span><span class=w> </span><span class=p>{</span><span class=w>
-</span><span class=w></span><span class=w>    </span><span class=c1>// ...
+</span><span class=w>    </span><span class=c1>// ...
 </span><span class=c1></span><span class=p>}</span><span class=w>
 </span></code></pre></div><p>Developing this macro was very nice because the compiler was able to catch
 errors as I developed. Had I used simple text substitution, catching bugs would

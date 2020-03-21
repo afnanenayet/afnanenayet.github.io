@@ -15,7 +15,7 @@ files split up in the following manner:</p><pre><code>config
 ├── 03.powerline.vim
 ├── 04.deoplete.vim
 ├── 05.language_client.vim
-└── 06.keybindings.vim</code></pre><p>My <code>init.vim</code> file looks like this:</p><div class=highlight><pre class=chroma><code class=language-vim data-lang=vim><span class=nx>for</span> <span class=nx>f</span> <span class=nx>in</span> <span class=nx>split</span><span class=p>(</span><span class=nx>glob</span><span class=p>(</span><span class=s1>&#39;~/.config/nvim/config/*.vim&#39;</span><span class=p>)</span><span class=p>,</span> <span class=s1>&#39;\n&#39;</span><span class=p>)</span><span class=err>
+└── 06.keybindings.vim</code></pre><p>My <code>init.vim</code> file looks like this:</p><div class=highlight><pre class=chroma><code class=language-vim data-lang=vim><span class=nx>for</span> <span class=nx>f</span> <span class=nx>in</span> <span class=nx>split</span><span class=p>(</span><span class=nx>glob</span><span class=p>(</span><span class=s1>&#39;~/.config/nvim/config/*.vim&#39;</span><span class=p>),</span> <span class=s1>&#39;\n&#39;</span><span class=p>)</span><span class=err>
 </span><span class=err></span>    <span class=nx>exe</span> <span class=s1>&#39;source&#39;</span> <span class=nx>f</span><span class=err>
 </span><span class=err></span><span class=nx>endfor</span></code></pre></div><p><em>Credit: Thanks to Igor Epstein for pointing out I can use a regex to grab
 multiple files in a directory and clean up my init.vim config.</em></p><p>Note that I had to put the <code>plugins.vim</code> file first because it contains
