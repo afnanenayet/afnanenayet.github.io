@@ -82,7 +82,7 @@ f_{0}(x) &= f_{1}
 \(f_{1}\). You then need to pass \(y\) to the second function, which will
 evaluate to \(x + y\).</p><span class=katex-display>\(\begin{aligned}
 f_{0}(1) &= f_{1} \\
-f_{1}(y) &= x + 1
+f_{1}(y) &= 1 + y
 \end{aligned}\)</span><p>So we can get the same behavior as \(f(x, y)\) by calling \(f_{0}(x)(y)\).</p><p>With abstractions, we would have something like this:</p><p>$$
 \lambda x y . x + y
 $$</p><p>We can convert the abstraction to its curried form like this:</p><p>$$
